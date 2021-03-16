@@ -1,0 +1,6 @@
+# Ignore nbproject folder
+nbproject/
+# Ignore node dependency directories
+node_modules/
+composer.lock
+test.php
