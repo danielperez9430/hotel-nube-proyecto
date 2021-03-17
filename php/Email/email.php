@@ -62,7 +62,7 @@ class email {
 
     function crearContenidoCorreo($nombre) {
 
-        return @file_get_contents('https://api.hotelnube.ml/email/' . urlencode($nombre));
+        return file_get_contents('https://api.hotelnube.ml/email/' . $nombre);
     }
 
     /**

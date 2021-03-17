@@ -2,7 +2,7 @@
 
 namespace Habitacion;
 
-class servicios implements \JsonSerializable{
+class servicios {
     
     protected $id;
     protected $nombre_servicio;
@@ -18,15 +18,8 @@ class servicios implements \JsonSerializable{
         $this->disponibilidad = $disponibilidad;
     }
 
-    public function jsonSerialize() {
-        return 
-        [
-            'id'   => $this->id,
-            'nombre_servicio' => $this->nombre_servicio,
-            'precio_servicio'   => $this->precio_servicio,
-            'descripcion'   => $this->descripcion,
-            'disponibilidad' => $this->disponibilidad
-        ];
+    
+    function __toString() {
+        return "<li>{Servicio: $this->nombre_servicio}</li>";
     }
-
 }

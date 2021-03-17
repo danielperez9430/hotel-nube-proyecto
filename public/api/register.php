@@ -4,15 +4,10 @@ require_once __DIR__ . '/../../autoload.php';
 
 use \DB\operacionesDB as db;
 use \Tools\tools as tools;
-use \Email\email as email;
-use \Session\session as s;
-
-s::comprobar_sesion();
 
 $campos = array('name', 'email', 'telf', 'pais', 'provincia', 'ciudad', 'direccion', 'password');
 
 $tool = new tools;
-$correo = new email;
 
 if ($tool->comprobarDatosRegistro($campos)) {
 
@@ -32,14 +27,6 @@ if ($tool->comprobarDatosRegistro($campos)) {
 
    if($resultado === 1) {
        $registerCorrect = true;
-       
-       // TODO: Moverlo a la transacción
-       $cuerpo = $correo->crearContenidoCorreo($_POST['name']);
-       $correo->enviarCorreo($email, $cuerpo, "Alta Usuario");
-       
-       $user = $con->buscarUsuario($email);
-       s::asignarDatosSession($user['id'], $user['email'], $user['nombre'], $user['nombre_rol']);
-       
    } else {
        $registerCorrect = false;
    }

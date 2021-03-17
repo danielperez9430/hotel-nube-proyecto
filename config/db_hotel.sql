@@ -59,7 +59,6 @@ tipo_de_habitacion varchar(255) not null,
 servicio_limpieza bit not null default 0,
 internet bit not null default 0,
 precio DECIMAL(6,2) not null,
-disponibilidad bit not null default 1,
 primary key (id),
 foreign key (tipo_de_habitacion) references habitacion_tipo(tipo_habitacion)
 );
@@ -81,7 +80,7 @@ id_servicio bigint(20) not null,
 fecha_servicio datetime not null,
 fecha_fin_servicio datetime not null,
 primary key (id_habitacion, id_servicio),
-foreign key (id_habitacion) references habitaciones(id) on delete cascade,
+foreign key (id_habitacion) references habitaciones(id),
 foreign key (id_servicio) references servicios(id)
 );
 
@@ -89,8 +88,6 @@ foreign key (id_servicio) references servicios(id)
 create table reservas(
 num_reserva bigint(20) not null auto_increment,
 id_usuario bigint(20) not null,
-fecha_entrada date not null,
-fecha_salida date not null,
 fecha_reserva timestamp not null default current_timestamp,
 num_dias smallint(20) not null,
 primary key (num_reserva), 
@@ -104,7 +101,7 @@ num_reserva bigint(20) not null,
 id_habitacion bigint(20) not null,
 primary key (id),
 foreign key (num_reserva) references  reservas(num_reserva),
-foreign key (id_habitacion) references habitaciones(id) on delete cascade
+foreign key (id_habitacion) references habitaciones(id)
 );
 
 -- Trigger actualización fecha de última modificación de los datos de un usuario
@@ -176,25 +173,25 @@ INSERT INTO `hotel`.`habitaciones` (`m2`, `ventana`, `tipo_de_habitacion`, `serv
 INSERT INTO `hotel`.`habitaciones` (`m2`, `ventana`, `tipo_de_habitacion`, `servicio_limpieza`, `internet`, `precio`) VALUES ('43', 1, 'Rustic Room', 1, 1, '234');
 
 -- Insertamos las imagenes
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('1', 'src/img/deluxe_room/cama_frente_hab_deluxe.jpg', 'Vista frontal cama habitación turquesa');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('1', 'src/img/deluxe_room/cama_lateral_hab_deluxe.jpg', 'Vista lateral cama habitación turquesa');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('1', 'src/img/deluxe_room/comedor_hab_deluxe.jpg', 'Comedor habitación turquesa');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('1', 'src/img/deluxe_room/salon_hab_deluxe.jpg', 'Salon habitación tuquesa');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('2', 'src/img/double_room/bano_hab_doble.jpg', 'Baño habitación doble');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('2', 'src/img/double_room/cama_hab_doble.jpg', 'Cama doble moderna');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('2', 'src/img/double_room/mesa_exterior_hab_doble.jpg', 'Mesita exterior habitación doble con jardín');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('2', 'src/img/double_room/salon_hab_doble.jpg', 'Salón con mucha luz y tranquilidad');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('3', 'src/img/rustic_room/cama_hab_rustica.jpg', 'Cama habitación rustica');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('3', 'src/img/rustic_room/chimenea_hab_rustica.jpg', 'Chimenea de la habitación rustica');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('3', 'src/img/rustic_room/mesa-salon_hab_rustica.jpg', 'Mesa salón habitación rustica');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('3', 'src/img/rustic_room/sofa_hab_rustica.jpg', 'Sofá con una amplia ventana');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('4', 'src/img/single_room/baño_hab_simple.jpg', 'Salón con sofá color crema');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('4', 'src/img/single_room/cama_hab_simple.jpg', 'Cama moderna con colores claros');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('4', 'src/img/single_room/hamaca_exterior_hab_simple.jpg', 'Hamaca exterior doble');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('4', 'src/img/single_room/salon_hab_simple.jpg', 'Salón moderno con mesita para el café');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('5', 'src/img/turquoise_room/cama_cerca_hab_turquesa.jpg', 'Cama de la habitación turquesa con frutas');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('5', 'src/img/turquoise_room/cama_hab_turquesa.jpg', 'Vista lateral cama de la habitación turquesa');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('5', 'src/img/turquoise_room/comedor_hab_turquesa.jpg', 'Gran comedor con colores turquesa');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('5', 'src/img/turquoise_room/salon_hab_turquesa.jpg', 'Salón comodo y muy luminoso');
-INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('5', 'src/img/turquoise_room/sofa_hab_turquesa.jpg', 'Vista frontal salón habitación turquesa');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('1', '/src/img/deluxe_room/cama_frente_hab_deluxe.jpg', 'Vista frontal cama habitación turquesa');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('1', '/src/img/deluxe_room/cama_lateral_hab_deluxe.jpg', 'Vista lateral cama habitación turquesa');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('1', '/src/img/deluxe_room/comedor_hab_deluxe.jpg', 'Comedor habitación turquesa');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('1', '/src/img/deluxe_room/salon_hab_deluxe.jpg', 'Salon habitación tuquesa');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('2', '/src/img/double_room/bano_hab_doble.jpg', 'Baño habitación doble');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('2', '/src/img/double_room/cama_hab_doble.jpg', 'Cama doble moderna');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('2', '/src/img/double_room/mesa_exterior_hab_doble.jpg', 'Mesita exterior habitación doble con jardín');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('2', '/src/img/double_room/salon_hab_doble.jpg', 'Salón con mucha luz y tranquilidad');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('3', '/src/img/rustic_room/cama_hab_rustica.jpg', 'Cama habitación rustica');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('3', '/src/img/rustic_room/chimenea_hab_rustica.jpg', 'Chimenea de la habitación rustica');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('3', '/src/img/rustic_room/mesa-salon_hab_rustica.jpg', 'Mesa salón habitación rustica');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('3', '/src/img/rustic_room/sofa_hab_rustica.jpg', 'Sofá con una amplia ventana');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('4', '/src/img/single_room/baño_hab_simple.jpg', 'Salón con sofá color crema');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('4', '/src/img/single_room/cama_hab_simple.jpg', 'Cama moderna con colores claros');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('4', '/src/img/single_room/hamaca_exterior_hab_simple.jpg', 'Hamaca exterior doble');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('4', '/src/img/single_room/salon_hab_simple.jpg', 'Salón moderno con mesita para el café');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('5', '/src/img/turquoise_room/cama_cerca_hab_turquesa.jpg', 'Cama de la habitación turquesa con frutas');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('5', '/src/img/turquoise_room/cama_hab_turquesa.jpg', 'Vista lateral cama de la habitación turquesa');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('5', '/src/img/turquoise_room/comedor_hab_turquesa.jpg', 'Gran comedor con colores turquesa');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('5', '/src/img/turquoise_room/salon_hab_turquesa.jpg', 'Salón comodo y muy luminoso');
+INSERT INTO `hotel`.`imagenes_habitaciones` (`id_habitacion_tipo`, `imagen_habitacion`, `descripcion_imagen`) VALUES ('5', '/src/img/turquoise_room/sofa_hab_turquesa.jpg', 'Vista frontal salón habitación turquesa');
 

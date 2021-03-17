@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    
     var loginDialog = document.getElementById('loginDialog');
     loginDialog.addEventListener('shown.bs.modal', function () {
+       
     });
 
     const getCountries = async () => {
@@ -12,6 +12,7 @@ $(document).ready(function () {
             $('#registerCountry').append(`<option value='${country}'>${country}</option>`);
         })
     }
+    
     getCountries();
 
     $('#goRegister').click(function (e) { 
@@ -60,8 +61,6 @@ $(document).ready(function () {
         $('#spinnerContainer span').html('Logging in...');
         $('#loginFail span').html('Login failed, retry again.');
         $('#loginSuccessful span').html('User logged in successfully.');
-
-        $('#spinnerContainer').css('display', 'flex');
         
         const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
@@ -69,7 +68,7 @@ $(document).ready(function () {
   
         $.ajax({
             type: "POST",
-            url: "api/login.php",
+            url: "/Hotel_Nube/public/api/login.php",
             data: {
                 email,
                 password,
@@ -83,8 +82,8 @@ $(document).ready(function () {
                     const timeout = setTimeout(() => {
                         $('#loginSuccessful').css('display', 'none');
                         clearTimeout(timeout);
-                        location.reload();
                     }, 3000);
+                    // login
                 }
                 else {
                     $('#spinnerContainer').css('display', 'none');
@@ -299,6 +298,7 @@ $(document).ready(function () {
         const valPhone = () => {
             const regexCode = /^\+[1-9]\d?\d?$/;
             const regexPhone = /^\d{9}$/;
+            console.log(regexCode.test(phoneCode), regexPhone.test(phoneNumber))
             if (regexCode.test(phoneCode) && regexPhone.test(phoneNumber)) {
                 return true;
             }
@@ -314,7 +314,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: "POST",
-                url: "api/register.php",
+                url: "/Hotel_Nube/public/api/register.php",
                 data: {
                     email,
                     password,
@@ -334,7 +334,7 @@ $(document).ready(function () {
                             $('#loginSuccessful').css('display', 'none');
                             clearTimeout(timeout);
                         }, 3000);
-                        location.reload();
+                        // login
                     }
                     else {
                         $('#spinnerContainer').css('display', 'none');
@@ -371,6 +371,24 @@ $(document).ready(function () {
                 $('#registerPhoneCode').removeAttr('style');
                 $('#registerPhoneNumber').removeAttr('style');
             }
+        }
+    });
+});
+
+$('#logOut').click(function (e) { 
+    e.preventDefault();
+    
+    $.ajax({
+        type: "POST",
+        url: "php/logout.php",
+        dataType: "JSON",
+        success: function (response) {
+            if (response.result == true) {
+                window.location.reload();
+            }
+        },
+        error: function () {
+            
         }
     });
 });

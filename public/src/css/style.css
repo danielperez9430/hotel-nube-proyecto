@@ -37,7 +37,6 @@
 a .text-light:hover {
    color: gold !important;
 }
-
 .login {
     position: absolute;
     right: 0;
@@ -89,7 +88,7 @@ a .text-light:hover {
 .phone {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 105%;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -130,15 +129,14 @@ a .text-light:hover {
     color: rgba(0, 0, 0, 0.7);
     margin-bottom: 5px;
     margin-left: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .registerContent > .buttons {
     width: 100%;
     margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    padding: 0 20%;
+    position: relative;
+    left: -10px;
 }
 
 .registerContent > .buttons > button {
@@ -188,33 +186,6 @@ a .text-light:hover {
     font-size: 22px;
 }
 
-#loginFail i {
-    font-size: 30px;
-    margin-bottom: 30px;
-} 
-
-#loginSuccessful {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: rgba(25, 135, 84, 0.7);
-    color: white;
-    border-radius: 5px;
-    pointer-events: all;
-    transition: 1s;
-    font-size: 22px;
-}
-
-#loginSuccessful i {
-    font-size: 30px;
-    margin-bottom: 30px;
-} 
-
 #spinnerContainer > span {
     margin-top: 20px;
 }
@@ -246,168 +217,28 @@ a .text-light:hover {
 }
 
 
-@keyframes openLogout {
-    from {
-        position: absolute;
-        top: 50px;
-        opacity: 0;
-    }
-    to {
-        position: absolute;
-        top: 70px;
-        opacity: 1;
-    }
-}
-
-@keyframes closeLogout {
-    from {
-        position: absolute;
-        top: 70px;
-        opacity: 1;
-    }
-    to {
-        position: absolute;
-        top: 50px;
-        opacity: 0;
-    }
-}
-
-#userLoggedMenuBase {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 20;
-}
-
 #userLoggedMenu {
     background-color: white;
     border-radius: 5px;
-    padding: 5px;
+    padding: 20px 10px;
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     position: absolute;
     top: 70px;
-    z-index: 25;
+    z-index: 100;
     right: 10px;
+    width: 200px;
     box-shadow: 3px 3px 10px 10px rgba(0, 0, 0, 0.3);
-    -webkit-animation-name: closeLogout;
-    -webkit-animation-duration: 0.3s;
-    animation-name: closeLogout;
-    animation-duration: 0.3s;
 }
 
-#userLoggedMenu.openLogout {
-    display: flex;
-    -webkit-animation-name: openLogout;
-    -webkit-animation-duration: 0.3s;
-    animation-name: openLogout;
-    animation-duration: 0.3s;
-}
-
-#userLoggedMenu .topDiv {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-#userLoggedMenu .topDiv button {
-    float: right;
-    border: none;
-    background-color: white;
-    outline: none;
-    padding: 5px;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    transition: 0.1s;
-}
-
-#userLoggedMenu .topDiv button:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-#userLoggedMenu .topDiv button:active {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-#userLoggedMenu .logoutContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-#userLoggedMenu .logoutContent #fullUserName {
-    font-weight: bold;
-    margin-bottom: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-#userLoggedMenu .logoutContent #fullUserName i {
-    margin-right: 10px;
-}
-
-#userLoggedMenu .logoutContent #email {
+#userLoggedMenu #fullUserName {
     font-weight: bold;
     margin-bottom: 30px;
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
-#userLoggedMenu .logoutContent #email i {
-    margin-right: 10px;
-}
-
-#userLoggedMenu .logoutContent #adminPanel {
-    border-radius: 5px;
-    background-color: white;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    outline: none;
-    height: 40px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    transition: 0.1s;
-}
-
-#userLoggedMenu .logoutContent #adminPanel:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 2px solid rgba(0, 0, 0, 0.0);
-}
-
-#userLoggedMenu .logoutContent #adminPanel:active {
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 2px solid rgba(0, 0, 0, 0.0);
-}
-
-#userLoggedMenu .logoutContent #adminPanel i {
-    margin-right: 10px;
-}    
-
-#userLoggedMenu .logoutContent .logoutButtons {
-    display: flex;
-}
-
-#userLoggedMenu .logoutContent .logoutButtons #userSettings {
-    width: 40px;
-    height: 40px;
-    margin-left: 10px;
-    margin-right: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#userLoggedMenu .logoutContent .logoutButtons #logOut {
-    margin-bottom: 10px;
-    margin-right: 10px;
-    height: 40px;
-    width: calc(100% - 50px);
-}
-
-#userLoggedMenu .logoutContent .logoutButtons #logOut i {
+#userLoggedMenu #logOut i {
     margin-right: 10px;
 }
 
@@ -499,92 +330,6 @@ a .text-light:hover {
     font-weight: bold;
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     color: white;
-}
-
-@keyframes openDialog {
-    from {
-        transform: scale(0);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes closeDialog {
-    from {
-        transform: scale(1);
-        opacity: 1;
-    }
-    to {
-        transform: scale(0);
-        opacity: 0;
-    }
-}
-
-.windowBackground {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.2);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    pointer-events: all;
-    z-index: 100;
-}
-
-.windowBackground .windowContainer { 
-    background-color: white;
-    width: 80%;
-    height: 80%;
-    border-radius: 5px;
-    position: relative;
-    -webkit-animation-name: closeDialog;
-    -webkit-animation-duration: 0.3s;
-    animation-name: closeDialog;
-    animation-duration: 0.3s;
-}
-
-.windowBackgroundOpen {
-    display: flex;
-}
-
-.windowBackgroundOpen .windowContainer { 
-    -webkit-animation-name: openDialog;
-    -webkit-animation-duration: 0.3s;
-    animation-name: openDialog;
-    animation-duration: 0.3s;
-}
-
-.settingsInputs {
-    width: 100%;
-    padding: 0 20px;
-    margin-bottom: 30px;
-}
-
-#userNameEditField, #passwordEditField, #rePasswordEditField {
-    margin-top: 20px;
-}
-
-#phoneCodeEditField {
-    width: 75px;
-    margin-right: 20px;
-}
-
-#phoneNumberEditField {
-    width: calc(100% - 110px);
-}
-
-#saveSettings {
-    float: right;
-}
-
-#saveSettings i {
-    margin-right: 10px;
 }
 
 @media (max-width: 990px) {
