@@ -13,7 +13,7 @@ header('content-type: application/json; charset=utf-8');
 // Establecemos la conexión
 $con = new db($_SESSION['rol']);
 
-// Obtenemos los tipos de habitacion
-$data = $con->obtenerTiposHabitaciones();
+// Obtenemos los nombres de los tipos de habitacion
+$data = $con->obtenerNombresTiposHabitacion();
 // Convertimos a JSON y los mostramos
 echo json_encode($data);

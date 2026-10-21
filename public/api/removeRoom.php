@@ -7,7 +7,16 @@ use \Session\session as s;
 
 s::comprobar_sesion();
 
-if (isset($_POST['roomId'])) {
+header('content-type: application/json; charset=utf-8');
+
+if (!s::esAdmin()) {
+    // Solo los administradores pueden borrar habitaciones
+    http_response_code(403);
+    echo json_encode([
+        'result' => 'fail',
+        'code' => 3
+    ]);
+} elseif (isset($_POST['roomId'])) {
     
     $roomId = $_POST['roomId']; // Obtenemos el ID de la habitación a borrar
    
