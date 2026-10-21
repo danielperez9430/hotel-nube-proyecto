@@ -5,6 +5,8 @@ require_once __DIR__ . '/../../autoload.php';
 use \DB\operacionesDB as db;
 use \Tools\tools as tools;
 
+header('content-type: application/json; charset=utf-8');
+
 $campos = array('name', 'email', 'telf', 'pais', 'provincia', 'ciudad', 'direccion', 'password');
 
 $tool = new tools;
@@ -21,16 +23,20 @@ if ($tool->comprobarDatosRegistro($campos)) {
     // Ciframos la contraseña
     $password = $tool->cifrarContraseña($_POST['password']);
 
-    $con = new db('admin');
-    // Registramos al usario en la base de datos
-   $resultado = $con->registrarUsuario($nombre, $email, $telf, $pais, $provincia, $ciudad, $direccion, $password);
+    $registerCorrect = false;
 
-   if($resultado === 1) {
-       $registerCorrect = true;
-   } else {
-       $registerCorrect = false;
-   }
-   
+    if ($tool->comprobarEmail($email)) {
+        $con = new db('admin');
+
+        try {
+            // Registramos al usario en la base de datos
+            $registerCorrect = $con->registrarUsuario($nombre, $email, $telf, $pais, $provincia, $ciudad, $direccion, $password) === 1;
+        } catch (\PDOException $e) {
+            // Por ejemplo, si el correo ya está registrado
+            error_log('Error al registrar el usuario: ' . $e->getMessage());
+        }
+    }
+
     if ($registerCorrect) {
         // start session
         echo json_encode([
@@ -49,4 +55,3 @@ if ($tool->comprobarDatosRegistro($campos)) {
         'code' => 1
     ]);
 }
-?>

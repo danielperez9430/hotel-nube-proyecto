@@ -20,6 +20,6 @@ class servicios {
 
     
     function __toString() {
-        return "<li>{Servicio: $this->nombre_servicio}</li>";
+        return '<li>Servicio: ' . htmlspecialchars($this->nombre_servicio) . '</li>';
     }
 }

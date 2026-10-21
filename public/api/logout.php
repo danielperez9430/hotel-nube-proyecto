@@ -1,7 +1,12 @@
 <?php
 
-// Destruimos la sesión
-unset($_SESION);
+require_once __DIR__ . '/../../autoload.php';
 
-echo json_encode(['result' => true])
-?>
+use \Session\session as s;
+
+header('content-type: application/json; charset=utf-8');
+
+// Destruimos la sesión
+s::cerrarSesion();
+
+echo json_encode(['result' => true]);

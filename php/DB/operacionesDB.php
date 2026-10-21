@@ -5,8 +5,8 @@ namespace DB;
 class operacionesDB {
 
     private $nombreBBDD = 'hotel';
-    private $usuario = 'juan';
-    private $pwd = '1234';
+    private $usuario;
+    private $pwd;
     private $servidor = "localhost";
     private $PDO;
     // Ficheros de configuración
@@ -38,12 +38,13 @@ class operacionesDB {
      */
     protected function conexion() {
         try {
-
-            $pdo = new \PDO("mysql:host={$this->servidor};dbname={$this->nombreBBDD};charset=utf8", $this->usuario, $this->pwd);
-
-            return $pdo;
-        } catch (PDOException $e) {
-            echo $e->getMessage();
+            return new \PDO("mysql:host={$this->servidor};dbname={$this->nombreBBDD};charset=utf8mb4", $this->usuario, $this->pwd, [
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+            ]);
+        } catch (\PDOException $e) {
+            // Registramos el error en el log del servidor sin mostrarlo al usuario
+            error_log('Error de conexión a la base de datos: ' . $e->getMessage());
+            throw $e;
         }
     }
 
@@ -53,6 +54,7 @@ class operacionesDB {
      * 
      * @param string $xml_file cadana de texto con la ruta del xml
      * @param string $xsd  cadana de texto con la ruta del xsd
+     * @param string $rol cadena de texto con el rol cuya conexión buscamos
      * @return array devuelve un array con el usuario y la contraseña
      * @throws PDOException
      */
@@ -66,14 +68,15 @@ class operacionesDB {
             throw new \PDOException("Ficheiro de usuarios no valido");
         }
 
+        // Recorremos los usuarios en lugar de construir una consulta XPath
+        // con el rol, así evitamos inyecciones en la expresión
+        foreach (simplexml_load_file($xml_file)->usuario as $usuario) {
+            if ((string) $usuario->rol === $rol) {
+                return [(string) $usuario->nombre, (string) $usuario->password];
+            }
+        }
 
-        $xml = simplexml_load_file($xml_file);
-        // Conversión a cadena de texto "" evitando que xpath devuelva un objecto
-        $array = [
-            "" . $xml->xpath('//nombre[../rol="' . $rol . '"]')[0],
-            "" . $xml->xpath('//password[../rol="' . $rol . '"]')[0]
-        ];
-        return $array;
+        throw new \PDOException("No existe configuración para el rol: " . $rol);
     }
 
     /**
@@ -242,6 +245,57 @@ class operacionesDB {
         unset($stmt);
 
         return $result;
+    }
+
+    /**
+     * Función que obtiene únicamente los nombres de los tipos de habitación
+     * 
+     * @return array devuelve un array de cadenas con los tipos de habitación
+     */
+    function obtenerNombresTiposHabitacion() {
+        return array_column($this->obtenerTiposHabitacion(), 'tipo_habitacion');
+    }
+
+    /**
+     * Función que obtiene el listado de todas las habitaciones
+     * 
+     * @return array devuelve un array asociativo con los datos de cada habitación
+     */
+    function obtenerListaHabitaciones() {
+
+        // Convertimos las columnas BIT a número para que lleguen como '0' o '1'
+        $sql = "SELECT id, tipo_de_habitacion AS tipo_habitacion, m2,
+                       CAST(ventana AS UNSIGNED) AS ventana,
+                       CAST(internet AS UNSIGNED) AS internet,
+                       CAST(servicio_limpieza AS UNSIGNED) AS servicio_limpieza,
+                       precio
+                  FROM habitaciones
+                 ORDER BY id;";
+
+        return $this->PDO->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Función que borra una habitación
+     * 
+     * @param Number $id_habitacion número (id) de la habitación
+     * @return Number devuelve 1 si se borró la habitación y 0 en caso contrario
+     */
+    function borrarHabitacion($id_habitacion) {
+
+        $sql = "DELETE FROM habitaciones WHERE id = ?;";
+
+        try {
+            $stmt = $this->PDO->prepare($sql);
+            $stmt->bindValue(1, $id_habitacion, \PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->rowCount();
+        } catch (\PDOException $e) {
+            // Por ejemplo, si la habitación tiene reservas asociadas
+            error_log('Error al borrar la habitación: ' . $e->getMessage());
+            return 0;
+        }
     }
 
     /**
