@@ -1,34 +1,30 @@
 $(document).ready(function () {
 
+    // Id de la habitación abierta en el diálogo de ajustes
+    var habitacionActual = null;
+
+    const siNo = valor => (Number(valor) === 1) ? "Yes" : "No";
+
     // Cargamos los datos de las habitaciones con Ajax
     $.ajax({
-        type: "POST",
-        url: "http://localhost/Hotel_Nube/test.php",
-        data: {},
+        type: "GET",
+        url: "api/getAllRooms.php",
         dataType: "JSON",
         success: function (response) {
 
             $.each(response, function (i, item) {
 
-                var wifi = (item.internet === '1') ? "Yes" : "No";
-                var ventana = (item.ventana === '1') ? "Yes" : "No";
-                var servicio_limpieza = (item.servicio_limpieza === '1') ? "Yes" : "No";
-
                 var habitacion = `<tr class="roomClickableRow" data-bs-toggle="modal" data-bs-target="#roomSettingsDialog" roomid="${item.id}">
                         <td>${item.id}</td>
                         <td>${item.tipo_habitacion}</td>
                         <td>${item.m2}</td>
-                        <td>${ventana}</td>
-                        <td>${wifi}</td>
-                        <td>${servicio_limpieza}</td>
+                        <td>${siNo(item.ventana)}</td>
+                        <td>${siNo(item.internet)}</td>
+                        <td>${siNo(item.servicio_limpieza)}</td>
                         <td>${item.precio}</td>
                     </tr>`;
                 $('.table_content').append(habitacion);
             });
-
-
-
-
         },
         error: function (e) {
             console.log(e);
@@ -37,106 +33,81 @@ $(document).ready(function () {
 
 
     $(document).on('shown.bs.modal', function (event) {
-        var numero = $(event.relatedTarget.attributes.roomid)[0].value; // Fila en la que hacemos click
+        habitacionActual = event.relatedTarget.getAttribute('roomid'); // Fila en la que hacemos click
+        const celdas = document.querySelector(`tr[roomid='${habitacionActual}']`).getElementsByTagName('td');
 
-        fetch('http://localhost/Hotel_Nube/public/api/getRoomTypes.php').then(response => {
-            return response.json()
+        fetch('api/getRoomTypes.php').then(response => {
+            return response.json();
         }).then(data => {
-            var options = "";
-            var opcion_marcada = document.querySelector("tr[roomid='1']").getElementsByTagName('td')[1].innerText;
+            const select = document.getElementById('roomTypeSelect');
+            const opcion_marcada = celdas[1].innerText;
 
+            select.innerHTML = '';
             data.forEach(element => {
-
-                if (element === opcion_marcada) {
-                    options = options + `<option value='${element}' selected>${element}</option>`;
-
-                } else {
-                    options = options + `<option value='${element}'>${element}</option>`;
-
-                }
-
+                select.add(new Option(element, element, false, element === opcion_marcada));
             });
-
-            document.getElementById('roomTypeSelect').innerHTML = options;
-
-            document.getElementById('roomNoValue').innerText = document.querySelector(`tr[roomid='${numero}']`).getElementsByTagName('td')[0].innerText;
-            // Input number
-            document.getElementById('roomSizeField').value = document.querySelector(`tr[roomid='${numero}']`).getElementsByTagName('td')[2].innerText;
-            // Checkbox
-            var ventana = document.querySelector(`tr[roomid='${numero}']`).getElementsByTagName('td')[3].innerText;
-            document.getElementById('roomWindowsField').checked = (ventana === "Yes") ? true : false;
-            var internet = document.querySelector(`tr[roomid='${numero}']`).getElementsByTagName('td')[4].innerText;
-            document.getElementById('roomInternetCheck').checked = (internet === "Yes") ? true : false;
-
-            var limpieza = document.querySelector(`tr[roomid='${numero}']`).getElementsByTagName('td')[5].innerText;
-            document.getElementById('roomCleaningCheck').checked = (limpieza === "Yes") ? true : false;
-
-            document.getElementById('roomPriceField').value = document.querySelector(`tr[roomid='${numero}']`).getElementsByTagName('td')[6].innerText;
-
         });
 
+        document.getElementById('roomNoValue').innerText = celdas[0].innerText;
+        // Input number
+        document.getElementById('roomSizeField').value = celdas[2].innerText;
+        // Checkbox
+        document.getElementById('roomWindowsField').checked = celdas[3].innerText === "Yes";
+        document.getElementById('roomInternetCheck').checked = celdas[4].innerText === "Yes";
+        document.getElementById('roomCleaningCheck').checked = celdas[5].innerText === "Yes";
 
-
+        document.getElementById('roomPriceField').value = celdas[6].innerText;
     });
 
 
+    var temporizadorBorrado = null;
+
+    // Devuelve el botón de borrado a su estado inicial
+    const reiniciarBotonBorrar = boton => {
+        clearTimeout(temporizadorBorrado);
+        document.getElementById('removeText').innerHTML = 'Remove room';
+        boton.setAttribute('clicks', '0');
+        $(boton).removeClass('clicked');
+    };
 
     $('#removeRoom').click(function (e) {
         e.preventDefault();
 
-        var clicked;
-        switch (e.target.nodeName) {
-            case 'I':
-                clicked = e.target.parentNode;
-                break;
-
-            case 'SPAN':
-                clicked = e.target.parentNode;
-                break;
-
-            case 'BUTTON':
-                clicked = e.target;
-                break;
-
-            default:
-                clicked = e.target;
-                break;
-        }
-        console.log(clicked)
+        // currentTarget es siempre el botón, aunque se pulse el icono o el texto
+        const clicked = e.currentTarget;
         const nClicks = clicked.getAttribute('clicks');
+
         if (nClicks == 0) {
             document.getElementById('removeText').innerHTML = 'Click to confirm';
             clicked.setAttribute('clicks', '1');
             $(clicked).addClass('clicked');
-            const interval = setInterval(() => {
-                document.getElementById('removeText').innerHTML = 'Remove room';
-                document.getElementById('removeText').setAttribute('clicks', '0');
-                $(clicked).removeClass('clicked');
-                clearInterval(interval)
-            }, 10000);
+            temporizadorBorrado = setTimeout(() => reiniciarBotonBorrar(clicked), 10000);
         } else if (nClicks == 1) {
-            document.getElementById('removeText').innerHTML = 'Remove room';
-            document.getElementById('removeText').setAttribute('clicks', '0');
-            $(clicked).removeClass('clicked');
+            reiniciarBotonBorrar(clicked);
+
+            const roomId = habitacionActual;
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost/Hotel_Nube/public/api/removeRoom.php",
-                data: {roomId: 1},
+                url: "api/removeRoom.php",
+                data: {roomId},
                 dataType: "JSON",
                 success: function (response) {
-                        console.log(response) 
-                    },
-                error: function () {
-
+                    if (response.result == 'success') {
+                        $(`tr[roomid='${roomId}']`).remove();
+                        bootstrap.Modal.getInstance(document.getElementById('roomSettingsDialog')).hide();
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
                 }
             });
         }
     });
 
     // Redirección a la página principal
-   document.getElementById('goBack').addEventListener("click", e => {
-        window.location = "/";
+    document.getElementById('goBack').addEventListener("click", e => {
+        window.location = "index.php";
     });
 
 });
