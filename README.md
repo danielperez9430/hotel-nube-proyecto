@@ -20,12 +20,14 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 - [✅ Requisitos](#-requisitos)
 - [🚀 Puesta en marcha](#-puesta-en-marcha)
 - [⚙️ Configuración (.env)](#️-configuración-env)
+- [🚢 Despliegue](#-despliegue)
 - [🧪 Tests y calidad](#-tests-y-calidad)
 - [👥 Roles y usuarios](#-roles-y-usuarios)
 - [📡 Endpoints internos](#-endpoints-internos)
 - [🗂️ Estructura del proyecto](#️-estructura-del-proyecto)
 - [📚 Documentación del código](#-documentación-del-código)
 - [🔒 Seguridad](#-seguridad)
+- [🤖 Dependencias](#-dependencias)
 - [🎨 Identidad visual](#-identidad-visual)
 - [🤝 Contribuir](#-contribuir)
 
@@ -178,6 +180,7 @@ Toda la configuración está en el fichero `.env` de la raíz, que **no se sube 
 | -------- | ----------- | ----------- |
 | `SITE_URL` | `http://localhost:8000` | URL pública de la web. Se usa para las imágenes de los correos |
 | `TIMEZONE` | `Europe/Madrid` | Zona horaria del hotel, para validar las fechas de las reservas |
+| `TRUST_PROXY` | `false` | `true` solo detrás de un proxy inverso que termina el HTTPS: se fía de su `X-Forwarded-Proto` para marcar la cookie de sesión como `Secure` y enviar HSTS |
 
 ### 🌍 API
 
@@ -197,11 +200,35 @@ Toda la configuración está en el fichero `.env` de la raíz, que **no se sube 
 | Variable | Descripción |
 | -------- | ----------- |
 | `DB_ROOT_PASSWORD` | Contraseña de root del contenedor de MariaDB |
+| `WEB_VERSION` / `API_VERSION` | Versión de las imágenes que usa `docker-compose.prod.yml` (`master` o una versión `X.Y.Z`) |
 
 Docker Compose fija el resto de valores de conexión (`DB_HOST`, `MAIL_HOST`, URLs…) para que los contenedores se encuentren entre sí.
 
 > [!TIP]
 > Si falta una variable obligatoria, el log de PHP lo indica con un mensaje del tipo `Falta la variable de configuración DB_USER_ADMIN (revisa el fichero .env)`.
+
+## 🚢 Despliegue
+
+Cada push a `master` publica la imagen de la web en GitHub Container Registry con el workflow [`docker.yml`](.github/workflows/docker.yml), igual que hace [hotelnube-api](https://github.com/danielperez9430/hotelnube-api) con la suya:
+
+| Imagen | Etiquetas |
+| ------ | --------- |
+| `ghcr.io/danielperez9430/hotel-nube-web` | `master` y `sha-<commit>` en cada push; `X.Y.Z`, `X.Y` y `latest` con cada etiqueta `vX.Y.Z` |
+| `ghcr.io/danielperez9430/hotelnube-api` | Las mismas, desde su repositorio |
+
+[`docker-compose.prod.yml`](docker-compose.prod.yml) levanta la web, la API y MariaDB a partir de esas imágenes, sin construir nada en el servidor:
+
+```bash
+git clone https://github.com/danielperez9430/hotel-nube-proyecto.git && cd hotel-nube-proyecto
+cp .env.example .env      # contraseñas, SMTP real, SITE_URL/API_URL públicas y TRUST_PROXY=true
+docker login ghcr.io      # solo si los paquetes son privados (token con read:packages)
+docker compose -f docker-compose.prod.yml up -d
+```
+
+- 🔐 La web (`127.0.0.1:8000`) y la API (`127.0.0.1:8001`) solo escuchan en local: publícalas con un proxy inverso con HTTPS (Nginx, Caddy, Traefik…) y activa `TRUST_PROXY=true`.
+- 🗃️ Las migraciones pendientes se aplican solas al arrancar la web, así que actualizar es `docker compose -f docker-compose.prod.yml pull && docker compose -f docker-compose.prod.yml up -d`.
+- 📌 Para fijar una versión concreta usa `WEB_VERSION` y `API_VERSION` en el `.env`.
+- 💾 Los datos viven en el volumen `db-datos`: haz copias con `docker compose -f docker-compose.prod.yml exec db mariadb-dump -uroot -p hotel > copia.sql`.
 
 ## 🧪 Tests y calidad
 
@@ -355,6 +382,10 @@ El script sustituye las fuentes y los scripts que la plantilla carga de CDNs por
 
 > [!CAUTION]
 > Nunca subas el fichero `.env` al repositorio. Si alguna credencial llega a publicarse, cámbiala: aunque borres el fichero, sigue en el historial de git.
+
+## 🤖 Dependencias
+
+[Dependabot](.github/dependabot.yml) revisa cada lunes Composer, ESLint (npm), las acciones de GitHub, las imágenes del `Dockerfile` (PHP y Composer) y las de los `docker-compose*.yml`. Las versiones menores y los parches llegan agrupados en un solo PR por ecosistema; las mayores, uno a uno. Las actualizaciones de versión de MariaDB que no son parches se hacen a mano, porque pueden exigir migrar los datos.
 
 ## 🎨 Identidad visual
 

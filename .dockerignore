@@ -7,3 +7,4 @@ tests
 docs
 .phpunit.cache
 docker-compose.yml
+docker-compose.prod.yml

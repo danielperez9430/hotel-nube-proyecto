@@ -1,0 +1,72 @@
+# Actualizaciones automáticas de dependencias. Las versiones menores y los
+# parches llegan agrupados en un solo PR por ecosistema; las mayores, uno a uno
+version: 2
+updates:
+  - package-ecosystem: composer
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: Europe/Madrid
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+    groups:
+      menores:
+        update-types: [minor, patch]
+
+  # Solo ESLint (herramienta de desarrollo)
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: Europe/Madrid
+    commit-message:
+      prefix: "chore(deps-dev)"
+    groups:
+      eslint:
+        patterns: ["*"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: Europe/Madrid
+    commit-message:
+      prefix: "ci(deps)"
+    groups:
+      acciones:
+        patterns: ["*"]
+
+  # Imágenes del Dockerfile de la web (php y composer)
+  - package-ecosystem: docker
+    directory: /docker/web
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: Europe/Madrid
+    commit-message:
+      prefix: "chore(docker)"
+
+  # Imágenes de docker-compose.yml y docker-compose.prod.yml (MariaDB y
+  # Mailpit). Las mayores de MariaDB se actualizan a mano: pueden exigir
+  # migrar los datos
+  - package-ecosystem: docker-compose
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: Europe/Madrid
+    commit-message:
+      prefix: "chore(docker)"
+    ignore:
+      - dependency-name: mariadb
+        update-types: [version-update:semver-major, version-update:semver-minor]
