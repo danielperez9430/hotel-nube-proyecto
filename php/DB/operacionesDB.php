@@ -388,13 +388,38 @@ class operacionesDB {
     }
 
     /**
+     * Función que busca las habitaciones libres entre dos fechas
      * 
-     * @param type $fecha_entrada
-     * @param type $fecha_salida
+     * @param string $fecha_entrada fecha de entrada (Y-m-d)
+     * @param string $fecha_salida fecha de salida (Y-m-d)
+     * @return array devuelve un array con los datos de cada habitación libre,
+     * su tipo y la primera imagen del tipo, ordenado por precio
      */
     function buscarHabitaciones($fecha_entrada, $fecha_salida) {
-        
+
+        $sql = "SELECT h.id, t.tipo_habitacion, t.descripcion, h.m2, h.ventana,
+                       h.servicio_limpieza, h.internet, h.precio,
+                       (SELECT i.imagen_habitacion FROM imagenes_habitaciones i
+                         WHERE i.id_habitacion_tipo = t.id ORDER BY i.id LIMIT 1) AS imagen,
+                       (SELECT i.descripcion_imagen FROM imagenes_habitaciones i
+                         WHERE i.id_habitacion_tipo = t.id ORDER BY i.id LIMIT 1) AS descripcion_imagen
+                  FROM habitaciones h
+                 INNER JOIN habitacion_tipo t ON t.id = h.id_tipo
+                 WHERE NOT EXISTS (" . self::SQL_OCUPADA . ")
+                 ORDER BY h.precio, h.id;";
+
+        $stmt = $this->PDO->prepare($sql);
+        $stmt->execute([$fecha_salida, $fecha_entrada]);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    // Subconsulta que indica si la habitación h tiene alguna reserva que se
+    // solapa con la estancia [entrada, salida). Parámetros: salida, entrada
+    const SQL_OCUPADA = "SELECT 1 FROM habitaciones_reservas hr
+                          INNER JOIN reservas r ON r.num_reserva = hr.num_reserva
+                          WHERE hr.id_habitacion = h.id
+                            AND r.fecha_entrada < ? AND r.fecha_salida > ?";
 
     /**
      * Función que obtiene todas las imagenes de una habitación en concreto

@@ -3,6 +3,7 @@
 namespace Tools;
 
 use \DB\operacionesDB as DB;
+use \Config\config as config;
 
 class tools {
 
@@ -66,6 +67,70 @@ class tools {
      */
     function comprobarEmail($email) {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+    // Número máximo de noches de una reserva
+    const MAX_NOCHES = 30;
+
+    /**
+     * Función que convierte una fecha en formato DD-MM-YYYY (el del selector
+     * de fechas) o YYYY-MM-DD en un objeto fecha
+     * 
+     * @param string $texto cadena de texto con la fecha
+     * @return \DateTimeImmutable|null devuelve la fecha o null si no es válida
+     */
+    function parsearFecha($texto) {
+
+        foreach (['!d-m-Y', '!Y-m-d'] as $formato) {
+            $fecha = \DateTimeImmutable::createFromFormat($formato, trim((string) $texto));
+
+            // Comprobamos que la fecha exista (createFromFormat acepta 31-02)
+            if ($fecha !== false && $fecha->format(substr($formato, 1)) === trim((string) $texto)) {
+                return $fecha;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Función que valida las fechas de una estancia
+     * 
+     * @param string $entrada cadena de texto con la fecha de entrada
+     * @param string $salida cadena de texto con la fecha de salida
+     * @return array devuelve ['entrada' => 'Y-m-d', 'salida' => 'Y-m-d',
+     * 'noches' => n] o ['error' => mensaje] si no son válidas
+     */
+    function validarEstancia($entrada, $salida) {
+
+        $fechaEntrada = $this->parsearFecha($entrada);
+        $fechaSalida = $this->parsearFecha($salida);
+        // Fecha de hoy en la zona horaria del hotel
+        $hoy = (new \DateTimeImmutable('now', new \DateTimeZone(config::get('TIMEZONE', 'Europe/Madrid'))))->format('Y-m-d');
+
+        if ($fechaEntrada === null || $fechaSalida === null) {
+            return ['error' => 'Invalid dates'];
+        }
+
+        if ($fechaEntrada->format('Y-m-d') < $hoy) {
+            return ['error' => 'The check-in date has already passed'];
+        }
+
+        $noches = (int) $fechaEntrada->diff($fechaSalida)->format('%r%a');
+
+        if ($noches < 1) {
+            return ['error' => 'The check-out date must be after the check-in date'];
+        }
+
+        if ($noches > self::MAX_NOCHES) {
+            return ['error' => 'The maximum stay is ' . self::MAX_NOCHES . ' nights'];
+        }
+
+        return [
+            'entrada' => $fechaEntrada->format('Y-m-d'),
+            'salida' => $fechaSalida->format('Y-m-d'),
+            'noches' => $noches
+        ];
     }
 
     /**
