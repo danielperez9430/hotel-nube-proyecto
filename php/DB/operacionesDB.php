@@ -512,6 +512,23 @@ class operacionesDB {
     }
 
     /**
+     * Función que obtiene los servicios disponibles del hotel, de más
+     * baratos a más caros
+     * 
+     * @return array devuelve un array con id, nombre_servicio,
+     * precio_servicio, descripcion e icono de cada servicio
+     */
+    function obtenerServicios() {
+
+        $sql = "SELECT id, nombre_servicio, precio_servicio, descripcion, icono
+                  FROM servicios
+                 WHERE disponibilidad = TRUE
+                 ORDER BY precio_servicio, nombre_servicio;";
+
+        return $this->PDO->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Función que obtiene todas las imagenes de una habitación en concreto
      * 
      * @param Number $id_habitacion_tipo número (id) del tipo de habitación

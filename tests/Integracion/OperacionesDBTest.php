@@ -140,6 +140,19 @@ class OperacionesDBTest extends TestCase {
         $this->assertSame(['email' => 0, 'ip' => 1], $con->contarIntentosLogin('ana@test.com', '10.0.0.1', 15));
     }
 
+    public function testServiciosDisponiblesOrdenadosPorPrecio(): void {
+        $servicios = (new db('estandar'))->obtenerServicios();
+        $noDisponibles = (int) self::$admin->query('SELECT COUNT(*) FROM servicios WHERE disponibilidad = FALSE')->fetchColumn();
+        $total = (int) self::$admin->query('SELECT COUNT(*) FROM servicios')->fetchColumn();
+
+        $this->assertCount($total - $noDisponibles, $servicios);
+        $precios = array_map('floatval', array_column($servicios, 'precio_servicio'));
+        $ordenados = $precios;
+        sort($ordenados);
+        $this->assertSame($ordenados, $precios);
+        $this->assertStringStartsWith('fa', $servicios[0]['icono']);
+    }
+
     public function testLosUsuariosDeBaseDeDatosTienenPermisosMinimos(): void {
         // El usuario estándar no puede borrar habitaciones
         $this->assertSame(0, (new db('estandar'))->borrarHabitacion(1));

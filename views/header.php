@@ -63,8 +63,8 @@ $enlaceNav = function ($pagina, $texto) use ($paginaActual) {
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav align-items-center">
                         <?= $enlaceNav('index.php', 'Home') ?>
-                        <a class="nav-link text-light" href="#">Promotions</a>
-                        <a class="nav-link text-light" href="#">Services</a>
+                        <?= $enlaceNav('promotions.php', 'Promotions') ?>
+                        <?= $enlaceNav('services.php', 'Services') ?>
                         <?= $enlaceNav('contact.php', 'Contact') ?>
 
                         <?php if ($usuario === null): ?>

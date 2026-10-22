@@ -77,6 +77,8 @@ CREATE TABLE servicios (
     precio_servicio DECIMAL(6,2) NOT NULL,
     descripcion VARCHAR(255) NOT NULL,
     disponibilidad BOOLEAN NOT NULL DEFAULT TRUE,
+    -- Clase del icono de Font Awesome que se muestra en la web
+    icono VARCHAR(50) NOT NULL DEFAULT 'fas fa-concierge-bell',
     PRIMARY KEY (id)
 );
 
@@ -204,3 +206,16 @@ INSERT INTO imagenes_habitaciones (id_habitacion_tipo, imagen_habitacion, descri
     (5, '/src/img/turquoise_room/comedor_hab_turquesa.jpg', 'Gran comedor con colores turquesa'),
     (5, '/src/img/turquoise_room/salon_hab_turquesa.jpg', 'Salón comodo y muy luminoso'),
     (5, '/src/img/turquoise_room/sofa_hab_turquesa.jpg', 'Vista frontal salón habitación turquesa');
+
+-- Datos: servicios del hotel (precio 0 = incluido)
+INSERT INTO servicios (nombre_servicio, precio_servicio, descripcion, disponibilidad, icono) VALUES
+    ('Personal Concierge', 0, 'Restaurant reservations, theatre tickets and tailor-made excursions arranged by our concierge team, at any time of day.', TRUE, 'fas fa-concierge-bell'),
+    ('High-Speed Wi-Fi', 0, 'Fibre connection in every room and common area, fast enough for video calls and streaming.', TRUE, 'fas fa-wifi'),
+    ('Breakfast in Bed', 22, 'Continental or Galician breakfast with fresh pastries and local produce, served in your room at the time you choose.', TRUE, 'fas fa-coffee'),
+    ('Late Check-out', 30, 'Keep your room until 4 pm on the day of departure and enjoy a relaxed last morning.', TRUE, 'fas fa-clock'),
+    ('Laundry & Pressing', 15, 'Same-day laundry, dry cleaning and pressing service for your garments.', TRUE, 'fas fa-tshirt'),
+    ('Wine Tasting', 35, 'Guided tasting of five wines from local cellars, paired with artisan cheeses.', TRUE, 'fas fa-wine-glass-alt'),
+    ('Spa & Wellness Circuit', 45, 'Two hours of heated pool, sauna, steam bath and relaxation area with herbal infusions.', TRUE, 'fas fa-spa'),
+    ('Private Transfer', 60, 'Private chauffeur between the airport or train station and the hotel, in both directions.', TRUE, 'fas fa-car'),
+    ('Romantic Package', 90, 'Rose petals, a bottle of champagne and handmade chocolates waiting for you in your room.', TRUE, 'fas fa-heart'),
+    ('Rooftop Cloud Dinner', 120, 'Seven-course tasting menu for two on our rooftop terrace, under the stars.', FALSE, 'fas fa-utensils');
