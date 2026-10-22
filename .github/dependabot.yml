@@ -57,7 +57,9 @@ updates:
       - dependency-name: "*"
         update-types: [version-update:semver-major]
 
-  # Imágenes del Dockerfile de la web (php y composer)
+  # Imágenes del Dockerfile de la web (php y composer). PHP solo recibe
+  # parches (8.5.x): una versión menor trae deprecaciones y Dependabot
+  # llega a proponer versiones candidatas como 8.6.0RC2
   - package-ecosystem: docker
     directory: /docker/web
     schedule:
@@ -70,6 +72,8 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: [version-update:semver-major]
+      - dependency-name: php
+        update-types: [version-update:semver-minor]
 
   # Imágenes de docker-compose.yml y docker-compose.prod.yml (MariaDB y
   # Mailpit). MariaDB solo recibe parches: incluso una versión menor puede
