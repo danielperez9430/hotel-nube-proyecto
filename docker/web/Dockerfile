@@ -1,7 +1,7 @@
 # Imagen de la web de Hotel Nube: PHP 8.5 + Apache sirviendo public/
 FROM composer:2.10.3 AS composer
 
-FROM php:8.5.12-apache
+FROM php:8.6.0RC2-apache
 
 # Extensión de MySQL/MariaDB y unzip para Composer
 RUN apt-get update \
