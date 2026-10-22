@@ -26,7 +26,8 @@ if ($tool->comprobarDatosRegistro($campos)) {
     $registerCorrect = false;
 
     if ($tool->comprobarEmail($email)) {
-        $con = new db('admin');
+        // El usuario estándar solo puede insertar en usuarios, suficiente para registrarse
+        $con = new db('estandar');
 
         try {
             // Registramos al usario en la base de datos
