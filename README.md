@@ -36,6 +36,8 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 - 📅 **Búsqueda de habitaciones libres** entre dos fechas ([Litepicker](https://litepicker.com)), con imágenes, servicios y precio total.
 - 🛎️ **Reservas** con resumen, confirmación por correo y protección frente a reservas simultáneas.
 - 🧳 **Mis reservas**: cada cliente consulta sus estancias desde el menú de usuario.
+- ⚙️ **Ajustes de cuenta**: nombre, teléfono y dirección editables desde el menú de usuario.
+- 🛎️ **Servicios y promociones**: páginas con los servicios del hotel (desde la base de datos) y las ofertas vigentes.
 - 👤 **Menú de usuario** con nombre, email, logout y acceso al panel para administradores.
 - ✉️ **Correos de bienvenida** por SMTP con [PHPMailer](https://github.com/PHPMailer/PHPMailer).
 - 🛠️ **Panel de administración** para modificar y borrar habitaciones.
@@ -218,7 +220,7 @@ Cada rol de la aplicación usa su propio usuario de base de datos, con los permi
 
 | Rol | Usuario de BD | Permisos en BD | Quién lo tiene |
 | --- | ------------- | -------------- | -------------- |
-| 🌐 `estandar` | `hotel_estandar` | Lee el catálogo, se registra y reserva | Visitantes sin sesión y clientes registrados |
+| 🌐 `estandar` | `hotel_estandar` | Lee el catálogo, se registra, reserva y edita su cuenta (solo nombre, teléfono y dirección; nunca lee contraseñas) | Visitantes sin sesión y clientes registrados |
 | 🔎 `conexion` | `hotel_conexion` | Solo lee `usuarios` y `roles` | Proceso de login |
 | 👑 `admin` | `hotel_admin` | `SELECT`, `INSERT`, `UPDATE`, `DELETE` (sin cambiar la estructura) | Administradores: acceso a `adminPanel.php` |
 
@@ -239,11 +241,11 @@ Todos están en `public/api/` y responden JSON.
 | `api/login.php` | `POST` | — | Inicia sesión (`email`, `password`) |
 | `api/logout.php` | `POST` | — | Cierra la sesión |
 | `api/register.php` | `POST` | — | Registra un usuario |
-| `api/room_type.php` | `GET` | — | Tipos de habitación con su descripción |
 | `api/getRoomTypes.php` | `GET` | — | Nombres de los tipos de habitación |
 | `api/searchRooms.php` | `GET` | — | Habitaciones libres entre `checkin` y `checkout` (`DD-MM-YYYY` o `YYYY-MM-DD`) |
 | `api/bookRoom.php` | `POST` | 👤 sesión | Reserva una habitación (`roomId`, `checkin`, `checkout`). `409` si ya está ocupada |
 | `api/myBookings.php` | `GET` | 👤 sesión | Reservas del usuario |
+| `api/account.php` | `GET` / `POST` | 👤 sesión | Datos de la cuenta / guardarlos (`nombre`, `telf`, `pais`, `provincia`, `ciudad`, `direccion`) |
 | `api/getAllRooms.php` | `GET` | 👑 admin | Listado de todas las habitaciones |
 | `api/updateRoom.php` | `POST` | 👑 admin | Modifica una habitación (`roomId`, `tipo`, `m2`, `ventana`, `internet`, `limpieza`, `precio`) |
 | `api/removeRoom.php` | `POST` | 👑 admin | Borra una habitación (`roomId`) |
@@ -278,14 +280,15 @@ hotel-nube-proyecto/
 │   ├── Config/               # Lectura del .env
 │   ├── DB/                   # Acceso a la base de datos (PDO)
 │   ├── Email/                # Envío de correos (PHPMailer)
-│   ├── Habitacion/           # Modelos de habitación y servicios
-│   ├── Session/              # Sesión y roles
+│   ├── Session/              # Sesión, roles y CSRF
 │   └── Tools/                # Utilidades (contraseñas, validaciones)
 ├── 📁 public/                # Raíz pública del servidor web
 │   ├── api/                  # Endpoints JSON
 │   ├── src/                  # CSS, JS, imágenes, iconos y logo
 │   │   └── vendor/           # Bootstrap, jQuery, Litepicker y Font Awesome
 │   ├── index.php             # Página principal y búsqueda de habitaciones
+│   ├── promotions.php        # Promociones
+│   ├── services.php          # Servicios del hotel
 │   ├── contact.php           # Contacto
 │   ├── privacy.php           # Privacidad, cookies y cancelación
 │   ├── adminPanel.php        # Panel de administración
