@@ -14,13 +14,13 @@ require_once(__DIR__ . '/../views/header.php');
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="src/img/carousel/1.jpg" class="d-block w-100" alt="...">
+            <img src="src/img/carousel/1.jpg" class="d-block w-100" alt="Bright double room with wooden wardrobes and a large bed">
         </div>
         <div class="carousel-item">
-            <img src="src/img/carousel/2.jpg" class="d-block w-100" alt="...">
+            <img src="src/img/carousel/2.jpg" class="d-block w-100" alt="Sunlit bedroom with a balcony overlooking palm trees">
         </div>
         <div class="carousel-item">
-            <img src="src/img/carousel/3.jpg" class="d-block w-100" alt="...">
+            <img src="src/img/carousel/3.jpg" class="d-block w-100" alt="Outdoor daybed with white cushions and a bowl of fresh fruit">
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">

@@ -168,54 +168,47 @@ class operacionesDB {
     }
 
     /**
-     * Función que actualiza los datos de un usuario
+     * Función que obtiene los datos de la cuenta de un usuario (sin la
+     * contraseña)
+     * 
+     * @param Number $id número del id del usuario
+     * @return array|false devuelve un array asociativo con los datos o false
+     * si el usuario no existe
+     */
+    function obtenerUsuario($id) {
+
+        $stmt = $this->PDO->prepare("SELECT id, nombre, email, telf, pais, provincia, ciudad, direccion
+                                       FROM usuarios WHERE id = ?;");
+        $stmt->execute([$id]);
+
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Función que actualiza los datos de un usuario. El email no se cambia:
+     * es el identificador del login
      * 
      * @param Number $id número del id del usuario
      * @param string $nombre cadena de texto con el nombre del usuario
-     * @param string $email cadena de texto con el email del usuario
      * @param string $telf cadena de texto con número de telf del usuario
      * @param string $pais cadena de texto con el pais del usuario
      * @param string $provincia cadena de texto con la provincia
      * @param string $ciudad cadena de texto con la ciudad
      * @param string $direccion cadena de texto con la dirección
-     * @return Number devuelve 0 si no se modificaron los datos en la base de datos
-     * y 1 en caso de que se actualizará
+     * @return boolean devuelve true si el usuario existe (aunque los datos
+     * no cambien)
      */
-    function actualizarDatosUsuario($id, $nombre, $email, $telf, $pais, $provincia, $ciudad, $direccion) {
-
-        $resultado = 0;
+    function actualizarDatosUsuario($id, $nombre, $telf, $pais, $provincia, $ciudad, $direccion) {
 
         $sql = "UPDATE usuarios
-                SET `nombre` = ?, `email` = ?,
-                `telf` = ?, `pais` = ?, `provincia` = ?,
-                `ciudad` = ?, `direccion` = ?
-                    WHERE (`id` = ?);";
+                   SET nombre = ?, telf = ?, pais = ?, provincia = ?, ciudad = ?, direccion = ?
+                 WHERE id = ?;";
 
+        $stmt = $this->PDO->prepare($sql);
+        $stmt->execute([$nombre, $telf, $pais, $provincia, $ciudad, $direccion, $id]);
 
-        $db = $this->PDO;
-
-        if (($stmt = $db->prepare($sql))) { // Creamos y validamos la sentencia preparada
-            $stmt->bindValue(1, $nombre, \PDO::PARAM_STR);
-            $stmt->bindValue(2, $email, \PDO::PARAM_STR);
-            $stmt->bindValue(3, $telf, \PDO::PARAM_STR);
-            $stmt->bindValue(4, $pais, \PDO::PARAM_STR);
-            $stmt->bindValue(5, $provincia, \PDO::PARAM_STR);
-            $stmt->bindValue(6, $ciudad, \PDO::PARAM_STR);
-            $stmt->bindValue(7, $direccion, \PDO::PARAM_STR);
-            $stmt->bindValue(8, $id, \PDO::PARAM_INT);
-
-            // Ejecutamos la consulta
-            $stmt->execute();
-
-            // Obtenemos el número de filas modificadas
-            $resultado = $stmt->rowCount();
-        } else {
-            throw new \PDOException('Error al preparar la consulta: ' . implode(' ', $db->errorInfo()));
-        }
-
-        unset($stmt);
-
-        return $resultado;
+        // rowCount es 0 si los datos no cambian: comprobamos que el usuario exista
+        return $stmt->rowCount() === 1 || $this->obtenerUsuario($id) !== false;
     }
 
     /**
@@ -509,6 +502,23 @@ class operacionesDB {
         $stmt->execute([$id_usuario]);
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Función que obtiene los servicios disponibles del hotel, de más
+     * baratos a más caros
+     * 
+     * @return array devuelve un array con id, nombre_servicio,
+     * precio_servicio, descripcion e icono de cada servicio
+     */
+    function obtenerServicios() {
+
+        $sql = "SELECT id, nombre_servicio, precio_servicio, descripcion, icono
+                  FROM servicios
+                 WHERE disponibilidad = TRUE
+                 ORDER BY precio_servicio, nombre_servicio;";
+
+        return $this->PDO->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**

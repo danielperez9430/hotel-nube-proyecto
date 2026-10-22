@@ -38,7 +38,8 @@ s::comprobarAdmin();
 </head>
 <body>
     <div class="topBar">
-        <button id="goBack"><i class="fas fa-arrow-left"></i></button>
+        <button id="goBack" aria-label="Back to the website"><i class="fas fa-arrow-left"></i></button>
+        <img src="src/logo/hotel_nube_sin_fondo.svg" height="34" alt="Hotel Nube">
         <span>Administration panel</span>
     </div>
     <div class="mainContent">

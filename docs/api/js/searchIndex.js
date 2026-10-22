@@ -81,9 +81,14 @@ Search.appendIndex(
             "summary": "Funci\u00F3n\u0020que\u0020borra\u0020los\u0020intentos\u0020fallidos\u0020de\u0020un\u0020email\u0020tras\u0020un\u0020login\u0020correcto",
             "url": "classes/DB-operacionesDB.html#method_borrarIntentosLogin"
         },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AobtenerUsuario\u0028\u0029",
+            "name": "obtenerUsuario",
+            "summary": "Funci\u00F3n\u0020que\u0020obtiene\u0020los\u0020datos\u0020de\u0020la\u0020cuenta\u0020de\u0020un\u0020usuario\u0020\u0028sin\u0020la\ncontrase\u00F1a\u0029",
+            "url": "classes/DB-operacionesDB.html#method_obtenerUsuario"
+        },                {
             "fqsen": "\\DB\\operacionesDB\u003A\u003AactualizarDatosUsuario\u0028\u0029",
             "name": "actualizarDatosUsuario",
-            "summary": "Funci\u00F3n\u0020que\u0020actualiza\u0020los\u0020datos\u0020de\u0020un\u0020usuario",
+            "summary": "Funci\u00F3n\u0020que\u0020actualiza\u0020los\u0020datos\u0020de\u0020un\u0020usuario.\u0020El\u0020email\u0020no\u0020se\u0020cambia\u003A\nes\u0020el\u0020identificador\u0020del\u0020login",
             "url": "classes/DB-operacionesDB.html#method_actualizarDatosUsuario"
         },                {
             "fqsen": "\\DB\\operacionesDB\u003A\u003AregistrarUsuario\u0028\u0029",
@@ -130,6 +135,11 @@ Search.appendIndex(
             "name": "obtenerReservasUsuario",
             "summary": "Funci\u00F3n\u0020que\u0020obtiene\u0020las\u0020reservas\u0020de\u0020un\u0020usuario,\u0020de\u0020la\u0020m\u00E1s\u0020reciente\u0020a\nla\u0020m\u00E1s\u0020antigua",
             "url": "classes/DB-operacionesDB.html#method_obtenerReservasUsuario"
+        },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AobtenerServicios\u0028\u0029",
+            "name": "obtenerServicios",
+            "summary": "Funci\u00F3n\u0020que\u0020obtiene\u0020los\u0020servicios\u0020disponibles\u0020del\u0020hotel,\u0020de\u0020m\u00E1s\nbaratos\u0020a\u0020m\u00E1s\u0020caros",
+            "url": "classes/DB-operacionesDB.html#method_obtenerServicios"
         },                {
             "fqsen": "\\DB\\operacionesDB\u003A\u003AbuscarImagenesHabitacion\u0028\u0029",
             "name": "buscarImagenesHabitacion",
@@ -246,96 +256,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Email-email.html#property_pass"
         },                {
-            "fqsen": "\\Habitacion\\Habitacion",
-            "name": "Habitacion",
-            "summary": "",
-            "url": "classes/Habitacion-Habitacion.html"
-        },                {
-            "fqsen": "\\Habitacion\\Habitacion\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "",
-            "url": "classes/Habitacion-Habitacion.html#property_id"
-        },                {
-            "fqsen": "\\Habitacion\\Habitacion\u003A\u003A\u0024m2",
-            "name": "m2",
-            "summary": "",
-            "url": "classes/Habitacion-Habitacion.html#property_m2"
-        },                {
-            "fqsen": "\\Habitacion\\Habitacion\u003A\u003A\u0024ventana",
-            "name": "ventana",
-            "summary": "",
-            "url": "classes/Habitacion-Habitacion.html#property_ventana"
-        },                {
-            "fqsen": "\\Habitacion\\Habitacion\u003A\u003A\u0024tipo_habitacion",
-            "name": "tipo_habitacion",
-            "summary": "",
-            "url": "classes/Habitacion-Habitacion.html#property_tipo_habitacion"
-        },                {
-            "fqsen": "\\Habitacion\\Habitacion\u003A\u003A\u0024servico_limpieza",
-            "name": "servico_limpieza",
-            "summary": "",
-            "url": "classes/Habitacion-Habitacion.html#property_servico_limpieza"
-        },                {
-            "fqsen": "\\Habitacion\\Habitacion\u003A\u003A\u0024internet",
-            "name": "internet",
-            "summary": "",
-            "url": "classes/Habitacion-Habitacion.html#property_internet"
-        },                {
-            "fqsen": "\\Habitacion\\Habitacion\u003A\u003A\u0024precio",
-            "name": "precio",
-            "summary": "",
-            "url": "classes/Habitacion-Habitacion.html#property_precio"
-        },                {
-            "fqsen": "\\Habitacion\\Habitacion\u003A\u003A\u0024servicios",
-            "name": "servicios",
-            "summary": "",
-            "url": "classes/Habitacion-Habitacion.html#property_servicios"
-        },                {
-            "fqsen": "\\Habitacion\\Habitacion\u003A\u003A\u0024imagenes",
-            "name": "imagenes",
-            "summary": "",
-            "url": "classes/Habitacion-Habitacion.html#property_imagenes"
-        },                {
-            "fqsen": "\\Habitacion\\servicios",
-            "name": "servicios",
-            "summary": "",
-            "url": "classes/Habitacion-servicios.html"
-        },                {
-            "fqsen": "\\Habitacion\\servicios\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Habitacion-servicios.html#method___construct"
-        },                {
-            "fqsen": "\\Habitacion\\servicios\u003A\u003A__toString\u0028\u0029",
-            "name": "__toString",
-            "summary": "",
-            "url": "classes/Habitacion-servicios.html#method___toString"
-        },                {
-            "fqsen": "\\Habitacion\\servicios\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "",
-            "url": "classes/Habitacion-servicios.html#property_id"
-        },                {
-            "fqsen": "\\Habitacion\\servicios\u003A\u003A\u0024nombre_servicio",
-            "name": "nombre_servicio",
-            "summary": "",
-            "url": "classes/Habitacion-servicios.html#property_nombre_servicio"
-        },                {
-            "fqsen": "\\Habitacion\\servicios\u003A\u003A\u0024precio_servicio",
-            "name": "precio_servicio",
-            "summary": "",
-            "url": "classes/Habitacion-servicios.html#property_precio_servicio"
-        },                {
-            "fqsen": "\\Habitacion\\servicios\u003A\u003A\u0024descripcion",
-            "name": "descripcion",
-            "summary": "",
-            "url": "classes/Habitacion-servicios.html#property_descripcion"
-        },                {
-            "fqsen": "\\Habitacion\\servicios\u003A\u003A\u0024disponibilidad",
-            "name": "disponibilidad",
-            "summary": "",
-            "url": "classes/Habitacion-servicios.html#property_disponibilidad"
-        },                {
             "fqsen": "\\Session\\session",
             "name": "session",
             "summary": "",
@@ -426,6 +346,11 @@ Search.appendIndex(
             "summary": "Funci\u00F3n\u0020que\u0020valida\u0020las\u0020fechas\u0020de\u0020una\u0020estancia",
             "url": "classes/Tools-tools.html#method_validarEstancia"
         },                {
+            "fqsen": "\\Tools\\tools\u003A\u003AvalidarDatosCuenta\u0028\u0029",
+            "name": "validarDatosCuenta",
+            "summary": "Funci\u00F3n\u0020que\u0020valida\u0020los\u0020datos\u0020personales\u0020de\u0020una\u0020cuenta\u0020seg\u00FAn\u0020los\nl\u00EDmites\u0020de\u0020la\u0020tabla\u0020usuarios",
+            "url": "classes/Tools-tools.html#method_validarDatosCuenta"
+        },                {
             "fqsen": "\\Tools\\tools\u003A\u003AcomprobarDatosRegistro\u0028\u0029",
             "name": "comprobarDatosRegistro",
             "summary": "Funci\u00F3n\u0020que\u0020comprueba\u0020si\u0020los\u0020campos\u0020enviados\u0020por\u0020POST\u0020no\u0020est\u00E1n\u0020vacios\ny\u0020existen",
@@ -455,11 +380,6 @@ Search.appendIndex(
             "name": "Email",
             "summary": "",
             "url": "namespaces/email.html"
-        },                {
-            "fqsen": "\\Habitacion",
-            "name": "Habitacion",
-            "summary": "",
-            "url": "namespaces/habitacion.html"
         },                {
             "fqsen": "\\Session",
             "name": "Session",

@@ -88,6 +88,26 @@ class ToolsTest extends TestCase {
         $this->assertStringContainsString($mensaje, $estancia['error']);
     }
 
+    /** @return array<string, string> */
+    private function datosCuenta(): array {
+        return ['nombre' => 'Ana López', 'telf' => '+34 612345678', 'pais' => 'Spain',
+            'provincia' => 'Lugo', 'ciudad' => 'Lugo', 'direccion' => 'Rúa 1'];
+    }
+
+    public function testDatosDeCuentaValidos(): void {
+        $this->assertSame([], $this->tools->validarDatosCuenta($this->datosCuenta()));
+    }
+
+    public function testDatosDeCuentaNoValidos(): void {
+        $datos = ['nombre' => '  ', 'telf' => '612345678', 'direccion' => str_repeat('x', 61)] + $this->datosCuenta();
+
+        $this->assertSame([
+            'nombre' => 'Required',
+            'direccion' => 'Maximum 60 characters',
+            'telf' => 'Invalid phone number'
+        ], $this->tools->validarDatosCuenta($datos));
+    }
+
     public function testEstanciaConFechasInvalidas(): void {
         $this->assertSame(['error' => 'Invalid dates'], $this->tools->validarEstancia('31-02-2030', '05-03-2030'));
     }
