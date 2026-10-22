@@ -246,7 +246,8 @@ a .text-light:hover {
 }
 
 #userLoggedMenu #adminPanel i,
-#userLoggedMenu #myBookings i {
+#userLoggedMenu #myBookings i,
+#userLoggedMenu #accountSettings i {
     margin-right: 10px;
 }
 
@@ -496,4 +497,9 @@ body:has(> .page) {
 .page-note i {
     color: #DCB004;
     margin-right: 6px;
+}
+
+/* Ajustes de la cuenta */
+.account-phone-code {
+    max-width: 90px;
 }

@@ -22,7 +22,8 @@ GRANT SELECT ON hotel.usuarios TO 'hotel_conexion'@'%';
 GRANT SELECT ON hotel.roles TO 'hotel_conexion'@'%';
 GRANT SELECT, INSERT, DELETE ON hotel.intentos_login TO 'hotel_conexion'@'%';
 
--- Visitantes y clientes: consultan el catálogo, se registran y reservan
+-- Visitantes y clientes: consultan el catálogo, se registran, reservan
+-- y editan los datos de su cuenta
 GRANT SELECT ON hotel.roles TO 'hotel_estandar'@'%';
 GRANT SELECT ON hotel.habitacion_tipo TO 'hotel_estandar'@'%';
 GRANT SELECT ON hotel.habitaciones TO 'hotel_estandar'@'%';
@@ -31,5 +32,9 @@ GRANT SELECT ON hotel.servicios TO 'hotel_estandar'@'%';
 GRANT SELECT, INSERT ON hotel.reservas TO 'hotel_estandar'@'%';
 GRANT SELECT, INSERT ON hotel.habitaciones_reservas TO 'hotel_estandar'@'%';
 GRANT INSERT ON hotel.usuarios TO 'hotel_estandar'@'%';
+-- Ajustes de cuenta: lee sus datos (nunca la contraseña) y edita solo
+-- nombre, teléfono y dirección
+GRANT SELECT (id, nombre, email, telf, pais, provincia, ciudad, direccion) ON hotel.usuarios TO 'hotel_estandar'@'%';
+GRANT UPDATE (nombre, telf, pais, provincia, ciudad, direccion) ON hotel.usuarios TO 'hotel_estandar'@'%';
 
 FLUSH PRIVILEGES;

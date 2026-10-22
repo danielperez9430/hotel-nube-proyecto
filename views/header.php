@@ -47,6 +47,7 @@ $enlaceNav = function ($pagina, $texto) use ($paginaActual) {
         <script src="src/js/login.js"></script>
         <script src="src/js/logout.js"></script>
         <script src="src/js/roomSelection.js"></script>
+        <script src="src/js/userAccountSettings.js"></script>
         <script src="src/js/datepickers.js"></script>
     </head>
 
@@ -87,10 +88,61 @@ $enlaceNav = function ($pagina, $texto) use ($paginaActual) {
                 <span id="fullUserName"><?= htmlspecialchars($usuario['nombre']) ?></span>
                 <span id="userEmail"><?= htmlspecialchars($usuario['email']) ?></span>
                 <button id="myBookings" class="btn btn-outline-dark mb-2"><i class="fas fa-suitcase"></i>My bookings</button>
+                <button id="accountSettings" class="btn btn-outline-dark mb-2"><i class="fas fa-user-cog"></i>Account settings</button>
                 <?php if ($usuario['rol'] === 'admin'): ?>
                     <button id="adminPanel" class="btn btn-outline-dark mb-2"><i class="fas fa-tools"></i>Admin panel</button>
                 <?php endif; ?>
                 <button id="logOut" class="btn btn-primary"><i class="fas fa-door-open"></i>Log out</button>
+            </div>
+
+            <!-- Ajustes de la cuenta -->
+            <div class="modal fade" id="accountDialog" tabindex="-1" aria-labelledby="accountTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="accountTitle">Account settings</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form class="modal-body" id="accountForm" novalidate>
+                            <div id="accountMessage" class="alert" style="display: none;"></div>
+                            <div class="mb-3">
+                                <label for="accountEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="accountEmail" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="accountName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="accountName" name="nombre" maxlength="255" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="accountPhoneNumber">Phone number</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control account-phone-code" id="accountPhoneCode" placeholder="+34" maxlength="4" aria-label="Country code">
+                                    <input type="text" class="form-control" id="accountPhoneNumber" placeholder="612345678" maxlength="9">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="accountAddress" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="accountAddress" name="direccion" maxlength="60" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="accountCountry" class="form-label">Country</label>
+                                <select class="form-select" id="accountCountry"></select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="accountProvince" class="form-label">Province</label>
+                                <select class="form-select" id="accountProvince"></select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="accountCity" class="form-label">City</label>
+                                <select class="form-select" id="accountCity"></select>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" form="accountForm" id="accountSave"><i class="fas fa-save"></i> Save changes</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Reservas del usuario -->

@@ -140,6 +140,39 @@ class OperacionesDBTest extends TestCase {
         $this->assertSame(['email' => 0, 'ip' => 1], $con->contarIntentosLogin('ana@test.com', '10.0.0.1', 15));
     }
 
+    public function testDatosDeLaCuenta(): void {
+        $id = $this->registrar();
+        $con = new db('estandar');
+
+        $cuenta = $con->obtenerUsuario($id);
+        $this->assertSame('ana@test.com', $cuenta['email']);
+        $this->assertArrayNotHasKey('password', $cuenta);
+
+        $this->assertTrue($con->actualizarDatosUsuario($id, 'Ana María', '+34 699999999', 'Spain', 'A Coruna', 'Ames', 'Rúa Nova 5'));
+        // Guardar los mismos datos no es un error
+        $this->assertTrue($con->actualizarDatosUsuario($id, 'Ana María', '+34 699999999', 'Spain', 'A Coruna', 'Ames', 'Rúa Nova 5'));
+        $this->assertFalse($con->actualizarDatosUsuario(999999, 'X', '+34 699999999', 'Spain', 'Lugo', 'Lugo', 'Rúa'));
+
+        $cuenta = $con->obtenerUsuario($id);
+        $this->assertSame(['Ana María', 'ana@test.com', 'Rúa Nova 5'], [$cuenta['nombre'], $cuenta['email'], $cuenta['direccion']]);
+        $this->assertFalse($con->obtenerUsuario(999999));
+    }
+
+    public function testElUsuarioEstandarNoPuedeLeerContraseñasNiCambiarEmails(): void {
+        $id = $this->registrar();
+        $pdo = new \PDO('mysql:host=' . getenv('DB_HOST') . ';port=' . (getenv('DB_PORT') ?: '3306') . ';dbname=' . (getenv('DB_NAME') ?: 'hotel'),
+            getenv('DB_USER_ESTANDAR'), getenv('DB_PASSWORD_ESTANDAR'), [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
+
+        foreach (['SELECT password FROM usuarios', "UPDATE usuarios SET email = 'x@test.com' WHERE id = $id"] as $sql) {
+            try {
+                $pdo->query($sql);
+                $this->fail("Debería estar denegado: $sql");
+            } catch (\PDOException $e) {
+                $this->assertMatchesRegularExpression('/denied/i', $e->getMessage());
+            }
+        }
+    }
+
     public function testServiciosDisponiblesOrdenadosPorPrecio(): void {
         $servicios = (new db('estandar'))->obtenerServicios();
         $noDisponibles = (int) self::$admin->query('SELECT COUNT(*) FROM servicios WHERE disponibilidad = FALSE')->fetchColumn();

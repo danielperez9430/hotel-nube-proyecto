@@ -29,7 +29,10 @@ if ($tool->comprobarDatosRegistro($campos)) {
 
     $idUsuario = 0;
 
-    if ($tool->comprobarEmail($email)) {
+    $datosValidos = empty($tool->validarDatosCuenta(['nombre' => $nombre, 'telf' => $telf, 'pais' => $pais,
+            'provincia' => $provincia, 'ciudad' => $ciudad, 'direccion' => $direccion]));
+
+    if ($datosValidos && $tool->comprobarEmail($email) && mb_strlen($email) <= 50) {
         // El usuario estándar solo puede insertar en usuarios, suficiente para registrarse
         $con = new db('estandar');
 

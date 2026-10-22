@@ -134,6 +134,38 @@ class tools {
     }
 
     /**
+     * Función que valida los datos personales de una cuenta según los
+     * límites de la tabla usuarios
+     * 
+     * @param array $datos array con nombre, telf, pais, provincia, ciudad y direccion
+     * @return array devuelve un array campo => mensaje con los errores
+     * (vacío si los datos son válidos)
+     */
+    function validarDatosCuenta($datos) {
+
+        // Longitud máxima de cada campo en la base de datos
+        $limites = ['nombre' => 255, 'telf' => 13, 'pais' => 255, 'provincia' => 255, 'ciudad' => 255, 'direccion' => 60];
+        $errores = [];
+
+        foreach ($limites as $campo => $maximo) {
+            $valor = trim((string) ($datos[$campo] ?? ''));
+
+            if ($valor === '') {
+                $errores[$campo] = 'Required';
+            } elseif (mb_strlen($valor) > $maximo) {
+                $errores[$campo] = "Maximum $maximo characters";
+            }
+        }
+
+        // Prefijo internacional y 9 cifras, como en el formulario: +34 612345678
+        if (!isset($errores['telf']) && !preg_match('/^\+[1-9]\d{0,2} \d{9}$/', trim($datos['telf']))) {
+            $errores['telf'] = 'Invalid phone number';
+        }
+
+        return $errores;
+    }
+
+    /**
      * Función que comprueba si los campos enviados por POST no están vacios
      * y existen
      * 
