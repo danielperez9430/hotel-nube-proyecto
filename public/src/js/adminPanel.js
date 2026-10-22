@@ -153,7 +153,7 @@ $(document).ready(function () {
     });
 
     // Redirección a la página principal
-    document.getElementById('goBack').addEventListener("click", e => {
+    document.getElementById('goBack').addEventListener("click", () => {
         window.location = "index.php";
     });
 

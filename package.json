@@ -1,0 +1,14 @@
+{
+  "name": "hotel-nube",
+  "private": true,
+  "type": "module",
+  "description": "Herramientas de desarrollo del JavaScript de Hotel Nube (solo lint)",
+  "scripts": {
+    "lint": "eslint public/src/js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0"
+  }
+}
