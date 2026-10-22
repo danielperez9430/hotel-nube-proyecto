@@ -324,6 +324,47 @@ class operacionesDB {
     }
 
     /**
+     * Función que actualiza los datos de una habitación
+     * 
+     * @param Number $id_habitacion número (id) de la habitación
+     * @param string $tipo nombre del tipo de habitación
+     * @param float $m2 superficie en metros cuadrados
+     * @param boolean $ventana si tiene ventana
+     * @param boolean $internet si tiene internet
+     * @param boolean $limpieza si tiene servicio de limpieza
+     * @param float $precio precio por noche
+     * @return boolean devuelve true si la habitación existe y el tipo es válido
+     */
+    function actualizarHabitacion($id_habitacion, $tipo, $m2, $ventana, $internet, $limpieza, $precio) {
+
+        // El tipo se busca por nombre: si no existe no se actualiza nada
+        $sql = "UPDATE habitaciones h
+                 INNER JOIN habitacion_tipo t ON t.tipo_habitacion = ?
+                   SET h.id_tipo = t.id, h.m2 = ?, h.ventana = ?, h.internet = ?,
+                       h.servicio_limpieza = ?, h.precio = ?
+                 WHERE h.id = ?;";
+
+        $stmt = $this->PDO->prepare($sql);
+        $stmt->bindValue(1, $tipo, \PDO::PARAM_STR);
+        $stmt->bindValue(2, $m2);
+        $stmt->bindValue(3, $ventana, \PDO::PARAM_BOOL);
+        $stmt->bindValue(4, $internet, \PDO::PARAM_BOOL);
+        $stmt->bindValue(5, $limpieza, \PDO::PARAM_BOOL);
+        $stmt->bindValue(6, $precio);
+        $stmt->bindValue(7, $id_habitacion, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        // rowCount es 0 si los datos no cambian, así que comprobamos que la
+        // habitación y el tipo existan
+        $comprobacion = $this->PDO->prepare("SELECT COUNT(*) FROM habitaciones h
+                 INNER JOIN habitacion_tipo t ON t.id = h.id_tipo
+                 WHERE h.id = ? AND t.tipo_habitacion = ?;");
+        $comprobacion->execute([$id_habitacion, $tipo]);
+
+        return (int) $comprobacion->fetchColumn() === 1;
+    }
+
+    /**
      * Función que borra una habitación
      * 
      * @param Number $id_habitacion número (id) de la habitación

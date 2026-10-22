@@ -3,7 +3,7 @@ $(document).ready(function () {
     // Id de la habitación abierta en el diálogo de ajustes
     var habitacionActual = null;
 
-    const siNo = valor => (Number(valor) === 1) ? "Yes" : "No";
+    const siNo = valor => (valor === true || Number(valor) === 1) ? "Yes" : "No";
 
     // Cargamos los datos de las habitaciones con Ajax
     $.ajax({
@@ -103,6 +103,53 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    $('#saveRoomChanges').click(function (e) {
+        e.preventDefault();
+
+        const boton = e.currentTarget;
+        const roomId = habitacionActual;
+        const datos = {
+            roomId,
+            tipo: document.getElementById('roomTypeSelect').value,
+            m2: document.getElementById('roomSizeField').value,
+            ventana: document.getElementById('roomWindowsField').checked,
+            internet: document.getElementById('roomInternetCheck').checked,
+            limpieza: document.getElementById('roomCleaningCheck').checked,
+            precio: document.getElementById('roomPriceField').value
+        };
+
+        boton.disabled = true;
+
+        $.ajax({
+            type: "POST",
+            url: "api/updateRoom.php",
+            data: datos,
+            dataType: "JSON",
+            success: function (response) {
+                if (response.result == 'success') {
+                    // Actualizamos la fila de la tabla con los datos guardados
+                    const celdas = document.querySelector(`tr[roomid='${roomId}']`).getElementsByTagName('td');
+                    celdas[1].innerText = datos.tipo;
+                    celdas[2].innerText = Number(datos.m2).toFixed(2);
+                    celdas[3].innerText = siNo(datos.ventana);
+                    celdas[4].innerText = siNo(datos.internet);
+                    celdas[5].innerText = siNo(datos.limpieza);
+                    celdas[6].innerText = Number(datos.precio).toFixed(2);
+
+                    bootstrap.Modal.getInstance(document.getElementById('roomSettingsDialog')).hide();
+                } else {
+                    alert('The room could not be saved. Check the size and the price.');
+                }
+            },
+            error: function () {
+                alert('The room could not be saved.');
+            },
+            complete: function () {
+                boton.disabled = false;
+            }
+        });
     });
 
     // Redirección a la página principal
