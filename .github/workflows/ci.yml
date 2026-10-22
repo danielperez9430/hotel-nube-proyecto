@@ -38,6 +38,8 @@ jobs:
       DB_USER_ESTANDAR: hotel_estandar
       DB_PASSWORD_ESTANDAR: ci_estandar
       DB_ROOT_PASSWORD: root
+      DB_USER_MIGRACIONES: root
+      DB_PASSWORD_MIGRACIONES: root
 
     steps:
       - uses: actions/checkout@v4
@@ -68,7 +70,7 @@ jobs:
               -e "s/CAMBIAR_CLAVE_CONEXION/$DB_PASSWORD_CONEXION/" \
               -e "s/CAMBIAR_CLAVE_ESTANDAR/$DB_PASSWORD_ESTANDAR/" \
               config/db_usuarios.sql | mysql -h 127.0.0.1 -u root -proot
-          DB_USER_MIGRACIONES=root DB_PASSWORD_MIGRACIONES=root php scripts/migrar.php
+          php scripts/migrar.php
 
       - name: Tests (PHPUnit)
         run: composer test
