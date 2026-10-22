@@ -37,7 +37,7 @@ class email {
      *
      * @param string $correo cadena de texto con la dirección del correo del usuario
      * @param string $cuerpo cadena de texto con la información del correo
-     * @param sting $asunto cadena de texto opcional con el asunto del correo
+     * @param string $asunto cadena de texto opcional con el asunto del correo
      * @return mixed Duelve true si el correo fue envia con exito, en caso contrario
      * devuelve el error
      */

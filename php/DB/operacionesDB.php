@@ -63,7 +63,7 @@ class operacionesDB {
      * 
      * @param string $rol cadena de texto con el rol cuya conexión buscamos
      * @return array devuelve un array con el usuario y la contraseña
-     * @throws PDOException
+     * @throws \PDOException
      */
     function leer_configuracion($rol) {
 
@@ -107,7 +107,7 @@ class operacionesDB {
                 $resultado = array($row['password'], $row['nombre_rol'], (int) $row['id'], $row['nombre']);
             }
         } else {
-            echo "ERROR: " . print_r($db->errorInfo());
+            throw new \PDOException('Error al preparar la consulta: ' . implode(' ', $db->errorInfo()));
         }
 
         unset($stmt);
@@ -177,7 +177,7 @@ class operacionesDB {
      * @param string $pais cadena de texto con el pais del usuario
      * @param string $provincia cadena de texto con la provincia
      * @param string $ciudad cadena de texto con la ciudad
-     * @param type $direccion
+     * @param string $direccion cadena de texto con la dirección
      * @return Number devuelve 0 si no se modificaron los datos en la base de datos
      * y 1 en caso de que se actualizará
      */
@@ -210,7 +210,7 @@ class operacionesDB {
             // Obtenemos el número de filas modificadas
             $resultado = $stmt->rowCount();
         } else {
-            echo "ERROR: " . print_r($db->errorInfo());
+            throw new \PDOException('Error al preparar la consulta: ' . implode(' ', $db->errorInfo()));
         }
 
         unset($stmt);
@@ -261,7 +261,7 @@ class operacionesDB {
             // Obtenemos el id del usuario insertado
             $resultado = $stmt->rowCount() === 1 ? (int) $db->lastInsertId() : 0;
         } else {
-            echo "ERROR: " . print_r($db->errorInfo());
+            throw new \PDOException('Error al preparar la consulta: ' . implode(' ', $db->errorInfo()));
         }
 
         unset($stmt);
@@ -290,7 +290,7 @@ class operacionesDB {
                     'descripcion' => $row['descripcion']));
             }
         } else {
-            echo "ERROR: " . print_r($db->errorInfo());
+            throw new \PDOException('Error al preparar la consulta: ' . implode(' ', $db->errorInfo()));
         }
 
         unset($stmt);
@@ -538,7 +538,7 @@ class operacionesDB {
                 array_push($imagenes, array($row['imagen_habitacion'], $row['descripcion_imagen']));
             }
         } else {
-            echo "ERROR: " . print_r($db->errorInfo());
+            throw new \PDOException('Error al preparar la consulta: ' . implode(' ', $db->errorInfo()));
         }
 
         unset($stmt);
