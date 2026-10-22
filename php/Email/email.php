@@ -38,16 +38,17 @@ class email {
          * Envía el correo a todas las direcciones.
          */
         $mail = new PHPMailer();
+        $mail->CharSet = PHPMailer::CHARSET_UTF8;
         $mail->IsSMTP();
         $mail->SMTPDebug = 0;  // cambiar a 1 o 2 para ver errores
         $mail->SMTPAuth = true;
-        $mail->SMTPSecure = "tls";
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Host = "smtp.gmail.com";
         $mail->Port = 587;
         $mail->Username = $this->email;  // Cuenta del Gmail
         $mail->Password = $this->pass; // Contraseña del Gmail          
         $mail->SetFrom('hotel.nube.2021@gmail.com', 'Hotel Nube');
-        $mail->Subject = utf8_decode($asunto);
+        $mail->Subject = $asunto;
         $mail->MsgHTML($cuerpo);
         $mail->isHTML(true);
 
@@ -62,7 +63,7 @@ class email {
 
     function crearContenidoCorreo($nombre) {
 
-        return file_get_contents('https://api.hotelnube.ml/email/' . $nombre);
+        return file_get_contents('https://api.hotelnube.ml/email/' . rawurlencode($nombre));
     }
 
     /**
@@ -81,15 +82,15 @@ class email {
         $res = $config->schemaValidate($xsd);
 
         if ($res === FALSE) {
-            throw new InvalidArgumentException("Error en el fichero de configuración del correo");
+            throw new \InvalidArgumentException("Error en el fichero de configuración del correo");
         }
 
         $datos = simplexml_load_file($xml);
         $usu = $datos->xpath("//usuario");
         $clave = $datos->xpath("//clave");
         $resul = [];
-        $resul[] = $usu[0];
-        $resul[] = $clave[0];
+        $resul[] = (string) $usu[0];
+        $resul[] = (string) $clave[0];
         return $resul;
     }
 

@@ -1,10 +1,12 @@
 <?php
-require_once(__DIR__ . '/../views/header.php');
-
 require_once(__DIR__ . '/../autoload.php');
 
 use \Session\session as s;
+
+// La sesión debe iniciarse antes de enviar cualquier HTML
 s::comprobar_sesion();
+
+require_once(__DIR__ . '/../views/header.php');
 
 ?>
 

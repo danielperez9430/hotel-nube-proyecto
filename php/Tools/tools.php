@@ -39,16 +39,11 @@ class tools {
      */
     function validarUsuario($email, $password) {
 
-        $correcto = false;
+        $db = new DB('conexion');
+        $datos_user = $db->buscarUsuario($email);
 
-        $db = new DB;
-        $hash = $db->buscarUsuario($email);
-
-        if ($this->comprobarContraseña($password, $hash)) {
-            $correcto = true;
-        }
-
-        return $correcto;
+        // buscarUsuario devuelve [hash, rol] o false si el usuario no existe
+        return is_array($datos_user) && $this->comprobarContraseña($password, $datos_user[0]);
     }
 
     /**
@@ -58,7 +53,7 @@ class tools {
      */
     function asignarRol($rol) {
 
-        $_SESION['rol'] = $rol;
+        $_SESSION['rol'] = $rol;
     }
 
     /**
@@ -86,7 +81,7 @@ class tools {
         
         foreach ($array as $value) {
             // Comprobamos si algún campo no tiene su valor
-            if(!isset($_POST[$value]) || empty($_POST[$value])) {
+            if (empty($_POST[$value])) {
                 $correcto = false;
             }
         }
