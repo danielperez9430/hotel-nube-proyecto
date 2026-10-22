@@ -11,6 +11,10 @@ $usuario = \Session\session::usuario();
         <meta name="csrf-token" content="<?= htmlspecialchars(\Session\session::tokenCsrf()) ?>">
         <title>Hotel Nube</title>
         
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+        <link rel="icon" href="favicon.ico" sizes="any">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <meta name="theme-color" content="#1F2929">
         <!-- Librerías (copias locales en src/vendor) -->
         <!-- Bootstrap 5 -->
         <link href="src/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src=".github/banner.png" alt="Hotel Nube — Where your dreams will be as soft as the clouds" width="100%">
+</p>
+
 # ☁️ Hotel Nube
 
 > *Where your dreams will be as soft as the clouds* ✨
@@ -17,6 +21,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 - [🗂️ Estructura del proyecto](#️-estructura-del-proyecto)
 - [📚 Documentación del código](#-documentación-del-código)
 - [🔒 Seguridad](#-seguridad)
+- [🎨 Identidad visual](#-identidad-visual)
 - [🤝 Contribuir](#-contribuir)
 
 ## ✨ Funcionalidades
@@ -242,6 +247,27 @@ La documentación de las clases está generada con [phpDocumentor](https://www.p
 
 > [!CAUTION]
 > Nunca subas el fichero `.env` al repositorio. Si alguna credencial llega a publicarse, cámbiala: aunque borres el fichero, sigue en el historial de git.
+
+## 🎨 Identidad visual
+
+Estética de hotel de lujo art déco: fondos oscuros, detalles dorados y tipografía serif.
+
+| Color | Hex | Uso |
+| ----- | --- | --- |
+| ⬛ Carbón | `#1F2929` | Fondo de la marca, barra de navegación y pie |
+| 🌑 Noche | `#111717` | Fondos profundos y degradados |
+| 🟨 Oro | `#DCB004` | Logo, iconos y detalles |
+| 🟫 Oro suave | `#C9A44C` | Textos secundarios y líneas finas |
+| 🤍 Marfil | `#F5EFE0` | Textos sobre fondo oscuro |
+
+| Recurso | Fichero |
+| ------- | ------- |
+| Logo vectorial | `public/src/logo/hotel_nube.svg` |
+| Logo PNG (correos) | `public/src/logo/hotel_nube.png` |
+| Favicon | `public/favicon.svg`, `public/favicon.ico`, `public/apple-touch-icon.png` |
+| Banner del README | `.github/banner.png` |
+
+Tipografías del banner: *Cormorant Garamond* y *Montserrat* (licencia OFL).
 
 ## 🤝 Contribuir
 
