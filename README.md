@@ -110,7 +110,13 @@ mariadb -u root -p < config/db_hotel.sql
 
 # Usuarios de base de datos: cambia antes las contraseñas CAMBIAR_* del fichero
 mariadb -u root -p < config/db_usuarios.sql
+
+# Cambios de esquema posteriores (con DB_USER_MIGRACIONES en el .env)
+php scripts/migrar.php
 ```
+
+> [!TIP]
+> Para actualizar una base de datos que ya existe, basta con `php scripts/migrar.php`: aplica solo las migraciones de [`config/migraciones`](config/migraciones/) que falten. En Docker se ejecuta sola al arrancar.
 
 > [!WARNING]
 > `db_hotel.sql` empieza con `DROP DATABASE IF EXISTS hotel`: **borra la base de datos `hotel` si ya existe**.
@@ -178,6 +184,12 @@ Toda la configuración está en el fichero `.env` de la raíz, que **no se sube 
 | -------- | ----------- | ----------- |
 | `API_URL` | `http://localhost:8001` | URL base de hotelnube-api tal como la ve el navegador (`window.API_URL`) |
 | `API_INTERNAL_URL` | `API_URL` | URL de la API desde el servidor PHP, si es distinta (en Docker, `http://api:8001`) |
+
+### 🗃️ Migraciones
+
+| Variable | Por defecto | Descripción |
+| -------- | ----------- | ----------- |
+| `DB_USER_MIGRACIONES` / `DB_PASSWORD_MIGRACIONES` | `root` / — | Usuario con permisos para cambiar el esquema; solo lo usa `scripts/migrar.php` |
 
 ### 🐳 Docker Compose
 
@@ -270,8 +282,9 @@ Las peticiones `POST` deben llevar la cabecera `X-CSRF-Token` con el token de la
 hotel-nube-proyecto/
 ├── 📁 .github/               # CI (workflows) y banner del README
 ├── 📁 config/
-│   ├── db_hotel.sql          # Esquema y datos de ejemplo
-│   └── db_usuarios.sql       # Usuarios de BD con permisos mínimos
+│   ├── db_hotel.sql          # Esquema base y datos de ejemplo
+│   ├── db_usuarios.sql       # Usuarios de BD con permisos mínimos
+│   └── migraciones/          # Cambios de esquema posteriores (NNN_*.sql)
 ├── 📁 docker/                # Imagen de la web y script de usuarios de MariaDB
 ├── 📁 docs/
 │   ├── api/                  # Documentación generada con phpDocumentor
@@ -293,7 +306,7 @@ hotel-nube-proyecto/
 │   ├── privacy.php           # Privacidad, cookies y cancelación
 │   ├── adminPanel.php        # Panel de administración
 │   └── favicon.svg / .ico
-├── 📁 scripts/               # generar-docs.sh
+├── 📁 scripts/               # migrar.php y generar-docs.sh
 ├── 📁 tests/                 # Tests unitarios y de integración (PHPUnit)
 ├── 📁 views/                 # Cabecera, pie y diálogo de login comunes
 ├── 📄 autoload.php           # Autocarga de las clases de php/
