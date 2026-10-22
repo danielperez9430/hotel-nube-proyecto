@@ -1,3 +1,10 @@
+    <?php
+    // Diálogo de login y registro, disponible en todas las páginas para los visitantes
+    if (\Session\session::usuario() === null) {
+        require __DIR__ . '/login.php';
+    }
+    ?>
+
     <!-- Footer -->
     <footer class="modal-footer justify-content-center mt-auto bg-dark">
         <div class="container justify-content-center">
