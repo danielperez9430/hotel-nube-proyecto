@@ -59,9 +59,17 @@ class email {
         }
     }
 
+    /**
+     * Función que obtiene de hotelnube-api el HTML del correo de bienvenida
+     * 
+     * @param string $nombre cadena de texto con el nombre del usuario
+     * @return string|false devuelve el HTML del correo o false si falla
+     */
     function crearContenidoCorreo($nombre) {
 
-        return file_get_contents('https://api.hotelnube.ml/email/' . rawurlencode($nombre));
+        $api = rtrim(config::get('API_URL', 'http://localhost:8001'), '/');
+
+        return file_get_contents($api . '/email/' . rawurlencode($nombre));
     }
 
     /**

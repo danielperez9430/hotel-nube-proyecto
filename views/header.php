@@ -27,6 +27,10 @@
         <script src="https://cdn.jsdelivr.net/npm/litepicker@2.0.12/dist/litepicker.js"
                 integrity="sha384-TwHJTusQtbcoEHJcrF5aeo0MHBgj8lt8onFRrG7wKk8Q/LG9EphkEsqNRiVWzIP9" crossorigin="anonymous"></script>
 
+        <!-- URL de hotelnube-api, configurada con API_URL en el .env -->
+        <script>
+            window.API_URL = <?= json_encode(rtrim(\Config\config::get('API_URL', 'http://localhost:8001'), '/'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES) ?>;
+        </script>
         <script src="src/js/login.js"></script>
         <script src="src/js/datepickers.js"></script>
     </head>
