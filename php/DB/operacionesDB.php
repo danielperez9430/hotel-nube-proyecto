@@ -91,7 +91,7 @@ class operacionesDB {
         $stmt = "";
         $resultado = false;
 
-        $sql = "SELECT password, nombre_rol FROM hotel.usuarios
+        $sql = "SELECT password, nombre_rol FROM usuarios
                  inner join roles
                   on usuarios.rol_usuario = roles.id
                    where email = ?;";
@@ -178,16 +178,16 @@ class operacionesDB {
      * @param string $ciudad cadena de texto con la ciudad
      * @param string $direccion cadena de texto con la dirección
      * @param string $password cadena de texto con la contraseña
-     * @param string $rol_usuario id del rol del usuario
-     * @return 
+     * @param string $rol_usuario nombre del rol del usuario
+     * @return Number devuelve 1 si se registró el usuario
      */
-    function registrarUsuario($nombre, $email, $telf, $pais, $provincia, $ciudad, $direccion, $password, $rol_usuario = 2) {
+    function registrarUsuario($nombre, $email, $telf, $pais, $provincia, $ciudad, $direccion, $password, $rol_usuario = 'estandar') {
 
         $resultado = 0;
 
         $sql = "INSERT usuarios 
                  (nombre, email, telf, pais, provincia, ciudad, direccion, password, rol_usuario)
-                    values(?, ?, ?, ?, ?, ?, ?, ? ,?);";
+                    SELECT ?, ?, ?, ?, ?, ?, ?, ?, id FROM roles WHERE nombre_rol = ?;";
 
 
         $db = $this->PDO;
@@ -201,7 +201,7 @@ class operacionesDB {
             $stmt->bindValue(6, $ciudad, \PDO::PARAM_STR);
             $stmt->bindValue(7, $direccion, \PDO::PARAM_STR);
             $stmt->bindValue(8, $password, \PDO::PARAM_STR);
-            $stmt->bindValue(9, $rol_usuario, \PDO::PARAM_INT);
+            $stmt->bindValue(9, $rol_usuario, \PDO::PARAM_STR);
 
 
             // Ejecutamos la consulta
@@ -228,7 +228,7 @@ class operacionesDB {
 
         $result = array();
 
-        $sql = "SELECT * FROM hotel.habitacion_tipo";
+        $sql = "SELECT * FROM habitacion_tipo";
 
         $db = $this->PDO;
 
@@ -263,14 +263,11 @@ class operacionesDB {
      */
     function obtenerListaHabitaciones() {
 
-        // Convertimos las columnas BIT a número para que lleguen como '0' o '1'
-        $sql = "SELECT id, tipo_de_habitacion AS tipo_habitacion, m2,
-                       CAST(ventana AS UNSIGNED) AS ventana,
-                       CAST(internet AS UNSIGNED) AS internet,
-                       CAST(servicio_limpieza AS UNSIGNED) AS servicio_limpieza,
-                       precio
-                  FROM habitaciones
-                 ORDER BY id;";
+        $sql = "SELECT h.id, t.tipo_habitacion, h.m2, h.ventana, h.internet,
+                       h.servicio_limpieza, h.precio
+                  FROM habitaciones h
+                 INNER JOIN habitacion_tipo t ON t.id = h.id_tipo
+                 ORDER BY h.id;";
 
         return $this->PDO->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
