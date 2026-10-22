@@ -75,7 +75,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 - 🐘 **PHP 8.5.12** o superior, con la extensión `pdo_mysql`
 - 📦 **Composer**
 - 🗄️ **MariaDB** 10.4+ o **MySQL** 8
-- 🟢 **Node.js 18+** para ejecutar [hotelnube-api](https://github.com/danielperez9430/hotelnube-api)
+- 🟢 **Node.js 24** (LTS) para ejecutar [hotelnube-api](https://github.com/danielperez9430/hotelnube-api) y el lint del JavaScript (`.nvmrc`)
 
 ## 🚀 Puesta en marcha
 
@@ -389,7 +389,7 @@ El script sustituye las fuentes y los scripts que la plantilla carga de CDNs por
 
 ## 🤖 Dependencias
 
-[Dependabot](.github/dependabot.yml) revisa cada lunes Composer, ESLint (npm), las acciones de GitHub, las imágenes del `Dockerfile` (PHP y Composer) y las de los `docker-compose*.yml`. Solo propone versiones **menores y parches**, agrupadas en un solo PR por ecosistema. Las versiones mayores pueden romper la compatibilidad, así que se actualizan a mano (como la subida a PHP 8.5). MariaDB solo recibe parches, porque incluso una versión menor puede exigir migrar los datos.
+[Dependabot](.github/dependabot.yml) revisa cada lunes Composer, ESLint (npm), las acciones de GitHub, las imágenes del `Dockerfile` (PHP y Composer) y las de los `docker-compose*.yml`. Solo propone versiones **menores y parches**, agrupadas en un solo PR por ecosistema. Las versiones mayores pueden romper la compatibilidad, así que se actualizan a mano (como la subida a PHP 8.5). PHP y MariaDB solo reciben parches (8.5.x, 11.4.x): una versión menor de PHP trae deprecaciones y una de MariaDB puede exigir migrar los datos, así que se suben a mano.
 
 ## 🎨 Identidad visual
 
