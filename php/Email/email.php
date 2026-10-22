@@ -174,7 +174,8 @@ class email {
      */
     private function pedirApi($ruta, $datos = null) {
 
-        $api = rtrim(config::get('API_URL', 'http://localhost:8001'), '/');
+        // Dentro de Docker el servidor llega a la API por otra dirección que el navegador
+        $api = rtrim(config::get('API_INTERNAL_URL', '') ?: config::get('API_URL', 'http://localhost:8001'), '/');
 
         $opciones = ['timeout' => self::TIMEOUT, 'ignore_errors' => false];
 
