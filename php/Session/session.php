@@ -10,6 +10,13 @@ class session {
     static function comprobar_sesion() {
 
         if (session_status() == PHP_SESSION_NONE) {  // Comprobamos si NO tiene una sesión activa
+            // Cookie de sesión inaccesible desde JavaScript, no enviada desde
+            // otras webs y solo por HTTPS cuando la web usa HTTPS
+            session_set_cookie_params([
+                'httponly' => true,
+                'samesite' => 'Lax',
+                'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'
+            ]);
             session_start(); // Iniciamos sesión
         }
 
@@ -45,6 +52,43 @@ class session {
     static function comprobarAdmin() {
         if (!self::esAdmin()) {
             header('Location: index.php');
+            exit;
+        }
+    }
+
+    /**
+     * Función que devuelve el token CSRF de la sesión, creándolo si no existe
+     * 
+     * @return string cadena de texto con el token
+     */
+    static function tokenCsrf() {
+        self::comprobar_sesion();
+
+        if (empty($_SESSION['csrf'])) {
+            $_SESSION['csrf'] = bin2hex(random_bytes(32));
+        }
+
+        return $_SESSION['csrf'];
+    }
+
+    /**
+     * Función que comprueba el token CSRF de las peticiones POST. El token
+     * llega en la cabecera X-CSRF-Token (la añade src/js/csrf.js). Si no es
+     * válido responde 403 y termina la ejecución
+     */
+    static function verificarCsrf() {
+        self::comprobar_sesion();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            return;
+        }
+
+        $token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+
+        if (empty($_SESSION['csrf']) || !is_string($token) || !hash_equals($_SESSION['csrf'], $token)) {
+            http_response_code(403);
+            header('content-type: application/json; charset=utf-8');
+            echo json_encode(['result' => 'fail', 'code' => 4]);
             exit;
         }
     }

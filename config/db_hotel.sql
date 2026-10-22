@@ -110,6 +110,17 @@ CREATE TABLE habitaciones_reservas (
     FOREIGN KEY (id_habitacion) REFERENCES habitaciones(id)
 );
 
+-- Intentos de login fallidos, para limitar los ataques de fuerza bruta
+CREATE TABLE intentos_login (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL,
+    ip VARCHAR(45) NOT NULL,
+    fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    INDEX idx_intentos_email (email, fecha),
+    INDEX idx_intentos_ip (ip, fecha)
+);
+
 -- Trigger: actualiza la fecha de última modificación de los datos de un usuario
 DELIMITER $$
 DROP TRIGGER IF EXISTS trigger_check_update_user$$

@@ -117,6 +117,57 @@ class operacionesDB {
     }
 
     /**
+     * Función que cuenta los intentos de login fallidos recientes de un
+     * email y de una IP
+     * 
+     * @param string $email cadena de texto con el email usado
+     * @param string $ip cadena de texto con la IP del cliente
+     * @param Number $minutos ventana de tiempo en minutos
+     * @return array devuelve ['email' => n, 'ip' => n]
+     */
+    function contarIntentosLogin($email, $ip, $minutos) {
+
+        $sql = "SELECT
+                    COALESCE(SUM(email = ?), 0) AS por_email,
+                    COALESCE(SUM(ip = ?), 0) AS por_ip
+                  FROM intentos_login
+                 WHERE fecha > NOW() - INTERVAL ? MINUTE
+                   AND (email = ? OR ip = ?);";
+
+        $stmt = $this->PDO->prepare($sql);
+        $stmt->execute([$email, $ip, (int) $minutos, $email, $ip]);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return ['email' => (int) $fila['por_email'], 'ip' => (int) $fila['por_ip']];
+    }
+
+    /**
+     * Función que registra un intento de login fallido y borra los
+     * registros de más de un día
+     * 
+     * @param string $email cadena de texto con el email usado
+     * @param string $ip cadena de texto con la IP del cliente
+     */
+    function registrarIntentoFallido($email, $ip) {
+
+        $this->PDO->exec("DELETE FROM intentos_login WHERE fecha < NOW() - INTERVAL 1 DAY;");
+
+        $stmt = $this->PDO->prepare("INSERT INTO intentos_login (email, ip) VALUES (?, ?);");
+        $stmt->execute([mb_substr($email, 0, 255), $ip]);
+    }
+
+    /**
+     * Función que borra los intentos fallidos de un email tras un login correcto
+     * 
+     * @param string $email cadena de texto con el email
+     */
+    function borrarIntentosLogin($email) {
+
+        $stmt = $this->PDO->prepare("DELETE FROM intentos_login WHERE email = ?;");
+        $stmt->execute([$email]);
+    }
+
+    /**
      * Función que actualiza los datos de un usuario
      * 
      * @param Number $id número del id del usuario

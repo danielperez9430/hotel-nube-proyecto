@@ -17,9 +17,10 @@ CREATE USER IF NOT EXISTS 'hotel_estandar'@'%' IDENTIFIED BY 'CAMBIAR_CLAVE_ESTA
 -- Administración: gestiona los datos de la base de datos hotel (no su estructura)
 GRANT SELECT, INSERT, UPDATE, DELETE ON hotel.* TO 'hotel_admin'@'%';
 
--- Login: solo lee usuarios y roles
+-- Login: lee usuarios y roles y registra los intentos fallidos
 GRANT SELECT ON hotel.usuarios TO 'hotel_conexion'@'%';
 GRANT SELECT ON hotel.roles TO 'hotel_conexion'@'%';
+GRANT SELECT, INSERT, DELETE ON hotel.intentos_login TO 'hotel_conexion'@'%';
 
 -- Visitantes y clientes: consultan el catálogo, se registran y reservan
 GRANT SELECT ON hotel.roles TO 'hotel_estandar'@'%';

@@ -4,6 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="<?= htmlspecialchars(\Session\session::tokenCsrf()) ?>">
         <title>Hotel Nube</title>
         
         <!-- Bootstrap 5 -->
@@ -31,6 +32,7 @@
         <script>
             window.API_URL = <?= json_encode(rtrim(\Config\config::get('API_URL', 'http://localhost:8001'), '/'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES) ?>;
         </script>
+        <script src="src/js/csrf.js"></script>
         <script src="src/js/login.js"></script>
         <script src="src/js/datepickers.js"></script>
     </head>

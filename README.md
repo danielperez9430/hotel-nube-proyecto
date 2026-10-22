@@ -177,6 +177,10 @@ Las respuestas de login, registro y borrado tienen la forma `{"result": "success
 | `1` | ⚠️ Faltan datos en la petición |
 | `2` | ❌ Datos incorrectos o la operación falló |
 | `3` | 🚫 Sin permisos (HTTP 403) |
+| `4` | 🛡️ Token CSRF ausente o incorrecto (HTTP 403) |
+| `5` | ⏳ Demasiados intentos de login fallidos (HTTP 429) |
+
+Las peticiones `POST` deben llevar la cabecera `X-CSRF-Token` con el token de la página (`<meta name="csrf-token">`). `src/js/csrf.js` la añade automáticamente a todas las peticiones de jQuery.
 
 ## 🗂️ Estructura del proyecto
 
@@ -215,7 +219,9 @@ La documentación de las clases está generada con [phpDocumentor](https://www.p
 - 🔑 Contraseñas cifradas con `password_hash()` y comprobadas con `password_verify()`.
 - 🧷 Consultas con sentencias preparadas de PDO.
 - 🗝️ Usuarios de base de datos con permisos mínimos, limitados a la base de datos `hotel`.
-- 🔄 El id de sesión se regenera al iniciar sesión.
+- 🔄 El id de sesión se regenera al iniciar sesión, y la cookie es `HttpOnly` y `SameSite=Lax` (y `Secure` con HTTPS).
+- 🛡️ Protección CSRF en todas las peticiones `POST`.
+- ⏳ Límite de intentos de login: 5 fallos por email o 20 por IP en 15 minutos. Además, el tiempo de respuesta es el mismo exista o no el usuario.
 - 👑 El panel y los endpoints de administración comprueban el rol en el servidor.
 - 🤫 Las credenciales solo están en el `.env`, que no se sube al repositorio.
 - 🌐 Todas las librerías del CDN se cargan con comprobación de integridad (SRI).
