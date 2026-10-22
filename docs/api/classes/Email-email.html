@@ -2,24 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Documentation</title>
+            <title>Hotel Nube</title>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png"/>
     <link rel="icon" href="images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
-            <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+            
+        <link href="recursos/fuentes/fuentes.css" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
-                <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
-        <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/js/all.min.js" integrity="sha256-0vuk8LXoyrmCjp1f0O300qo1M75ZQyhH9X3J6d+scmk=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="recursos/fontawesome/css/all.min.css" />
+        <link rel="stylesheet" href="recursos/prism/themes/prism-okaidia.min.css">
+        <link rel="stylesheet" href="recursos/prism/plugins/line-numbers/prism-line-numbers.min.css">
+        <link rel="stylesheet" href="recursos/prism/plugins/line-highlight/prism-line-highlight.min.css">
+                <script src="recursos/fuse/fuse.js"></script>
+        <script src="recursos/css-vars-ponyfill/css-vars-ponyfill.min.js"></script>
+        <script src="js/template.js"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Hotel Nube</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -47,61 +55,58 @@
 <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
     Menu
 </label>
-<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
-    
-    <section class="phpdocumentor-sidebar__category">
-        <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
-                                <h3 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/default.html"><abbr title="\">Global</abbr></a></h3>
-                                        <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/db.html"><abbr title="\DB">DB</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/email.html"><abbr title="\Email">Email</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/habitacion.html"><abbr title="\Habitacion">Habitacion</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/session.html"><abbr title="\Session">Session</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/tools.html"><abbr title="\Tools">Tools</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/composer.html"><abbr title="\Composer">Composer</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                            <li><a href="namespaces/composer-autoload.html"><abbr title="\Composer\Autoload">Autoload</abbr></a></li>
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/phpmailer.html"><abbr title="\PHPMailer">PHPMailer</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                            <li><a href="namespaces/phpmailer-phpmailer.html"><abbr title="\PHPMailer\PHPMailer">PHPMailer</abbr></a></li>
-                                    </ul>
-                        </section>
+<aside class="phpdocumentor-column -three phpdocumentor-sidebar">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
+            <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/config.html" class="">Config</a>
+</h4>
 
-        <section class="phpdocumentor-sidebar__category">
-        <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
-                    <h3 class="phpdocumentor-sidebar__root-package"><a href="packages/Default.html"><abbr title="\Default">Default</abbr></a></h3>
-                                <h3 class="phpdocumentor-sidebar__root-package"><a href="packages/PHPMailer.html"><abbr title="\PHPMailer">PHPMailer</abbr></a></h3>
-                                <h3 class="phpdocumentor-sidebar__root-package"><a href="packages/PHPMailerSomeFrenchpunctuationrequiresathinnon.html"><abbr title="\PHPMailerSomeFrenchpunctuationrequiresathinnon">PHPMailerSomeFrenchpunctuationrequiresathinnon</abbr></a></h3>
-                        <ul class="phpdocumentor-list">
-                                    <li><a href="packages/PHPMailerSomeFrenchpunctuationrequiresathinnon-breakingspaceU202Fcharacterbeforeitforexamplebeforeacolonorexclamationmark.html"><abbr title="\PHPMailerSomeFrenchpunctuationrequiresathinnon\breakingspaceU202Fcharacterbeforeitforexamplebeforeacolonorexclamationmark">breakingspaceU202Fcharacterbeforeitforexamplebeforeacolonorexclamationmark</abbr></a></li>
-                            </ul>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/db.html" class="">DB</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/email.html" class="">Email</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/habitacion.html" class="">Habitacion</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/session.html" class="">Session</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/tools.html" class="">Tools</a>
+</h4>
+
                         </section>
-    
-    <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
+            <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
+
+                        </section>
+            
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
 </aside>
 
-            <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <ul class="phpdocumentor-breadcrumbs">
+            <div class="phpdocumentor-column -nine phpdocumentor-content">
+                                <section>
+                                        <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/email.html">Email</a></li>
     </ul>
 
@@ -113,220 +118,283 @@
             <div class="phpdocumentor-element__package">
             in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Default.html">Default</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
                             </ul>
         </div>
     
     
     </h2>
 
+<div class="phpdocumentor-label-line">
+
+
+</div>
+
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">9</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">10</span>
+
+    </aside>
 
         
 
 
 
 
-
-
-
-
+    
+    
 <h3 id="toc">
     Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Email-email.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+
 </h3>
 
+
+
+
+
+
+
+<h4 id="toc-constants">
+    Constants
+    <a href="classes/Email-email.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
 <dl class="phpdocumentor-table-of-contents">
-                <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Email-email.html#property_email">$email</a>
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Email-email.html#constant_TIMEOUT">TIMEOUT</a>
     <span>
-                &nbsp;: mixed            </span>
+        &nbsp;: mixed&nbsp;= 10                            </span>
 </dt>
-<dd></dd>
+
+    </dl>
+
+
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/Email-email.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Email-email.html#property_email">$email</a>
+    <span>
+                        &nbsp;: mixed            </span>
+</dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Email-email.html#property_pass">$pass</a>
+    <a class="" href="classes/Email-email.html#property_pass">$pass</a>
     <span>
-                &nbsp;: mixed            </span>
+                        &nbsp;: mixed            </span>
 </dt>
-<dd></dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Email-email.html#property_xml">$xml</a>
-    <span>
-                &nbsp;: mixed            </span>
-</dt>
-<dd></dd>
+    </dl>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Email-email.html#property_xsd">$xsd</a>
-    <span>
-                &nbsp;: mixed            </span>
-</dt>
-<dd></dd>
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/Email-email.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
-                <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Email-email.html#method___construct">__construct()</a>
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Email-email.html#method___construct">__construct()</a>
     <span>
-                        &nbsp;: mixed    </span>
+                                &nbsp;: mixed    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Email-email.html#method_crearContenidoCorreo">crearContenidoCorreo()</a>
+    <a class="" href="classes/Email-email.html#method_crearContenidoCorreo">crearContenidoCorreo()</a>
     <span>
-                        &nbsp;: mixed    </span>
+                                &nbsp;: string|false    </span>
 </dt>
-<dd></dd>
+<dd>Función que obtiene de hotelnube-api el HTML del correo de bienvenida</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Email-email.html#method_enviarCorreo">enviarCorreo()</a>
+    <a class="" href="classes/Email-email.html#method_crearContenidoReserva">crearContenidoReserva()</a>
     <span>
-                        &nbsp;: mixed    </span>
+                                &nbsp;: string|false    </span>
+</dt>
+<dd>Función que obtiene de hotelnube-api el HTML del correo de confirmación
+de una reserva</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Email-email.html#method_enviarBienvenida">enviarBienvenida()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Función que envía el correo de bienvenida a un usuario nuevo. Los
+errores se registran en el log sin interrumpir el registro</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Email-email.html#method_enviarConfirmacionReserva">enviarConfirmacionReserva()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Función que envía el correo de confirmación de una reserva. Los errores
+se registran en el log sin interrumpir la reserva</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Email-email.html#method_enviarCorreo">enviarCorreo()</a>
+    <span>
+                                &nbsp;: mixed    </span>
 </dt>
 <dd>Función que envia un corre electorinico</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Email-email.html#method_leer_configCorreo">leer_configCorreo()</a>
+    <a class="" href="classes/Email-email.html#method_estaConfigurado">estaConfigurado()</a>
     <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;    </span>
+                                &nbsp;: bool    </span>
 </dt>
-<dd>Función leer los datos de conexión del correo</dd>
+<dd>Función que indica si el envío de correos está configurado (MAIL_HOST)</dd>
 
-        </dl>
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Email-email.html#method_leer_configCorreo">leer_configCorreo()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Función que lee del .env el usuario y la contraseña del servidor SMTP
+(MAIL_USERNAME y MAIL_PASSWORD). Pueden estar vacíos si el servidor
+no requiere autenticación</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a class="" href="classes/Email-email.html#method_enviarSeguro">enviarSeguro()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Función que genera el contenido con $crearCuerpo y envía el correo,
+registrando en el log cualquier error</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a class="" href="classes/Email-email.html#method_pedirApi">pedirApi()</a>
+    <span>
+                                &nbsp;: string|false    </span>
+</dt>
+<dd>Función que hace una petición a hotelnube-api. Si recibe datos los envía
+por POST como JSON</dd>
+
+    </dl>
 
 
 
         
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="classes/Email-email.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TIMEOUT">
+        TIMEOUT
+        <a href="classes/Email-email.html#constant_TIMEOUT" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">13</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TIMEOUT</span>
+    = <span class="phpdocumentor-signature__default-value">10</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+            </section>
 
         
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
             <a href="classes/Email-email.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="
             phpdocumentor-element
             -property
             -private
-                                                        "
+                                                                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_email">
         $email
         <a href="classes/Email-email.html#property_email" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">11</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">$email</span>
-    </code>
-
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_pass">
-        $pass
-        <a href="classes/Email-email.html#property_pass" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">12</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">$pass</span>
-    </code>
-
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_xml">
-        $xml
-        <a href="classes/Email-email.html#property_xml" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">14</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">$xml</span>
-     = <span class="phpdocumentor-signature__default-value">__DIR__ . &quot;/../../config/correo.xml&quot;</span></code>
-
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_xsd">
-        $xsd
-        <a href="classes/Email-email.html#property_xsd" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
+                                            </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">15</span>
-</aside>
 
+    </aside>
+
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">$xsd</span>
-     = <span class="phpdocumentor-signature__default-value">__DIR__ . &quot;/../../config/correo.xsd&quot;</span></code>
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">$email</span>
+    </code>
 
     
     
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_pass">
+        $pass
+        <a href="classes/Email-email.html#property_pass" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">16</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">$pass</span>
+    </code>
+
+    
+    
+    
+
+        
+        
 
 </article>
             </section>
@@ -335,6 +403,7 @@
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
             <a href="classes/Email-email.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="phpdocumentor-element
@@ -345,27 +414,29 @@
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
         <a href="classes/Email-email.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">18</span>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
+    
     
 </article>
                     <article
@@ -377,38 +448,238 @@
     <h4 class="phpdocumentor-element__name" id="method_crearContenidoCorreo">
         crearContenidoCorreo()
         <a href="classes/Email-email.html#method_crearContenidoCorreo" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
-    
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que obtiene de hotelnube-api el HTML del correo de bienvenida</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">crearContenidoCorreo</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$nombre</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">crearContenidoCorreo</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$nombre</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
+    
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$nombre</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                <span class="phpdocumentor-argument-list__argument__name">$nombre</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>cadena de texto con el nombre del usuario</p>
+</section>
+
             </dd>
             </dl>
 
     
 
+        
+    
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-            <section class="phpdocumentor-description"></section>
+        <span class="phpdocumentor-signature__response_type">string|false</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve el HTML del correo o false si falla</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_crearContenidoReserva">
+        crearContenidoReserva()
+        <a href="classes/Email-email.html#method_crearContenidoReserva" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">96</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que obtiene de hotelnube-api el HTML del correo de confirmación
+de una reserva</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">crearContenidoReserva</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reserva</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$reserva</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>array con id, order_date, nombre y habitaciones
+(room_name, room_img, fecha_entrada, fecha_salida, precio)</p>
+</section>
+
+            </dd>
+            </dl>
 
     
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string|false</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve el HTML del correo o false si falla</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_enviarBienvenida">
+        enviarBienvenida()
+        <a href="classes/Email-email.html#method_enviarBienvenida" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">108</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que envía el correo de bienvenida a un usuario nuevo. Los
+errores se registran en el log sin interrumpir el registro</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">enviarBienvenida</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$correo</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$nombre</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$correo</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>cadena de texto con el email del usuario</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$nombre</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>cadena de texto con el nombre del usuario</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve true si el correo se envió</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_enviarConfirmacionReserva">
+        enviarConfirmacionReserva()
+        <a href="classes/Email-email.html#method_enviarConfirmacionReserva" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">122</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que envía el correo de confirmación de una reserva. Los errores
+se registran en el log sin interrumpir la reserva</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">enviarConfirmacionReserva</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$correo</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reserva</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$correo</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>cadena de texto con el email del usuario</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$reserva</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>datos de la reserva (ver crearContenidoReserva)</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve true si el correo se envió</p>
+</section>
+
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -419,26 +690,30 @@
     <h4 class="phpdocumentor-element__name" id="method_enviarCorreo">
         enviarCorreo()
         <a href="classes/Email-email.html#method_enviarCorreo" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">44</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Función que envia un corre electorinico</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">enviarCorreo</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$correo</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$cuerpo</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Email\sting">sting</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$asunto</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&quot;&quot;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">enviarCorreo</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$correo</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$cuerpo</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$asunto</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">""</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$correo</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-argument-list__argument__name">$correo</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>cadena de texto con la dirección del correo del usuario</p>
@@ -446,8 +721,8 @@
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$cuerpo</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-argument-list__argument__name">$cuerpo</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>cadena de texto con la información del correo</p>
@@ -455,9 +730,9 @@
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$asunto</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Email\sting">sting</abbr></span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&quot;&quot;</span>            </dt>
+                <span class="phpdocumentor-argument-list__argument__name">$asunto</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">""</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>cadena de texto opcional con el asunto del correo</p>
 </section>
@@ -467,14 +742,61 @@
 
     
 
+        
+    
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Duelve true si el correo fue envia con exito, en caso contrario
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Duelve true si el correo fue envia con exito, en caso contrario
 devuelve el error</p>
 </section>
 
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_estaConfigurado">
+        estaConfigurado()
+        <a href="classes/Email-email.html#method_estaConfigurado" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">31</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que indica si el envío de correos está configurado (MAIL_HOST)</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">estaConfigurado</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
     
+    
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve true si hay un servidor SMTP configurado</p>
+</section>
+
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -485,73 +807,236 @@ devuelve el error</p>
     <h4 class="phpdocumentor-element__name" id="method_leer_configCorreo">
         leer_configCorreo()
         <a href="classes/Email-email.html#method_leer_configCorreo" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">198</span>
 
-        <p class="phpdocumentor-summary">Función leer los datos de conexión del correo</p>
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que lee del .env el usuario y la contraseña del servidor SMTP
+(MAIL_USERNAME y MAIL_PASSWORD). Pueden estar vacíos si el servidor
+no requiere autenticación</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">leer_configCorreo</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Email\sting">sting</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$xml</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$xsd</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">leer_configCorreo</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
-        <section class="phpdocumentor-description"></section>
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
 
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve un array con el usuario y la contraseña</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_enviarSeguro">
+        enviarSeguro()
+        <a href="classes/Email-email.html#method_enviarSeguro" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">137</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que genera el contenido con $crearCuerpo y envía el correo,
+registrando en el log cualquier error</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">enviarSeguro</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$correo</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$asunto</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$crearCuerpo</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$xml</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Email\sting">sting</abbr></span>
+                <span class="phpdocumentor-argument-list__argument__name">$correo</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>cadena de texto con la ruta del xml que contiene
-el nombre de usuarios y contraseña del correo</p>
+                    <section class="phpdocumentor-description"><p>dirección de destino</p>
 </section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$xsd</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-argument-list__argument__name">$asunto</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>cadena de texto con la ruta del xsd</p>
+                    <section class="phpdocumentor-description"><p>asunto del correo</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$crearCuerpo</span>
+                : <span class="phpdocumentor-argument-list__argument__type">callable</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>función que recibe la instancia y devuelve el HTML</p>
 </section>
 
             </dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Email\InvalidArgumentException">InvalidArgumentException</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"></section>
 
-                                    </dd>
-                        </dl>
-
+        
+    
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>devuelve un array con los datos de</p>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve true si el correo se envió</p>
 </section>
 
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_pedirApi">
+        pedirApi()
+        <a href="classes/Email-email.html#method_pedirApi" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Email/email.php"><a href="files/php-email-email.html"><abbr title="php/Email/email.php">email.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">175</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que hace una petición a hotelnube-api. Si recibe datos los envía
+por POST como JSON</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">pedirApi</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ruta</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$datos</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
     
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$ruta</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>ruta del endpoint</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$datos</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;|null</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>datos a enviar por POST</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string|false</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve la respuesta o false si falla</p>
+</section>
+
+            </section>
+
 </article>
             </section>
 
+        
     </article>
-                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+                                </section>
+                <section class="phpdocumentor-on-this-page__sidebar">
+                                
+    <section class="phpdocumentor-on-this-page__content">
+        <strong class="phpdocumentor-on-this-page__title">On this page</strong>
+
+        <ul class="phpdocumentor-list -clean">
+            <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                        <li><a href="classes/Email-email.html#toc-constants">Constants</a></li>
+                                                            <li><a href="classes/Email-email.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Email-email.html#toc-methods">Methods</a></li>
+                                    </ul>
+            </li>
+                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Email-email.html#constant_TIMEOUT">TIMEOUT</a></li>
+                                            </ul>
+                </li>
+            
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Email-email.html#property_email">$email</a></li>
+                                                    <li class=""><a href="classes/Email-email.html#property_pass">$pass</a></li>
+                                            </ul>
+                </li>
+            
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li class=""><a href="classes/Email-email.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/Email-email.html#method_crearContenidoCorreo">crearContenidoCorreo()</a></li>
+                                            <li class=""><a href="classes/Email-email.html#method_crearContenidoReserva">crearContenidoReserva()</a></li>
+                                            <li class=""><a href="classes/Email-email.html#method_enviarBienvenida">enviarBienvenida()</a></li>
+                                            <li class=""><a href="classes/Email-email.html#method_enviarConfirmacionReserva">enviarConfirmacionReserva()</a></li>
+                                            <li class=""><a href="classes/Email-email.html#method_enviarCorreo">enviarCorreo()</a></li>
+                                            <li class=""><a href="classes/Email-email.html#method_estaConfigurado">estaConfigurado()</a></li>
+                                            <li class=""><a href="classes/Email-email.html#method_leer_configCorreo">leer_configCorreo()</a></li>
+                                            <li class=""><a href="classes/Email-email.html#method_enviarSeguro">enviarSeguro()</a></li>
+                                            <li class=""><a href="classes/Email-email.html#method_pedirApi">pedirApi()</a></li>
+                                    </ul>
+            </li>
+                    </ul>
+    </section>
+
+                </section>
+                            </div>
+            <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
             <h2 class="phpdocumentor-search-results__title">Search results</h2>
@@ -562,7 +1047,6 @@ el nombre de usuarios y contraseña del correo</p>
         </section>
     </section>
 </section>
-            </div>
         </div>
         <a href="classes/Email-email.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
@@ -571,5 +1055,9 @@ el nombre de usuarios y contraseña del correo</p>
     <script>
         cssVars({});
     </script>
+    <script src="recursos/prism/prism.js"></script>
+    <script src="recursos/prism/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="recursos/prism/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="recursos/prism/plugins/line-highlight/prism-line-highlight.min.js"></script>
 </body>
 </html>

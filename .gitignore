@@ -2,7 +2,10 @@
 nbproject/
 # Ignore node dependency directories
 node_modules/
-composer.lock
+# Dependencias de Composer (se instalan con composer install)
+/vendor/
+# Caché de PHPUnit
+.phpunit.cache/
 test.php
 .phpdoc
 # Configuración local con credenciales

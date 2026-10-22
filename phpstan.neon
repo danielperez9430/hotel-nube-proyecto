@@ -1,0 +1,15 @@
+parameters:
+    level: 5
+    paths:
+        - php
+        - public
+        - views
+        - autoload.php
+    bootstrapFiles:
+        - autoload.php
+    ignoreErrors:
+        # Las vistas son plantillas HTML: el salto de línea final se envía
+        # dentro del <body>, después de que la página ya ha empezado
+        -
+            identifier: whitespace.fileEnd
+            path: views/*

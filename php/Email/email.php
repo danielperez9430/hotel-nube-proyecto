@@ -37,7 +37,7 @@ class email {
      *
      * @param string $correo cadena de texto con la dirección del correo del usuario
      * @param string $cuerpo cadena de texto con la información del correo
-     * @param sting $asunto cadena de texto opcional con el asunto del correo
+     * @param string $asunto cadena de texto opcional con el asunto del correo
      * @return mixed Duelve true si el correo fue envia con exito, en caso contrario
      * devuelve el error
      */
@@ -174,7 +174,8 @@ class email {
      */
     private function pedirApi($ruta, $datos = null) {
 
-        $api = rtrim(config::get('API_URL', 'http://localhost:8001'), '/');
+        // Dentro de Docker el servidor llega a la API por otra dirección que el navegador
+        $api = rtrim(config::get('API_INTERNAL_URL', '') ?: config::get('API_URL', 'http://localhost:8001'), '/');
 
         $opciones = ['timeout' => self::TIMEOUT, 'ignore_errors' => false];
 

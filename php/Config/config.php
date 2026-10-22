@@ -34,6 +34,16 @@ class config {
     }
 
     /**
+     * Función que cambia el fichero .env que se lee (se usa en los tests)
+     * 
+     * @param string $fichero cadena de texto con la ruta del fichero
+     */
+    static function usarFichero($fichero) {
+        self::$fichero = $fichero;
+        self::$valores = null;
+    }
+
+    /**
      * Función que obtiene una variable obligatoria
      * 
      * @param string $clave nombre de la variable

@@ -110,7 +110,7 @@ $(document).ready(function () {
             // Guardamos la búsqueda para repetirla tras el login
             try {
                 sessionStorage.setItem(BUSQUEDA_PENDIENTE, JSON.stringify(estancia));
-            } catch (error) {
+            } catch {
                 // Sin sessionStorage solo se pierde la búsqueda
             }
 
@@ -223,7 +223,7 @@ $(document).ready(function () {
 
             buscarHabitaciones(pendiente.checkin, pendiente.checkout);
         }
-    } catch (error) {
+    } catch {
         // Búsqueda pendiente no válida: la ignoramos
     }
 });

@@ -1,0 +1,112 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  php:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4']
+
+    services:
+      mariadb:
+        image: mariadb:11.4.13
+        env:
+          MARIADB_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+
+    env:
+      DB_TESTS: '1'
+      DB_HOST: 127.0.0.1
+      DB_USER_ADMIN: hotel_admin
+      DB_PASSWORD_ADMIN: ci_admin
+      DB_USER_CONEXION: hotel_conexion
+      DB_PASSWORD_CONEXION: ci_conexion
+      DB_USER_ESTANDAR: hotel_estandar
+      DB_PASSWORD_ESTANDAR: ci_estandar
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: pdo_mysql
+          coverage: none
+          tools: composer:v2
+
+      - name: Validar composer.json
+        run: composer validate --strict
+
+      - name: Instalar dependencias
+        run: composer install --no-interaction --no-progress
+
+      - name: Comprobar la sintaxis
+        run: composer lint
+
+      - name: Análisis estático (PHPStan)
+        run: composer analyse
+
+      - name: Crear la base de datos
+        run: |
+          mysql -h 127.0.0.1 -u root -proot < config/db_hotel.sql
+          sed -e "s/CAMBIAR_CLAVE_ADMIN/$DB_PASSWORD_ADMIN/" \
+              -e "s/CAMBIAR_CLAVE_CONEXION/$DB_PASSWORD_CONEXION/" \
+              -e "s/CAMBIAR_CLAVE_ESTANDAR/$DB_PASSWORD_ESTANDAR/" \
+              config/db_usuarios.sql | mysql -h 127.0.0.1 -u root -proot
+
+      - name: Tests (PHPUnit)
+        run: composer test
+
+  javascript:
+    name: JavaScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: ESLint
+        run: npm run lint
+
+  docker:
+    name: Docker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validar docker-compose.yml
+        run: |
+          sed -e 's/^DB_PASSWORD_ADMIN=$/DB_PASSWORD_ADMIN=x/' \
+              -e 's/^DB_PASSWORD_CONEXION=$/DB_PASSWORD_CONEXION=x/' \
+              -e 's/^DB_PASSWORD_ESTANDAR=$/DB_PASSWORD_ESTANDAR=x/' \
+              -e 's/^DB_ROOT_PASSWORD=$/DB_ROOT_PASSWORD=x/' \
+              .env.example > .env
+          docker compose config --quiet
+
+      - name: Construir la imagen de la web
+        run: docker build -f docker/web/Dockerfile -t hotel-nube-web .
+
+      - name: Comprobar la imagen
+        run: |
+          docker run --rm hotel-nube-web php -m | grep -i pdo_mysql
+          docker run --rm hotel-nube-web php -r 'require "vendor/autoload.php"; echo class_exists("PHPMailer\\PHPMailer\\PHPMailer") ? "PHPMailer OK\n" : exit(1);'
+          docker run --rm hotel-nube-web test ! -e vendor/phpunit
