@@ -367,6 +367,9 @@ Estética de hotel de lujo art déco: fondos oscuros, detalles dorados y tipogra
 | 🟨 Oro | `#DCB004` | Logo, iconos y detalles |
 | 🟫 Oro suave | `#C9A44C` | Textos secundarios y líneas finas |
 | 🤍 Marfil | `#F5EFE0` | Textos sobre fondo oscuro |
+| 🍷 Burdeos | `#8A2C2C` | Acciones destructivas (cancelar, borrar) |
+
+Los componentes de Bootstrap (botones, formularios, diálogos y avisos) usan esta paleta a través de `public/src/css/marca.css`, que redefine sus variables CSS y se carga justo después de Bootstrap en todas las páginas: botones principales en carbón con texto dorado, cabeceras de los diálogos en carbón con el título en marfil y foco de los campos en oro.
 
 | Recurso | Fichero |
 | ------- | ------- |

@@ -196,7 +196,7 @@ $(document).ready(function () {
             success: function (response) {
                 $('#bookingSummary').html(`
                     <div class="text-center">
-                        <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                        <i class="fas fa-check-circle fa-3x text-brand mb-3"></i>
                         <p class="fs-5 mb-1">Booking <strong>#${esc(response.booking)}</strong> confirmed!</p>
                         <p class="mb-0">We have sent the details to your email. Total: <strong>${euros(response.total)}</strong></p>
                     </div>`);

@@ -21,6 +21,7 @@ s::comprobarAdmin();
     <meta name="theme-color" content="#1F2929">
     <!-- Librerías (copias locales en src/vendor) -->
     <link href="src/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="src/css/marca.css" rel="stylesheet" />
     <link href="src/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="src/vendor/fontawesome/css/all.min.css"/>
     <link rel="stylesheet" href="src/css/adminPanel.css">
