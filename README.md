@@ -41,7 +41,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 | ---- | ---------- |
 | 🐘 Backend | PHP 8 + PDO |
 | 🗄️ Base de datos | MariaDB / MySQL |
-| 🎨 Frontend | Bootstrap 5.3, jQuery 3.7, Font Awesome 5, Litepicker 2 |
+| 🎨 Frontend | Bootstrap 5.3, jQuery 3.7, Font Awesome 5, Litepicker 2 (copias locales en `public/src/vendor`) |
 | ✉️ Correo | PHPMailer 7 |
 | 🌍 Datos y plantillas de correo | [hotelnube-api](https://github.com/danielperez9430/hotelnube-api) (Node.js) |
 
@@ -218,11 +218,14 @@ hotel-nube-proyecto/
 │   └── Tools/                # Utilidades (contraseñas, validaciones)
 ├── 📁 public/                # Raíz pública del servidor web
 │   ├── api/                  # Endpoints JSON
-│   ├── src/                  # CSS, JS, imágenes e iconos
-│   ├── index.php             # Página principal
-│   ├── contact.php
-│   └── adminPanel.php        # Panel de administración
-├── 📁 views/                 # Cabecera y pie comunes
+│   ├── src/                  # CSS, JS, imágenes, iconos y logo
+│   │   └── vendor/           # Bootstrap, jQuery, Litepicker y Font Awesome
+│   ├── index.php             # Página principal y búsqueda de habitaciones
+│   ├── contact.php           # Contacto
+│   ├── privacy.php           # Privacidad, cookies y cancelación
+│   ├── adminPanel.php        # Panel de administración
+│   └── favicon.svg / .ico
+├── 📁 views/                 # Cabecera, pie y diálogo de login comunes
 ├── 📁 vendor/                # Dependencias de Composer (PHPMailer)
 ├── 📄 autoload.php           # Autocarga de las clases de php/
 ├── 📄 composer.json
@@ -243,7 +246,7 @@ La documentación de las clases está generada con [phpDocumentor](https://www.p
 - ⏳ Límite de intentos de login: 5 fallos por email o 20 por IP en 15 minutos. Además, el tiempo de respuesta es el mismo exista o no el usuario.
 - 👑 El panel y los endpoints de administración comprueban el rol en el servidor.
 - 🤫 Las credenciales solo están en el `.env`, que no se sube al repositorio.
-- 🌐 Todas las librerías del CDN se cargan con comprobación de integridad (SRI).
+- 🏠 Sin recursos de terceros: librerías, fuentes e iconos se sirven desde `public/src/vendor`, así que ninguna visita llega a un CDN.
 
 > [!CAUTION]
 > Nunca subas el fichero `.env` al repositorio. Si alguna credencial llega a publicarse, cámbiala: aunque borres el fichero, sigue en el historial de git.
