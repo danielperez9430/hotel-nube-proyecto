@@ -663,6 +663,11 @@ body:has(> .page) {
     color: #DCB004;
 }
 
+.booking-status.in-house {
+    background-color: #DCB004;
+    color: #1F2929;
+}
+
 .booking-status.past {
     background-color: #e9e4d6;
     color: #1F2929;

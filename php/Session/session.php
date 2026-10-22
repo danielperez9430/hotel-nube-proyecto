@@ -101,6 +101,19 @@ class session {
     }
 
     /**
+     * Función para los endpoints de administración: si el usuario no es
+     * administrador responde 403 en JSON y termina la ejecución
+     */
+    static function exigirAdminApi() {
+        if (!self::esAdmin()) {
+            http_response_code(403);
+            header('content-type: application/json; charset=utf-8');
+            echo json_encode(['result' => 'fail', 'code' => 3]);
+            exit;
+        }
+    }
+
+    /**
      * Función que devuelve el token CSRF de la sesión, creándolo si no existe
      * 
      * @return string cadena de texto con el token

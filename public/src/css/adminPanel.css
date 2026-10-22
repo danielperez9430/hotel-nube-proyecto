@@ -43,23 +43,123 @@
 }
 
 .mainContent {
-    margin-top: 100px;
-    margin-left: 20%;
-    margin-right: 20%
+    max-width: 1200px;
+    margin: 90px auto 40px;
+    padding: 0 16px;
 }
 
-table tbody tr {
-    transition: 0.1s;
+/* Pestañas del panel */
+.admin-tabs {
+    border-bottom: 1px solid rgba(31, 41, 41, 0.15);
+    margin-bottom: 24px;
 }
 
-table tbody tr:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+.admin-tabs .nav-link {
+    color: #1F2929;
+    border: none;
+    border-bottom: 2px solid transparent;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 13px;
+    padding: 12px 18px;
+}
+
+.admin-tabs .nav-link i {
+    margin-right: 6px;
+    color: #C9A44C;
+}
+
+.admin-tabs .nav-link:hover {
+    border-bottom-color: rgba(220, 176, 4, 0.5);
+}
+
+.admin-tabs .nav-link.active {
+    color: #1F2929;
+    background: transparent;
+    border-bottom-color: #DCB004;
+    font-weight: 600;
+}
+
+.admin-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+/* Filas que se pueden pulsar para editar */
+.roomClickableRow,
+.serviceRow {
+    transition: background-color 0.1s;
     cursor: pointer;
 }
 
-table tbody tr:active {
-    background-color: rgba(0, 0, 0, 0.2);
-    cursor: pointer;
+.roomClickableRow:hover,
+.roomClickableRow:focus-visible,
+.serviceRow:hover,
+.serviceRow:focus-visible {
+    background-color: rgba(220, 176, 4, 0.08);
+    outline: none;
+}
+
+.admin-table th {
+    color: #1F2929;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.service-icon {
+    width: 40px;
+    color: #C9A44C;
+    text-align: center;
+}
+
+.service-unavailable td {
+    opacity: 0.55;
+}
+
+#serviceIconPreview {
+    margin-left: 6px;
+    color: #C9A44C;
+}
+
+/* Resumen de ocupación */
+.occupancy {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.occupancy-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px;
+    background: linear-gradient(180deg, #243030 0%, #1f2929 100%);
+    border-top: 2px solid #DCB004;
+    border-radius: 4px;
+    color: #F5EFE0;
+}
+
+.occupancy-card i {
+    color: #DCB004;
+}
+
+.occupancy-value {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.occupancy-label {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(245, 239, 224, 0.7);
 }
 
 
