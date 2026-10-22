@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    // El selector de fechas solo está en la página principal
+    if (!document.getElementById('fechaInicio')) {
+        return;
+    }
+
     var dateToday = new Date();
     
     // Se expone para poder restaurar las fechas de una búsqueda pendiente

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src=".github/banner.png" alt="Hotel Nube — Where your dreams will be as soft as the clouds" width="100%">
+</p>
+
 # ☁️ Hotel Nube
 
 > *Where your dreams will be as soft as the clouds* ✨
@@ -17,6 +21,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 - [🗂️ Estructura del proyecto](#️-estructura-del-proyecto)
 - [📚 Documentación del código](#-documentación-del-código)
 - [🔒 Seguridad](#-seguridad)
+- [🎨 Identidad visual](#-identidad-visual)
 - [🤝 Contribuir](#-contribuir)
 
 ## ✨ Funcionalidades
@@ -36,7 +41,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 | ---- | ---------- |
 | 🐘 Backend | PHP 8 + PDO |
 | 🗄️ Base de datos | MariaDB / MySQL |
-| 🎨 Frontend | Bootstrap 5.3, jQuery 3.7, Font Awesome 5, Litepicker 2 |
+| 🎨 Frontend | Bootstrap 5.3, jQuery 3.7, Font Awesome 5, Litepicker 2 (copias locales en `public/src/vendor`) |
 | ✉️ Correo | PHPMailer 7 |
 | 🌍 Datos y plantillas de correo | [hotelnube-api](https://github.com/danielperez9430/hotelnube-api) (Node.js) |
 
@@ -213,11 +218,14 @@ hotel-nube-proyecto/
 │   └── Tools/                # Utilidades (contraseñas, validaciones)
 ├── 📁 public/                # Raíz pública del servidor web
 │   ├── api/                  # Endpoints JSON
-│   ├── src/                  # CSS, JS, imágenes e iconos
-│   ├── index.php             # Página principal
-│   ├── contact.php
-│   └── adminPanel.php        # Panel de administración
-├── 📁 views/                 # Cabecera y pie comunes
+│   ├── src/                  # CSS, JS, imágenes, iconos y logo
+│   │   └── vendor/           # Bootstrap, jQuery, Litepicker y Font Awesome
+│   ├── index.php             # Página principal y búsqueda de habitaciones
+│   ├── contact.php           # Contacto
+│   ├── privacy.php           # Privacidad, cookies y cancelación
+│   ├── adminPanel.php        # Panel de administración
+│   └── favicon.svg / .ico
+├── 📁 views/                 # Cabecera, pie y diálogo de login comunes
 ├── 📁 vendor/                # Dependencias de Composer (PHPMailer)
 ├── 📄 autoload.php           # Autocarga de las clases de php/
 ├── 📄 composer.json
@@ -238,10 +246,31 @@ La documentación de las clases está generada con [phpDocumentor](https://www.p
 - ⏳ Límite de intentos de login: 5 fallos por email o 20 por IP en 15 minutos. Además, el tiempo de respuesta es el mismo exista o no el usuario.
 - 👑 El panel y los endpoints de administración comprueban el rol en el servidor.
 - 🤫 Las credenciales solo están en el `.env`, que no se sube al repositorio.
-- 🌐 Todas las librerías del CDN se cargan con comprobación de integridad (SRI).
+- 🏠 Sin recursos de terceros: librerías, fuentes e iconos se sirven desde `public/src/vendor`, así que ninguna visita llega a un CDN.
 
 > [!CAUTION]
 > Nunca subas el fichero `.env` al repositorio. Si alguna credencial llega a publicarse, cámbiala: aunque borres el fichero, sigue en el historial de git.
+
+## 🎨 Identidad visual
+
+Estética de hotel de lujo art déco: fondos oscuros, detalles dorados y tipografía serif.
+
+| Color | Hex | Uso |
+| ----- | --- | --- |
+| ⬛ Carbón | `#1F2929` | Fondo de la marca, barra de navegación y pie |
+| 🌑 Noche | `#111717` | Fondos profundos y degradados |
+| 🟨 Oro | `#DCB004` | Logo, iconos y detalles |
+| 🟫 Oro suave | `#C9A44C` | Textos secundarios y líneas finas |
+| 🤍 Marfil | `#F5EFE0` | Textos sobre fondo oscuro |
+
+| Recurso | Fichero |
+| ------- | ------- |
+| Logo vectorial | `public/src/logo/hotel_nube.svg` |
+| Logo PNG (correos) | `public/src/logo/hotel_nube.png` |
+| Favicon | `public/favicon.svg`, `public/favicon.ico`, `public/apple-touch-icon.png` |
+| Banner del README | `.github/banner.png` |
+
+Tipografías del banner: *Cormorant Garamond* y *Montserrat* (licencia OFL).
 
 ## 🤝 Contribuir
 

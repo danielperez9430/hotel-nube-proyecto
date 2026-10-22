@@ -1,7 +1,19 @@
 $(document).ready(function () {
     var loginDialog = document.getElementById('loginDialog');
+
+    // El diálogo solo existe para los visitantes sin sesión
+    if (!loginDialog) {
+        return;
+    }
+
+    // Cargamos los países la primera vez que se abre el diálogo
+    var paisesCargados = false;
+
     loginDialog.addEventListener('shown.bs.modal', function () {
-       
+        if (!paisesCargados) {
+            paisesCargados = true;
+            getCountries();
+        }
     });
 
     const getCountries = async () => {
@@ -22,8 +34,6 @@ $(document).ready(function () {
         valores.forEach(valor => select.add(new Option(valor, valor)));
         select.disabled = valores.length === 0;
     }
-    
-    getCountries();
 
     $('#goRegister').click(function (e) { 
         e.preventDefault();
