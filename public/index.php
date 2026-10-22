@@ -42,6 +42,7 @@ require_once(__DIR__ . '/../views/header.php');
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div id="loginNotice" class="alert alert-info" style="display: none;"></div>
                 <div class="loginContent" id="loginContent">
                     <input type="email" class="form-control" id="loginEmail" placeholder="Email" autocomplete="off"\>
                     <input type="password" class="form-control" id="loginPassword" placeholder="Password" autocomplete="off"\>
@@ -123,11 +124,47 @@ require_once(__DIR__ . '/../views/header.php');
                 </div>
             </div>
             <div class="divBotonBuscar">
-                <button type="button" class="btn btn-primary buscar"><i class="fas fa-search"></i>Search</button>
+                <button type="button" class="btn btn-primary buscar" id="searchRooms"><i class="fas fa-search"></i>Search</button>
             </div>
         </div>
     </div>
 </form>
+
+<!-- Habitaciones disponibles -->
+<div class="modal fade" id="roomsDialog" tabindex="-1" aria-labelledby="roomsDialogTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title" id="roomsDialogTitle">Available rooms</h5>
+                    <span id="roomsDialogStay" class="text-muted"></span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="roomsMessage" class="alert alert-info" style="display: none;"></div>
+                <div id="roomSelection"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmación de la reserva -->
+<div class="modal fade" id="bookingDialog" tabindex="-1" aria-labelledby="bookingDialogTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookingDialogTitle">Confirm your booking</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="bookingSummary"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="bookingCancel">Cancel</button>
+                <button type="button" class="btn btn-primary" id="bookingConfirm"><i class="fas fa-check"></i> Confirm booking</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php
 require_once(__DIR__ . '/../views/footer.php');

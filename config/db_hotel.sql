@@ -4,6 +4,10 @@
 -- Los usuarios de base de datos se crean aparte con db_usuarios.sql
 -- ---------------------------------------------------------------
 
+-- El script está en UTF-8: sin esto, el cliente puede leerlo como latin1
+-- y guardar mal los acentos y las eñes
+SET NAMES utf8mb4;
+
 DROP DATABASE IF EXISTS hotel;
 
 CREATE DATABASE hotel CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -191,7 +195,7 @@ INSERT INTO imagenes_habitaciones (id_habitacion_tipo, imagen_habitacion, descri
     (3, '/src/img/rustic_room/chimenea_hab_rustica.jpg', 'Chimenea de la habitación rustica'),
     (3, '/src/img/rustic_room/mesa-salon_hab_rustica.jpg', 'Mesa salón habitación rustica'),
     (3, '/src/img/rustic_room/sofa_hab_rustica.jpg', 'Sofá con una amplia ventana'),
-    (4, '/src/img/single_room/baño_hab_simple.jpg', 'Salón con sofá color crema'),
+    (4, '/src/img/single_room/bano_hab_simple.jpg', 'Salón con sofá color crema'),
     (4, '/src/img/single_room/cama_hab_simple.jpg', 'Cama moderna con colores claros'),
     (4, '/src/img/single_room/hamaca_exterior_hab_simple.jpg', 'Hamaca exterior doble'),
     (4, '/src/img/single_room/salon_hab_simple.jpg', 'Salón moderno con mesita para el café'),

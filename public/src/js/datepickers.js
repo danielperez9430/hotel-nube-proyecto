@@ -1,7 +1,8 @@
 $(document).ready(function () {
     var dateToday = new Date();
     
-    const picker = new Litepicker({ 
+    // Se expone para poder restaurar las fechas de una búsqueda pendiente
+    const picker = window.pickerFechas = new Litepicker({ 
         element: document.getElementById('fechaInicio'),
         elementEnd: document.getElementById('fechaFin'),
         minDate: dateToday,

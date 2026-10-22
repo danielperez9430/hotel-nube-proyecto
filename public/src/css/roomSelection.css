@@ -79,7 +79,7 @@
     transition: 0.2s;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    margin: 40px 0;
+    margin: 0 0 24px;
 }
 
 .room .top {
@@ -167,4 +167,35 @@
 .notavailable {
         text-decoration:line-through;
         color: red;
+}
+
+/* Pantallas pequeñas: la imagen pasa encima del contenido */
+@media (max-width: 768px) {
+    .room {
+        padding: 20px;
+    }
+
+    .room .top {
+        flex-direction: column;
+    }
+
+    .room .top #picture,
+    .room .top .content {
+        width: 100%;
+        margin: 0 0 16px;
+    }
+
+    .room .top .content .details {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .room .price {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .room .price #summary {
+        margin-right: 0;
+    }
 }
