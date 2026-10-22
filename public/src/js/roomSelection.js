@@ -178,14 +178,25 @@ $(document).ready(function () {
         });
     });
 
-    // Reservas del usuario
-    $('#myBookings').click(function (e) {
-        e.preventDefault();
+    // Reservas del usuario, por número de reserva
+    var misReservas = {};
+    // Reserva que se va a cancelar y cargo mostrado al cliente
+    var cancelacion = null;
 
-        $('#userLoggedMenu').css('display', 'none');
-        $('#userLoggedMenuBase').css('display', 'none');
+    const fechaHora = texto => new Date(texto).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+    function estadoReserva(r) {
+        if (r.estado === 'cancelada') {
+            const cargo = Number(r.cargo_cancelacion) > 0 ? ` · ${euros(r.cargo_cancelacion)} charge` : '';
+            return `<span class="badge booking-status cancelled">Cancelled</span><small class="d-block text-muted">${esc(fecha(String(r.fecha_cancelacion).slice(0, 10)))}${cargo}</small>`;
+        }
+
+        const pasada = r.fecha_salida < new Date().toISOString().slice(0, 10);
+        return `<span class="badge booking-status ${pasada ? 'past' : 'confirmed'}">${pasada ? 'Completed' : 'Confirmed'}</span>`;
+    }
+
+    function cargarReservas() {
         $('#myBookingsList').html('<p class="text-muted">Loading...</p>');
-        modal('myBookingsDialog').show();
 
         $.getJSON('api/myBookings.php', function (response) {
             if (response.bookings.length === 0) {
@@ -193,21 +204,104 @@ $(document).ready(function () {
                 return;
             }
 
-            const filas = response.bookings.map(r => `<tr>
+            misReservas = {};
+            response.bookings.forEach(r => { misReservas[r.num_reserva] = r; });
+
+            const filas = response.bookings.map(r => `<tr${r.estado === 'cancelada' ? ' class="booking-cancelled"' : ''}>
                     <td>#${esc(r.num_reserva)}</td>
                     <td>${esc(r.tipo_habitacion)} · ${esc(r.id_habitacion)}</td>
                     <td>${fecha(r.fecha_entrada)}</td>
                     <td>${fecha(r.fecha_salida)}</td>
                     <td class="text-end">${euros(r.total)}</td>
+                    <td>${estadoReserva(r)}</td>
+                    <td class="text-end">${r.cancelacion ? `<button class="btn btn-sm btn-outline-danger cancelBooking" data-booking="${esc(r.num_reserva)}">Cancel</button>` : ''}</td>
                 </tr>`).join('');
 
-            $('#myBookingsList').html(`<table class="table align-middle mb-0">
-                    <thead><tr><th>Booking</th><th>Room</th><th>Check-in</th><th>Check-out</th><th class="text-end">Total</th></tr></thead>
+            $('#myBookingsList').html(`<div class="table-responsive"><table class="table align-middle mb-0">
+                    <thead><tr><th>Booking</th><th>Room</th><th>Check-in</th><th>Check-out</th><th class="text-end">Total</th><th>Status</th><th></th></tr></thead>
                     <tbody>${filas}</tbody>
-                </table>`);
+                </table></div>
+                <p class="small text-muted mt-3 mb-0">Cancellations follow our <a href="privacy.php#cancellation">cancellation policy</a>.</p>`);
         }).fail(function () {
             $('#myBookingsList').html('<div class="alert alert-danger mb-0">Your bookings could not be loaded.</div>');
         });
+    }
+
+    $('#myBookings').click(function (e) {
+        e.preventDefault();
+
+        $('#userLoggedMenu').css('display', 'none');
+        $('#userLoggedMenuBase').css('display', 'none');
+        cargarReservas();
+        modal('myBookingsDialog').show();
+    });
+
+    function resumenCancelacion(r, cargo) {
+        const texto = cargo > 0
+            ? `Cancelling now has a charge of <strong>${euros(cargo)}</strong>, according to our cancellation policy.`
+            : `Cancelling now is <strong>free of charge</strong> (free until ${esc(fechaHora(r.cancelacion.gratis_hasta))}).`;
+
+        $('#cancelBookingSummary').html(`
+            <p class="mb-1"><strong>Booking #${esc(r.num_reserva)}</strong> · ${esc(r.tipo_habitacion)}</p>
+            <p class="mb-3"><i class="far fa-calendar"></i> ${fecha(r.fecha_entrada)} → ${fecha(r.fecha_salida)}</p>
+            <p class="mb-0">${texto}</p>`);
+    }
+
+    $(document).on('click', '.cancelBooking', function (e) {
+        e.preventDefault();
+
+        const r = misReservas[this.dataset.booking];
+        cancelacion = { booking: r.num_reserva, charge: r.cancelacion.cargo };
+
+        resumenCancelacion(r, r.cancelacion.cargo);
+        $('#cancelBookingMessage').hide();
+        $('#cancelBookingConfirm').prop('disabled', false).show();
+        $('#cancelBookingClose').text('Keep booking');
+
+        modal('myBookingsDialog').hide();
+        modal('cancelBookingDialog').show();
+    });
+
+    $('#cancelBookingConfirm').click(function (e) {
+        e.preventDefault();
+
+        const boton = this;
+        boton.disabled = true;
+
+        $.ajax({
+            type: 'POST',
+            url: 'api/cancelBooking.php',
+            data: cancelacion,
+            dataType: 'JSON',
+            success: function (response) {
+                const cargo = response.charge > 0 ? ` A charge of ${euros(response.charge)} applies.` : ' No charge applies.';
+                $('#cancelBookingMessage').attr('class', 'alert alert-success mt-3 mb-0').text('Your booking has been cancelled.' + cargo + ' We have sent you a confirmation email.').show();
+                $(boton).hide();
+                $('#cancelBookingClose').text('Close');
+            },
+            error: function (xhr) {
+                const respuesta = xhr.responseJSON || {};
+
+                if (respuesta.code === 7) {
+                    // El cargo ha cambiado: lo mostramos y pedimos confirmar otra vez
+                    cancelacion.charge = respuesta.charge;
+                    resumenCancelacion(misReservas[cancelacion.booking], respuesta.charge);
+                    $('#cancelBookingMessage').attr('class', 'alert alert-warning mt-3 mb-0').text(respuesta.message).show();
+                    boton.disabled = false;
+                    return;
+                }
+
+                $('#cancelBookingMessage').attr('class', 'alert alert-danger mt-3 mb-0').text(respuesta.message || 'The booking could not be cancelled. Try again.').show();
+                $(boton).hide();
+                $('#cancelBookingClose').text('Close');
+            }
+        });
+    });
+
+    // Al cerrar el diálogo volvemos a la lista de reservas actualizada
+    $('#cancelBookingDialog').on('hidden.bs.modal', function () {
+        cargarReservas();
+        modal('myBookingsDialog').show();
     });
 
     // Repetimos la búsqueda pendiente tras el login

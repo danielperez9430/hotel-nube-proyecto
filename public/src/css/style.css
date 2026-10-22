@@ -651,3 +651,30 @@ body:has(> .page) {
 .reset-card {
     max-width: 480px;
 }
+
+/* Estado de las reservas en "My bookings" */
+.booking-status {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.booking-status.confirmed {
+    background-color: #1F2929;
+    color: #DCB004;
+}
+
+.booking-status.past {
+    background-color: #e9e4d6;
+    color: #1F2929;
+}
+
+.booking-status.cancelled {
+    background-color: transparent;
+    color: #8a2c2c;
+    border: 1px solid #8a2c2c;
+}
+
+.booking-cancelled td:not(:nth-last-child(-n+2)) {
+    color: #8b8b8b;
+    text-decoration: line-through;
+}

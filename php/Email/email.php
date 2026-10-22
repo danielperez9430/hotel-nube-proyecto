@@ -141,6 +141,20 @@ class email {
     }
 
     /**
+     * Función que envía la confirmación de una reserva cancelada. Los errores
+     * se registran en el log sin interrumpir la cancelación
+     * 
+     * @param string $correo cadena de texto con el email del usuario
+     * @param array $datos array con nombre, reserva, entrada, salida (Y-m-d) y cargo
+     * @return boolean devuelve true si el correo se envió
+     */
+    static function enviarCancelacion($correo, $datos) {
+        return self::enviarSeguro($correo, 'Your Hotel Nube booking #' . $datos['reserva'] . ' has been cancelled', function () use ($datos) {
+            return self::plantilla('cancelacion', $datos);
+        });
+    }
+
+    /**
      * Función que genera el HTML de una plantilla de correo de views/correos
      * 
      * @param string $plantilla nombre de la plantilla (sin .php)

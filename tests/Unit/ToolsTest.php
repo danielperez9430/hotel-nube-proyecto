@@ -122,4 +122,40 @@ class ToolsTest extends TestCase {
         $this->assertNull($tool->validarPassword('ññññññññ'));
         $this->assertNotNull($tool->validarPassword(str_repeat('ñ', 37)));
     }
+
+    /**
+     * Momentos de cancelación de una reserva con entrada el 20-06-2030
+     * (15:00 en Madrid = 13:00 UTC, horario de verano)
+     */
+    public static function tramosDeCancelacion(): array {
+        return [
+            'más de 72 horas: gratis' => ['2030-06-17 12:59', 1, 0.0],
+            'justo a 72 horas: 50%' => ['2030-06-17 13:00', 1, 60.0],
+            'entre 72 y 24 horas: 50%' => ['2030-06-18 20:00', 1, 60.0],
+            'menos de 24 horas: primera noche' => ['2030-06-19 13:30', 1, 120.0],
+            'grupo a 10 días: 50%' => ['2030-06-10 12:00', 3, 60.0],
+            'grupo a 15 días: gratis' => ['2030-06-05 12:00', 3, 0.0],
+        ];
+    }
+
+    #[DataProvider('tramosDeCancelacion')]
+    public function testCargoDeCancelacionSegunLaPolitica(string $ahoraUtc, int $habitaciones, float $cargo): void {
+        $ahora = new \DateTimeImmutable($ahoraUtc, new \DateTimeZone('UTC'));
+
+        $resultado = $this->tools->cargoCancelacion('2030-06-20', 120.0, $habitaciones, $ahora);
+
+        $this->assertSame($cargo, $resultado['cargo']);
+    }
+
+    public function testElPlazoGratuitoSeCuentaDesdeLaHoraDeEntradaDelHotel(): void {
+        $resultado = $this->tools->cargoCancelacion('2030-06-20', 120.0, 1, new \DateTimeImmutable('2030-06-01'));
+
+        $this->assertSame('2030-06-17T15:00:00+02:00', $resultado['gratis_hasta']);
+    }
+
+    public function testNoSePuedeCancelarDesdeLaHoraDeEntrada(): void {
+        $this->assertNull($this->tools->cargoCancelacion('2030-06-20', 120.0, 1, new \DateTimeImmutable('2030-06-20 13:00', new \DateTimeZone('UTC'))));
+        $this->assertNull($this->tools->cargoCancelacion('2030-06-20', 120.0, 1, new \DateTimeImmutable('2030-06-25')));
+        $this->assertNull($this->tools->cargoCancelacion('no-es-fecha', 120.0));
+    }
 }
