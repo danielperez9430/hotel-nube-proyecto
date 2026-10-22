@@ -683,3 +683,27 @@ body:has(> .page) {
     color: #8b8b8b;
     text-decoration: line-through;
 }
+
+/* Extras del resumen de la reserva */
+.booking-extras {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border: 1px solid rgba(201, 164, 76, 0.4);
+    border-radius: 4px;
+    background-color: rgba(245, 239, 224, 0.5);
+}
+
+.booking-extras:empty {
+    display: none;
+}
+
+.booking-extras-title {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.booking-extras .form-check-label i {
+    width: 20px;
+    color: #C9A44C;
+    text-align: center;
+}

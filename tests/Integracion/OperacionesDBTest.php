@@ -32,6 +32,7 @@ class OperacionesDBTest extends TestCase {
         }
 
         // Empezamos cada prueba sin reservas, usuarios ni intentos de login
+        self::$admin->exec('DELETE FROM reservas_servicios');
         self::$admin->exec('DELETE FROM habitaciones_reservas');
         self::$admin->exec('DELETE FROM reservas');
         self::$admin->exec('DELETE FROM usuarios');
@@ -371,5 +372,48 @@ class OperacionesDBTest extends TestCase {
         $this->assertSame(0, $admin->guardarServicio(999999, $datos));
         $this->assertTrue($admin->borrarServicio($id));
         $this->assertFalse($admin->borrarServicio($id));
+    }
+
+    public function testReservaConServiciosExtra(): void {
+        $ana = $this->registrar();
+        $con = new db('estandar');
+        $admin = new db('admin');
+
+        // El 10 (Rooftop Cloud Dinner) no está disponible y se descarta
+        $servicios = $con->obtenerServiciosDisponibles([3, 7, 7, 10, 9999]);
+        $this->assertSame([3, 7], array_map('intval', array_column($servicios, 'id')));
+
+        $reserva = $con->crearReserva($ana, 5, $this->fecha(20), $this->fecha(22), $servicios);
+
+        $this->assertNotFalse($reserva);
+
+        // El precio se copia: cambiarlo después no altera la reserva
+        self::$admin->exec('UPDATE servicios SET precio_servicio = precio_servicio + 100 WHERE id = 7');
+
+        try {
+            $listado = $con->obtenerReservasUsuario($ana)[0];
+            $esperado = array_sum(array_map('floatval', array_column($servicios, 'precio_servicio')));
+            $this->assertEquals($esperado, (float) $listado['extras']);
+            $this->assertSame('Breakfast in Bed, Spa & Wellness Circuit', $listado['servicios']);
+
+            $this->assertEquals($esperado, (float) $admin->obtenerReservasAdmin('todas', $this->fecha(0))[0]['extras']);
+
+            // Un servicio contratado no se puede borrar (se oculta como no disponible)
+            $this->assertFalse($admin->borrarServicio(7));
+        } finally {
+            self::$admin->exec('UPDATE servicios SET precio_servicio = precio_servicio - 100 WHERE id = 7');
+        }
+    }
+
+    public function testReservaSinServiciosExtra(): void {
+        $ana = $this->registrar();
+        $con = new db('estandar');
+
+        $this->assertSame([], $con->obtenerServiciosDisponibles([]));
+        $con->crearReserva($ana, 5, $this->fecha(20), $this->fecha(22));
+
+        $listado = $con->obtenerReservasUsuario($ana)[0];
+        $this->assertEquals(0, (float) $listado['extras']);
+        $this->assertNull($listado['servicios']);
     }
 }

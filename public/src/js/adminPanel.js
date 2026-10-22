@@ -230,7 +230,7 @@ $(document).ready(function () {
                     <td>${esc(r.tipo_habitacion)} · ${esc(r.id_habitacion)}</td>
                     <td>${fecha(r.fecha_entrada)}</td>
                     <td>${fecha(r.fecha_salida)}</td>
-                    <td class="text-end">${euros(r.total)}</td>
+                    <td class="text-end">${euros(Number(r.total) + Number(r.extras))}${r.servicios ? `<small class="d-block text-muted">incl. ${esc(r.servicios)}</small>` : ''}</td>
                     <td>${estadoReserva(r, response.today)}</td>
                 </tr>`).join('');
 

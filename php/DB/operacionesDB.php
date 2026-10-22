@@ -544,6 +544,36 @@ class operacionesDB {
                           WHERE hr.id_habitacion = h.id AND r.estado = 'confirmada'
                             AND r.fecha_entrada < ? AND r.fecha_salida > ?";
 
+    // Columnas con el importe y los nombres de los servicios extra de la reserva r
+    const SQL_EXTRAS = "(SELECT COALESCE(SUM(rs.precio), 0) FROM reservas_servicios rs
+                          WHERE rs.num_reserva = r.num_reserva) AS extras,
+                        (SELECT GROUP_CONCAT(s.nombre_servicio ORDER BY s.nombre_servicio SEPARATOR ', ')
+                           FROM reservas_servicios rs INNER JOIN servicios s ON s.id = rs.id_servicio
+                          WHERE rs.num_reserva = r.num_reserva) AS servicios";
+
+    /**
+     * Función que obtiene los servicios disponibles con los ids indicados
+     * 
+     * @param array $ids ids de los servicios
+     * @return array devuelve id, nombre_servicio y precio_servicio de los que
+     * existen y están disponibles
+     */
+    function obtenerServiciosDisponibles($ids) {
+
+        $ids = array_values(array_unique(array_map('intval', $ids)));
+
+        if ($ids === []) {
+            return [];
+        }
+
+        $marcas = implode(', ', array_fill(0, count($ids), '?'));
+        $stmt = $this->PDO->prepare("SELECT id, nombre_servicio, precio_servicio FROM servicios
+                                      WHERE disponibilidad = TRUE AND id IN ($marcas) ORDER BY id;");
+        $stmt->execute($ids);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     /**
      * Función que reserva una habitación si sigue libre. Usa un bloqueo con
      * nombre por habitación para que dos reservas simultáneas de la misma
@@ -553,10 +583,12 @@ class operacionesDB {
      * @param Number $id_habitacion id de la habitación
      * @param string $fecha_entrada fecha de entrada (Y-m-d)
      * @param string $fecha_salida fecha de salida (Y-m-d)
+     * @param array $servicios servicios extra (obtenerServiciosDisponibles):
+     * se guardan con el precio que tienen en este momento
      * @return array|false devuelve num_reserva, tipo_habitacion, imagen y
      * precio_noche, o false si la habitación no existe o está ocupada
      */
-    function crearReserva($id_usuario, $id_habitacion, $fecha_entrada, $fecha_salida) {
+    function crearReserva($id_usuario, $id_habitacion, $fecha_entrada, $fecha_salida, $servicios = []) {
 
         $db = $this->PDO;
         $bloqueo = 'hotel_reserva_' . (int) $id_habitacion;
@@ -591,6 +623,11 @@ class operacionesDB {
             $stmt = $db->prepare("INSERT INTO habitaciones_reservas (num_reserva, id_habitacion, precio_noche) VALUES (?, ?, ?);");
             $stmt->execute([$num_reserva, $id_habitacion, $habitacion['precio']]);
 
+            $stmt = $db->prepare("INSERT INTO reservas_servicios (num_reserva, id_servicio, precio) VALUES (?, ?, ?);");
+            foreach ($servicios as $servicio) {
+                $stmt->execute([$num_reserva, $servicio['id'], $servicio['precio_servicio']]);
+            }
+
             $db->commit();
 
             return [
@@ -621,7 +658,8 @@ class operacionesDB {
         $sql = "SELECT r.num_reserva, r.fecha_reserva, r.fecha_entrada, r.fecha_salida,
                        r.estado, r.fecha_cancelacion, r.cargo_cancelacion,
                        t.tipo_habitacion, hr.id_habitacion, hr.precio_noche,
-                       hr.precio_noche * DATEDIFF(r.fecha_salida, r.fecha_entrada) AS total
+                       hr.precio_noche * DATEDIFF(r.fecha_salida, r.fecha_entrada) AS total,
+                       " . self::SQL_EXTRAS . "
                   FROM reservas r
                  INNER JOIN habitaciones_reservas hr ON hr.num_reserva = r.num_reserva
                  INNER JOIN habitaciones h ON h.id = hr.id_habitacion
@@ -700,7 +738,8 @@ class operacionesDB {
                        r.estado, r.fecha_cancelacion, r.cargo_cancelacion,
                        u.nombre, u.email, u.telf,
                        t.tipo_habitacion, hr.id_habitacion, hr.precio_noche,
-                       hr.precio_noche * DATEDIFF(r.fecha_salida, r.fecha_entrada) AS total
+                       hr.precio_noche * DATEDIFF(r.fecha_salida, r.fecha_entrada) AS total,
+                       " . self::SQL_EXTRAS . "
                   FROM reservas r
                  INNER JOIN usuarios u ON u.id = r.id_usuario
                  INNER JOIN habitaciones_reservas hr ON hr.num_reserva = r.num_reserva

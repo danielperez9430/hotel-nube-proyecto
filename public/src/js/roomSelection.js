@@ -131,13 +131,51 @@ $(document).ready(function () {
             <p class="mb-1"><strong>${esc(habitacionElegida.tipo)}</strong> · Room ${esc(habitacionElegida.id)}</p>
             <p class="mb-1"><i class="far fa-calendar"></i> ${fecha(estancia.checkin)} → ${fecha(estancia.checkout)}</p>
             <p class="mb-3">${estancia.nights} night${estancia.nights > 1 ? 's' : ''} × ${euros(habitacionElegida.precio)}</p>
-            <p class="fs-4 mb-0">Total: <strong>${euros(habitacionElegida.precio * estancia.nights)}</strong></p>`);
+            <div id="bookingExtras" class="booking-extras"></div>
+            <p class="fs-4 mb-0">Total: <strong id="bookingTotal"></strong></p>`);
+        mostrarExtras();
         $('#bookingConfirm').prop('disabled', false).show();
         $('#bookingCancel').text('Cancel');
 
         modal('roomsDialog').hide();
         modal('bookingDialog').show();
     });
+
+    // Servicios que se pueden añadir a la reserva (se piden una sola vez)
+    var serviciosExtra = null;
+
+    function mostrarExtras() {
+        actualizarTotal();
+
+        if (!serviciosExtra) {
+            serviciosExtra = $.getJSON('api/getServices.php').then(response => response.services);
+        }
+
+        serviciosExtra.then(servicios => {
+            const opciones = servicios.map(servicio => {
+                const precio = Number(servicio.precio_servicio);
+                return `<div class="form-check">
+                        <input class="form-check-input booking-extra" type="checkbox" value="${esc(servicio.id)}" id="extra${esc(servicio.id)}" data-precio="${esc(precio)}"${precio === 0 ? ' checked disabled' : ''}>
+                        <label class="form-check-label" for="extra${esc(servicio.id)}">
+                            <i class="${esc(servicio.icono)}" aria-hidden="true"></i> ${esc(servicio.nombre_servicio)}
+                            <span class="text-muted">${precio > 0 ? '+' + euros(precio) : 'included'}</span>
+                        </label>
+                    </div>`;
+            }).join('');
+
+            $('#bookingExtras').html(`<p class="booking-extras-title">Add extras to your stay <small class="text-muted">(price per stay)</small></p>${opciones}`);
+        }, () => $('#bookingExtras').empty());
+    }
+
+    // Ids de los extras de pago elegidos (los incluidos no hace falta enviarlos)
+    const extrasElegidos = () => $('.booking-extra:checked:not(:disabled)').map((i, el) => el.value).get();
+
+    function actualizarTotal() {
+        const extras = $('.booking-extra:checked:not(:disabled)').get().reduce((suma, el) => suma + Number(el.dataset.precio), 0);
+        $('#bookingTotal').text(euros(habitacionElegida.precio * estancia.nights + extras));
+    }
+
+    $(document).on('change', '.booking-extra', actualizarTotal);
 
     // Confirmar la reserva
     $('#bookingConfirm').click(function (e) {
@@ -151,7 +189,8 @@ $(document).ready(function () {
             data: {
                 roomId: habitacionElegida.id,
                 checkin: estancia.checkin,
-                checkout: estancia.checkout
+                checkout: estancia.checkout,
+                services: extrasElegidos()
             },
             dataType: "JSON",
             success: function (response) {
@@ -212,7 +251,7 @@ $(document).ready(function () {
                     <td>${esc(r.tipo_habitacion)} · ${esc(r.id_habitacion)}</td>
                     <td>${fecha(r.fecha_entrada)}</td>
                     <td>${fecha(r.fecha_salida)}</td>
-                    <td class="text-end">${euros(r.total)}</td>
+                    <td class="text-end">${euros(Number(r.total) + Number(r.extras))}${r.servicios ? `<small class="d-block text-muted">incl. ${esc(r.servicios)}</small>` : ''}</td>
                     <td>${estadoReserva(r)}</td>
                     <td class="text-end">${r.cancelacion ? `<button class="btn btn-sm btn-outline-danger cancelBooking" data-booking="${esc(r.num_reserva)}">Cancel</button>` : ''}</td>
                 </tr>`).join('');
