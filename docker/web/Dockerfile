@@ -24,3 +24,7 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-interaction --no-progress --prefer-dist --optimize-autoloader
 
 COPY . .
+
+# Aplica las migraciones pendientes antes de arrancar Apache, también sobre
+# una base de datos que ya existía
+CMD ["sh", "-c", "php scripts/migrar.php && exec apache2-foreground"]

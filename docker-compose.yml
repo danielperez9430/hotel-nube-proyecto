@@ -54,6 +54,9 @@ services:
       DB_USER_ADMIN: hotel_admin
       DB_USER_CONEXION: hotel_conexion
       DB_USER_ESTANDAR: hotel_estandar
+      # Usuario con permisos de esquema, solo para scripts/migrar.php
+      DB_USER_MIGRACIONES: root
+      DB_PASSWORD_MIGRACIONES: ${DB_ROOT_PASSWORD}
       MAIL_HOST: mailpit
       MAIL_PORT: "1025"
       MAIL_ENCRYPTION: ""
