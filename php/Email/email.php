@@ -5,18 +5,16 @@ namespace Email;
 require(__DIR__ . '/../../vendor/autoload.php');
 
 use \PHPMailer\PHPMailer\PHPMailer; // Importamos la liberia PHPMailer
+use \Config\config as config;
 
 class email {
 
     private $email;
     private $pass;
-
-    private $xml = __DIR__ . "/../../config/correo.xml";
-    private $xsd = __DIR__ . "/../../config/correo.xsd";
       
     function __construct() {
         
-        $datos = $this->leer_configCorreo($this->xml, $this->xsd);
+        $datos = $this->leer_configCorreo();
 
         $this->email = $datos[0];
         $this->pass = $datos[1];
@@ -42,12 +40,12 @@ class email {
         $mail->IsSMTP();
         $mail->SMTPDebug = 0;  // cambiar a 1 o 2 para ver errores
         $mail->SMTPAuth = true;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Host = "smtp.gmail.com";
-        $mail->Port = 587;
-        $mail->Username = $this->email;  // Cuenta del Gmail
-        $mail->Password = $this->pass; // Contraseña del Gmail          
-        $mail->SetFrom('hotel.nube.2021@gmail.com', 'Hotel Nube');
+        $mail->SMTPSecure = config::get('MAIL_ENCRYPTION', PHPMailer::ENCRYPTION_STARTTLS);
+        $mail->Host = config::get('MAIL_HOST', 'smtp.gmail.com');
+        $mail->Port = (int) config::get('MAIL_PORT', 587);
+        $mail->Username = $this->email;  // Cuenta del servidor SMTP
+        $mail->Password = $this->pass; // Contraseña del servidor SMTP
+        $mail->SetFrom(config::get('MAIL_FROM_ADDRESS', $this->email), config::get('MAIL_FROM_NAME', 'Hotel Nube'));
         $mail->Subject = $asunto;
         $mail->MsgHTML($cuerpo);
         $mail->isHTML(true);
@@ -61,37 +59,28 @@ class email {
         }
     }
 
+    /**
+     * Función que obtiene de hotelnube-api el HTML del correo de bienvenida
+     * 
+     * @param string $nombre cadena de texto con el nombre del usuario
+     * @return string|false devuelve el HTML del correo o false si falla
+     */
     function crearContenidoCorreo($nombre) {
 
-        return file_get_contents('https://api.hotelnube.ml/email/' . rawurlencode($nombre));
+        $api = rtrim(config::get('API_URL', 'http://localhost:8001'), '/');
+
+        return file_get_contents($api . '/email/' . rawurlencode($nombre));
     }
 
     /**
-     * Función leer los datos de conexión del correo
+     * Función que lee del .env el usuario y la contraseña del servidor SMTP
+     * (MAIL_USERNAME y MAIL_PASSWORD)
      * 
-     * @param sting $xml cadena de texto con la ruta del xml que contiene
-     * el nombre de usuarios y contraseña del correo
-     * @param string $xsd cadena de texto con la ruta del xsd
-     * @return array devuelve un array con los datos de
-     * @throws InvalidArgumentException
+     * @return array devuelve un array con el usuario y la contraseña
+     * @throws RuntimeException si falta alguna de las variables
      */
-    function leer_configCorreo($xml, $xsd) {
-
-        $config = new \DOMDocument();
-        $config->load($xml);
-        $res = $config->schemaValidate($xsd);
-
-        if ($res === FALSE) {
-            throw new \InvalidArgumentException("Error en el fichero de configuración del correo");
-        }
-
-        $datos = simplexml_load_file($xml);
-        $usu = $datos->xpath("//usuario");
-        $clave = $datos->xpath("//clave");
-        $resul = [];
-        $resul[] = (string) $usu[0];
-        $resul[] = (string) $clave[0];
-        return $resul;
+    function leer_configCorreo() {
+        return [config::requerida('MAIL_USERNAME'), config::requerida('MAIL_PASSWORD')];
     }
 
 }

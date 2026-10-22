@@ -19,7 +19,7 @@ $(document).ready(function () {
     getCities();
 
 
-    fetch('https://api.hotelnube.ml/paises').then(response => {return response.json()}).then(data => {
+    fetch(`${API_URL}/paises`).then(response => {return response.json()}).then(data => {
         data.map(country => {
             if (country == selectedCountry) {
                 $('#countryEditField').append(`<option value='${country}' selected>${country}</option>`);
@@ -31,7 +31,7 @@ $(document).ready(function () {
     });
 
     function getProvinces() {
-        fetch(`https://api.hotelnube.ml/buscar/${selectedCountry}`).then(response => response.json()).then(data => {
+        fetch(`${API_URL}/buscar/${selectedCountry}`).then(response => response.json()).then(data => {
             $('#provinceEditField').html('');
             data.map(province => {
                 if (province == selectedProvince) {
@@ -46,7 +46,7 @@ $(document).ready(function () {
     }
 
     function getCities() {
-        fetch(`https://api.hotelnube.ml/buscar/${selectedCountry}/${selectedProvince}/`).then(response =>  response.json()).then(data => {
+        fetch(`${API_URL}/buscar/${selectedCountry}/${selectedProvince}/`).then(response =>  response.json()).then(data => {
             $('#cityEditField').html('');
             data[0].map(city => {
                 if (city == selectedCity) {

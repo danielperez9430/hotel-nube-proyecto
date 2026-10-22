@@ -5,7 +5,7 @@ $(document).ready(function () {
     });
 
     const getCountries = async () => {
-        const response = await fetch('https://api.hotelnube.ml/paises').then(response => {return response.json()});
+        const response = await fetch(`${API_URL}/paises`).then(response => {return response.json()});
         rellenarSelect('registerCountry', response, 'Select one country');
     }
 
@@ -104,7 +104,7 @@ $(document).ready(function () {
         document.getElementById('registerProvince').disabled = true;
         document.getElementById('registerCity').disabled = true;
 
-        fetch(`https://api.hotelnube.ml/buscar/${encodeURIComponent(value)}`).then(response =>  response.json()).then(data => {
+        fetch(`${API_URL}/buscar/${encodeURIComponent(value)}`).then(response =>  response.json()).then(data => {
             rellenarSelect('registerProvince', data, 'Select one province');
         });
 
@@ -119,7 +119,7 @@ $(document).ready(function () {
         document.getElementById('registerCity').disabled = true;
         $('#registerCity').append(`<option value="">Loading...</option>`);
 
-        fetch(`https://api.hotelnube.ml/buscar/${encodeURIComponent(country)}/${encodeURIComponent(province)}/`).then(response =>  response.json()).then(data => {
+        fetch(`${API_URL}/buscar/${encodeURIComponent(country)}/${encodeURIComponent(province)}/`).then(response =>  response.json()).then(data => {
             rellenarSelect('registerCity', data[0], 'Select one city');
         });
 
