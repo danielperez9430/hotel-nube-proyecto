@@ -2,7 +2,7 @@
     "name": "danielperez9430/hotel-nube",
     "description": "Web de reservas del hotel Hotel Nube",
     "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
     "require": {
         "php": ">=8.5.12",
         "ext-pdo": "*",

@@ -30,6 +30,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 - [🤖 Dependencias](#-dependencias)
 - [🎨 Identidad visual](#-identidad-visual)
 - [🤝 Contribuir](#-contribuir)
+- [📄 Licencia](#-licencia)
 
 ## ✨ Funcionalidades
 
@@ -424,6 +425,12 @@ Tipografías del banner: *Cormorant Garamond* y *Montserrat* (licencia OFL).
    ```
 3. 🔀 Abre un Pull Request contra `master` explicando el cambio y cómo se ha probado.
 
+## 📄 Licencia
+
+El código de Hotel Nube, el logo y las fotografías de las habitaciones (`public/src/img/`) se publican bajo la licencia [MIT](LICENSE) © 2021–2026 Daniel Pérez Fernández.
+
+Las librerías de terceros incluidas en `public/src/vendor/` y `docs/recursos/` conservan sus propias licencias (Bootstrap, jQuery y Litepicker: MIT; Font Awesome Free: iconos CC BY 4.0, fuentes OFL y código MIT), igual que las tipografías del banner (OFL) y las dependencias de Composer y npm.
+
 ---
 
-© 2021 Hotel Nube · Daniel Pérez Fernández
+© 2021–2026 Hotel Nube · Daniel Pérez Fernández
