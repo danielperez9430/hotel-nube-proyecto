@@ -74,20 +74,24 @@ class OperacionesDBTest extends TestCase {
         $usuario = $this->registrar();
         $con = new db('estandar');
 
+        // Sin reservas, todas las habitaciones están libres
+        $total = (int) self::$admin->query('SELECT COUNT(*) FROM habitaciones')->fetchColumn();
+        $precio = (float) self::$admin->query('SELECT precio FROM habitaciones WHERE id = 5')->fetchColumn();
+
         $libres = $con->buscarHabitaciones($this->fecha(10), $this->fecha(13));
-        $this->assertCount(30, $libres);
+        $this->assertCount($total, $libres);
         $this->assertLessThanOrEqual($libres[1]['precio'], $libres[0]['precio'], 'Ordenadas por precio');
 
         $reserva = $con->crearReserva($usuario, 5, $this->fecha(10), $this->fecha(13));
         $this->assertIsArray($reserva);
-        $this->assertSame(200.0, $reserva['precio_noche']);
+        $this->assertSame($precio, $reserva['precio_noche']);
 
         // Ocupada en cualquier estancia que se solape
         $this->assertFalse($con->crearReserva($usuario, 5, $this->fecha(12), $this->fecha(15)));
         $this->assertFalse($con->crearReserva($usuario, 5, $this->fecha(8), $this->fecha(11)));
         $ids = array_column($con->buscarHabitaciones($this->fecha(11), $this->fecha(12)), 'id');
         $this->assertNotContains(5, $ids);
-        $this->assertCount(29, $ids);
+        $this->assertCount($total - 1, $ids);
 
         // Libre justo antes y justo después: [entrada, salida)
         $this->assertIsArray($con->crearReserva($usuario, 5, $this->fecha(13), $this->fecha(15)));
@@ -96,7 +100,7 @@ class OperacionesDBTest extends TestCase {
         $reservas = $con->obtenerReservasUsuario($usuario);
         // De la entrada más reciente a la más antigua, con total = noches × precio
         $this->assertSame([$this->fecha(13), $this->fecha(10), $this->fecha(7)], array_column($reservas, 'fecha_entrada'));
-        $this->assertSame(['400.00', '600.00', '600.00'], array_column($reservas, 'total'));
+        $this->assertEquals([$precio * 2, $precio * 3, $precio * 3], array_map('floatval', array_column($reservas, 'total')));
     }
 
     public function testNoSePuedeReservarUnaHabitacionInexistente(): void {
