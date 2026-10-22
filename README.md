@@ -35,7 +35,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 - 🔁 **Recuperación de contraseña** con un enlace por correo de un solo uso y válido una hora.
 - 🌍 **Selección de país, provincia y ciudad** en el registro, con datos de [hotelnube-api](https://github.com/danielperez9430/hotelnube-api).
 - 📅 **Búsqueda de habitaciones libres** entre dos fechas ([Litepicker](https://litepicker.com)), con imágenes, servicios y precio total.
-- 🛎️ **Reservas** con resumen, confirmación por correo y protección frente a reservas simultáneas.
+- 🛎️ **Reservas** con resumen, **servicios extra** (desayuno, spa, traslados…) que se suman al total, confirmación por correo y protección frente a reservas simultáneas.
 - 🧳 **Mis reservas**: cada cliente consulta sus estancias desde el menú de usuario y puede **cancelarlas** hasta la hora de entrada, viendo antes el cargo que marca la política de cancelación.
 - ⚙️ **Ajustes de cuenta**: nombre, teléfono y dirección editables desde el menú de usuario.
 - 🛎️ **Servicios y promociones**: páginas con los servicios del hotel (desde la base de datos) y las ofertas vigentes.
@@ -258,7 +258,8 @@ Todos están en `public/api/` y responden JSON.
 | `api/resetPassword.php` | `POST` | — | Cambia la contraseña con el token del enlace (`token`, `password`). `400` si el token no es válido |
 | `api/getRoomTypes.php` | `GET` | — | Nombres de los tipos de habitación |
 | `api/searchRooms.php` | `GET` | — | Habitaciones libres entre `checkin` y `checkout` (`DD-MM-YYYY` o `YYYY-MM-DD`) |
-| `api/bookRoom.php` | `POST` | 👤 sesión | Reserva una habitación (`roomId`, `checkin`, `checkout`). `409` si ya está ocupada |
+| `api/getServices.php` | `GET` | — | Servicios disponibles, que se pueden añadir a una reserva |
+| `api/bookRoom.php` | `POST` | 👤 sesión | Reserva una habitación (`roomId`, `checkin`, `checkout` y, opcionalmente, `services[]` con los ids de los extras). `400` si algún extra no está disponible, `409` si la habitación ya está ocupada |
 | `api/myBookings.php` | `GET` | 👤 sesión | Reservas del usuario, con su estado y el cargo que tendría cancelarlas ahora |
 | `api/cancelBooking.php` | `POST` | 👤 sesión | Cancela una reserva (`booking`, `charge`: el cargo aceptado). `409` si ya está cancelada, ya no se puede cancelar o el cargo ha cambiado |
 | `api/account.php` | `GET` / `POST` | 👤 sesión | Datos de la cuenta / guardarlos (`nombre`, `telf`, `pais`, `provincia`, `ciudad`, `direccion`) |
