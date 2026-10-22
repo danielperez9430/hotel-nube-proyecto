@@ -36,6 +36,46 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Config-config.html#property_fichero"
         },                {
+            "fqsen": "\\DB\\migraciones",
+            "name": "migraciones",
+            "summary": "",
+            "url": "classes/DB-migraciones.html"
+        },                {
+            "fqsen": "\\DB\\migraciones\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructor",
+            "url": "classes/DB-migraciones.html#method___construct"
+        },                {
+            "fqsen": "\\DB\\migraciones\u003A\u003AprepararTabla\u0028\u0029",
+            "name": "prepararTabla",
+            "summary": "Funci\u00F3n\u0020que\u0020crea\u0020la\u0020tabla\u0020que\u0020registra\u0020las\u0020migraciones\u0020aplicadas",
+            "url": "classes/DB-migraciones.html#method_prepararTabla"
+        },                {
+            "fqsen": "\\DB\\migraciones\u003A\u003Apendientes\u0028\u0029",
+            "name": "pendientes",
+            "summary": "Funci\u00F3n\u0020que\u0020devuelve\u0020las\u0020migraciones\u0020que\u0020a\u00FAn\u0020no\u0020se\u0020han\u0020aplicado,\u0020en\u0020orden",
+            "url": "classes/DB-migraciones.html#method_pendientes"
+        },                {
+            "fqsen": "\\DB\\migraciones\u003A\u003Aaplicar\u0028\u0029",
+            "name": "aplicar",
+            "summary": "Funci\u00F3n\u0020que\u0020aplica\u0020las\u0020migraciones\u0020pendientes\u0020en\u0020orden.\u0020Si\u0020una\u0020falla\u0020se\ndetiene\u0020y\u0020lanza\u0020la\u0020excepci\u00F3n\u003A\u0020las\u0020anteriores\u0020quedan\u0020registradas",
+            "url": "classes/DB-migraciones.html#method_aplicar"
+        },                {
+            "fqsen": "\\DB\\migraciones\u003A\u003AsepararSentencias\u0028\u0029",
+            "name": "separarSentencias",
+            "summary": "Funci\u00F3n\u0020que\u0020separa\u0020un\u0020script\u0020SQL\u0020en\u0020sentencias\u0020por\u0020los\u0020\u003B\u0020que\u0020no\u0020est\u00E1n\ndentro\u0020de\u0020cadenas,\u0020identificadores\u0020entre\u0020comillas\u0020invertidas\u0020o\ncomentarios.\u0020Se\u0020ejecutan\u0020una\u0020a\u0020una\u0020porque\u0020con\u0020varias\u0020sentencias\u0020en\u0020un\nsolo\u0020exec\u0028\u0029\u0020PDO\u0020solo\u0020informa\u0020del\u0020error\u0020de\u0020la\u0020primera",
+            "url": "classes/DB-migraciones.html#method_separarSentencias"
+        },                {
+            "fqsen": "\\DB\\migraciones\u003A\u003A\u0024pdo",
+            "name": "pdo",
+            "summary": "",
+            "url": "classes/DB-migraciones.html#property_pdo"
+        },                {
+            "fqsen": "\\DB\\migraciones\u003A\u003A\u0024directorio",
+            "name": "directorio",
+            "summary": "",
+            "url": "classes/DB-migraciones.html#property_directorio"
+        },                {
             "fqsen": "\\DB\\operacionesDB",
             "name": "operacionesDB",
             "summary": "",
@@ -81,6 +121,21 @@ Search.appendIndex(
             "summary": "Funci\u00F3n\u0020que\u0020borra\u0020los\u0020intentos\u0020fallidos\u0020de\u0020un\u0020email\u0020tras\u0020un\u0020login\u0020correcto",
             "url": "classes/DB-operacionesDB.html#method_borrarIntentosLogin"
         },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AcrearRestablecimiento\u0028\u0029",
+            "name": "crearRestablecimiento",
+            "summary": "Funci\u00F3n\u0020que\u0020crea\u0020un\u0020token\u0020para\u0020restablecer\u0020la\u0020contrase\u00F1a\u0020de\u0020un\u0020usuario.",
+            "url": "classes/DB-operacionesDB.html#method_crearRestablecimiento"
+        },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AtokenRestablecimientoValido\u0028\u0029",
+            "name": "tokenRestablecimientoValido",
+            "summary": "Funci\u00F3n\u0020que\u0020indica\u0020si\u0020un\u0020token\u0020de\u0020restablecimiento\u0020es\u0020v\u00E1lido\u0020\u0028existe,\nno\u0020se\u0020ha\u0020usado\u0020y\u0020no\u0020ha\u0020caducado\u0029",
+            "url": "classes/DB-operacionesDB.html#method_tokenRestablecimientoValido"
+        },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003ArestablecerPassword\u0028\u0029",
+            "name": "restablecerPassword",
+            "summary": "Funci\u00F3n\u0020que\u0020cambia\u0020la\u0020contrase\u00F1a\u0020con\u0020un\u0020token\u0020de\u0020restablecimiento\nv\u00E1lido.\u0020Invalida\u0020todos\u0020los\u0020tokens\u0020del\u0020usuario\u0020y\u0020borra\u0020sus\u0020intentos\u0020de\nlogin\u0020fallidos",
+            "url": "classes/DB-operacionesDB.html#method_restablecerPassword"
+        },                {
             "fqsen": "\\DB\\operacionesDB\u003A\u003AobtenerUsuario\u0028\u0029",
             "name": "obtenerUsuario",
             "summary": "Funci\u00F3n\u0020que\u0020obtiene\u0020los\u0020datos\u0020de\u0020la\u0020cuenta\u0020de\u0020un\u0020usuario\u0020\u0028sin\u0020la\ncontrase\u00F1a\u0029",
@@ -116,6 +171,11 @@ Search.appendIndex(
             "summary": "Funci\u00F3n\u0020que\u0020actualiza\u0020los\u0020datos\u0020de\u0020una\u0020habitaci\u00F3n",
             "url": "classes/DB-operacionesDB.html#method_actualizarHabitacion"
         },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AcrearHabitacion\u0028\u0029",
+            "name": "crearHabitacion",
+            "summary": "Funci\u00F3n\u0020que\u0020crea\u0020una\u0020habitaci\u00F3n\u0020nueva",
+            "url": "classes/DB-operacionesDB.html#method_crearHabitacion"
+        },                {
             "fqsen": "\\DB\\operacionesDB\u003A\u003AborrarHabitacion\u0028\u0029",
             "name": "borrarHabitacion",
             "summary": "Funci\u00F3n\u0020que\u0020borra\u0020una\u0020habitaci\u00F3n",
@@ -126,6 +186,11 @@ Search.appendIndex(
             "summary": "Funci\u00F3n\u0020que\u0020busca\u0020las\u0020habitaciones\u0020libres\u0020entre\u0020dos\u0020fechas",
             "url": "classes/DB-operacionesDB.html#method_buscarHabitaciones"
         },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AobtenerServiciosDisponibles\u0028\u0029",
+            "name": "obtenerServiciosDisponibles",
+            "summary": "Funci\u00F3n\u0020que\u0020obtiene\u0020los\u0020servicios\u0020disponibles\u0020con\u0020los\u0020ids\u0020indicados",
+            "url": "classes/DB-operacionesDB.html#method_obtenerServiciosDisponibles"
+        },                {
             "fqsen": "\\DB\\operacionesDB\u003A\u003AcrearReserva\u0028\u0029",
             "name": "crearReserva",
             "summary": "Funci\u00F3n\u0020que\u0020reserva\u0020una\u0020habitaci\u00F3n\u0020si\u0020sigue\u0020libre.\u0020Usa\u0020un\u0020bloqueo\u0020con\nnombre\u0020por\u0020habitaci\u00F3n\u0020para\u0020que\u0020dos\u0020reservas\u0020simult\u00E1neas\u0020de\u0020la\u0020misma\nhabitaci\u00F3n\u0020no\u0020puedan\u0020solaparse",
@@ -135,6 +200,41 @@ Search.appendIndex(
             "name": "obtenerReservasUsuario",
             "summary": "Funci\u00F3n\u0020que\u0020obtiene\u0020las\u0020reservas\u0020de\u0020un\u0020usuario,\u0020de\u0020la\u0020m\u00E1s\u0020reciente\u0020a\nla\u0020m\u00E1s\u0020antigua",
             "url": "classes/DB-operacionesDB.html#method_obtenerReservasUsuario"
+        },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AobtenerReservaUsuario\u0028\u0029",
+            "name": "obtenerReservaUsuario",
+            "summary": "Funci\u00F3n\u0020que\u0020obtiene\u0020una\u0020reserva\u0020de\u0020un\u0020usuario\u0020con\u0020el\u0020precio\u0020de\u0020la\nprimera\u0020noche\u0020\u0028todas\u0020sus\u0020habitaciones\u0029,\u0020para\u0020calcular\u0020la\u0020cancelaci\u00F3n",
+            "url": "classes/DB-operacionesDB.html#method_obtenerReservaUsuario"
+        },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AcancelarReserva\u0028\u0029",
+            "name": "cancelarReserva",
+            "summary": "Funci\u00F3n\u0020que\u0020cancela\u0020una\u0020reserva\u0020confirmada\u0020de\u0020un\u0020usuario.\u0020La\u0020condici\u00F3n\ndel\u0020UPDATE\u0020hace\u0020que\u0020dos\u0020cancelaciones\u0020simult\u00E1neas\u0020no\u0020se\u0020apliquen\u0020dos\u0020veces",
+            "url": "classes/DB-operacionesDB.html#method_cancelarReserva"
+        },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AobtenerReservasAdmin\u0028\u0029",
+            "name": "obtenerReservasAdmin",
+            "summary": "Funci\u00F3n\u0020que\u0020obtiene\u0020todas\u0020las\u0020reservas\u0020del\u0020hotel\u0020para\u0020el\u0020panel\u0020de\nadministraci\u00F3n,\u0020de\u0020la\u0020entrada\u0020m\u00E1s\u0020pr\u00F3xima\u0020a\u0020la\u0020m\u00E1s\u0020lejana",
+            "url": "classes/DB-operacionesDB.html#method_obtenerReservasAdmin"
+        },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AobtenerResumenOcupacion\u0028\u0029",
+            "name": "obtenerResumenOcupacion",
+            "summary": "Funci\u00F3n\u0020que\u0020calcula\u0020la\u0020ocupaci\u00F3n\u0020del\u0020hotel\u003A\u0020habitaciones\u0020ocupadas\u0020esta\nnoche,\u0020entradas\u0020y\u0020salidas\u0020de\u0020hoy,\u0020porcentaje\u0020de\u0020ocupaci\u00F3n\u0020de\u0020los\npr\u00F3ximos\u0020d\u00EDas\u0020e\u0020ingresos\u0020de\u0020las\u0020reservas\u0020futuras",
+            "url": "classes/DB-operacionesDB.html#method_obtenerResumenOcupacion"
+        },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AobtenerTodosServicios\u0028\u0029",
+            "name": "obtenerTodosServicios",
+            "summary": "Funci\u00F3n\u0020que\u0020obtiene\u0020todos\u0020los\u0020servicios\u0020del\u0020hotel,\u0020tambi\u00E9n\u0020los\u0020no\ndisponibles,\u0020para\u0020el\u0020panel\u0020de\u0020administraci\u00F3n",
+            "url": "classes/DB-operacionesDB.html#method_obtenerTodosServicios"
+        },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AguardarServicio\u0028\u0029",
+            "name": "guardarServicio",
+            "summary": "Funci\u00F3n\u0020que\u0020crea\u0020un\u0020servicio\u0020o,\u0020si\u0020recibe\u0020un\u0020id,\u0020lo\u0020actualiza",
+            "url": "classes/DB-operacionesDB.html#method_guardarServicio"
+        },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003AborrarServicio\u0028\u0029",
+            "name": "borrarServicio",
+            "summary": "Funci\u00F3n\u0020que\u0020borra\u0020un\u0020servicio",
+            "url": "classes/DB-operacionesDB.html#method_borrarServicio"
         },                {
             "fqsen": "\\DB\\operacionesDB\u003A\u003AobtenerServicios\u0028\u0029",
             "name": "obtenerServicios",
@@ -155,6 +255,11 @@ Search.appendIndex(
             "name": "SQL_OCUPADA",
             "summary": "",
             "url": "classes/DB-operacionesDB.html#constant_SQL_OCUPADA"
+        },                {
+            "fqsen": "\\DB\\operacionesDB\u003A\u003ASQL_EXTRAS",
+            "name": "SQL_EXTRAS",
+            "summary": "",
+            "url": "classes/DB-operacionesDB.html#constant_SQL_EXTRAS"
         },                {
             "fqsen": "\\DB\\operacionesDB\u003A\u003A\u0024nombreBBDD",
             "name": "nombreBBDD",
@@ -226,6 +331,21 @@ Search.appendIndex(
             "summary": "Funci\u00F3n\u0020que\u0020env\u00EDa\u0020el\u0020correo\u0020de\u0020confirmaci\u00F3n\u0020de\u0020una\u0020reserva.\u0020Los\u0020errores\nse\u0020registran\u0020en\u0020el\u0020log\u0020sin\u0020interrumpir\u0020la\u0020reserva",
             "url": "classes/Email-email.html#method_enviarConfirmacionReserva"
         },                {
+            "fqsen": "\\Email\\email\u003A\u003AenviarRestablecimiento\u0028\u0029",
+            "name": "enviarRestablecimiento",
+            "summary": "Funci\u00F3n\u0020que\u0020env\u00EDa\u0020el\u0020enlace\u0020para\u0020restablecer\u0020la\u0020contrase\u00F1a.\u0020Los\u0020errores\nse\u0020registran\u0020en\u0020el\u0020log",
+            "url": "classes/Email-email.html#method_enviarRestablecimiento"
+        },                {
+            "fqsen": "\\Email\\email\u003A\u003AenviarCancelacion\u0028\u0029",
+            "name": "enviarCancelacion",
+            "summary": "Funci\u00F3n\u0020que\u0020env\u00EDa\u0020la\u0020confirmaci\u00F3n\u0020de\u0020una\u0020reserva\u0020cancelada.\u0020Los\u0020errores\nse\u0020registran\u0020en\u0020el\u0020log\u0020sin\u0020interrumpir\u0020la\u0020cancelaci\u00F3n",
+            "url": "classes/Email-email.html#method_enviarCancelacion"
+        },                {
+            "fqsen": "\\Email\\email\u003A\u003Aplantilla\u0028\u0029",
+            "name": "plantilla",
+            "summary": "Funci\u00F3n\u0020que\u0020genera\u0020el\u0020HTML\u0020de\u0020una\u0020plantilla\u0020de\u0020correo\u0020de\u0020views\/correos",
+            "url": "classes/Email-email.html#method_plantilla"
+        },                {
             "fqsen": "\\Email\\email\u003A\u003AenviarSeguro\u0028\u0029",
             "name": "enviarSeguro",
             "summary": "Funci\u00F3n\u0020que\u0020genera\u0020el\u0020contenido\u0020con\u0020\u0024crearCuerpo\u0020y\u0020env\u00EDa\u0020el\u0020correo,\nregistrando\u0020en\u0020el\u0020log\u0020cualquier\u0020error",
@@ -255,6 +375,31 @@ Search.appendIndex(
             "name": "pass",
             "summary": "",
             "url": "classes/Email-email.html#property_pass"
+        },                {
+            "fqsen": "\\Http\\cabeceras",
+            "name": "cabeceras",
+            "summary": "",
+            "url": "classes/Http-cabeceras.html"
+        },                {
+            "fqsen": "\\Http\\cabeceras\u003A\u003Aenviar\u0028\u0029",
+            "name": "enviar",
+            "summary": "Funci\u00F3n\u0020que\u0020env\u00EDa\u0020las\u0020cabeceras\u0020de\u0020seguridad\u0020HTTP\u0020de\u0020todas\u0020las\nrespuestas\u003A\u0020pol\u00EDtica\u0020de\u0020seguridad\u0020de\u0020contenido\u0020\u0028CSP\u0029,\u0020protecci\u00F3n\ncontra\u0020clickjacking\u0020y\u0020sniffing,\u0020pol\u00EDtica\u0020de\u0020referer\u0020y\u0020de\u0020permisos",
+            "url": "classes/Http-cabeceras.html#method_enviar"
+        },                {
+            "fqsen": "\\Http\\cabeceras\u003A\u003AesHttps\u0028\u0029",
+            "name": "esHttps",
+            "summary": "Funci\u00F3n\u0020que\u0020indica\u0020si\u0020la\u0020petici\u00F3n\u0020ha\u0020llegado\u0020por\u0020HTTPS.\u0020Detr\u00E1s\u0020de\u0020un\nproxy\u0020inverso\u0020que\u0020termina\u0020el\u0020TLS\u0020\u0028TRUST_PROXY\u003Dtrue\u0020en\u0020el\u0020.env\u0029\u0020se\u0020f\u00EDa\nde\u0020su\u0020cabecera\u0020X\u002DForwarded\u002DProto\u003B\u0020sin\u0020\u00E9l,\u0020la\u0020ignora,\u0020porque\u0020cualquier\ncliente\u0020podr\u00EDa\u0020enviarla",
+            "url": "classes/Http-cabeceras.html#method_esHttps"
+        },                {
+            "fqsen": "\\Http\\cabeceras\u003A\u003ApoliticaContenido\u0028\u0029",
+            "name": "politicaContenido",
+            "summary": "Funci\u00F3n\u0020que\u0020construye\u0020la\u0020Content\u002DSecurity\u002DPolicy.\u0020Todo\u0020se\u0020sirve\u0020desde\u0020la\npropia\u0020web\u0020salvo\u0020las\u0020llamadas\u0020a\u0020hotelnube\u002Dapi\u0020\u0028API_URL\u0029.\u0020Los\u0020estilos\u0020en\nl\u00EDnea\u0020se\u0020permiten\u0020porque\u0020Bootstrap\u0020y\u0020el\u0020HTML\u0020usan\u0020atributos\u0020style",
+            "url": "classes/Http-cabeceras.html#method_politicaContenido"
+        },                {
+            "fqsen": "\\Http\\cabeceras\u003A\u003A\u0024enviadas",
+            "name": "enviadas",
+            "summary": "",
+            "url": "classes/Http-cabeceras.html#property_enviadas"
         },                {
             "fqsen": "\\Session\\session",
             "name": "session",
@@ -290,6 +435,11 @@ Search.appendIndex(
             "name": "comprobarAdmin",
             "summary": "Funci\u00F3n\u0020que\u0020redirige\u0020a\u0020la\u0020p\u00E1gina\u0020principal\u0020si\u0020el\u0020usuario\nno\u0020es\u0020administrador",
             "url": "classes/Session-session.html#method_comprobarAdmin"
+        },                {
+            "fqsen": "\\Session\\session\u003A\u003AexigirAdminApi\u0028\u0029",
+            "name": "exigirAdminApi",
+            "summary": "Funci\u00F3n\u0020para\u0020los\u0020endpoints\u0020de\u0020administraci\u00F3n\u003A\u0020si\u0020el\u0020usuario\u0020no\u0020es\nadministrador\u0020responde\u0020403\u0020en\u0020JSON\u0020y\u0020termina\u0020la\u0020ejecuci\u00F3n",
+            "url": "classes/Session-session.html#method_exigirAdminApi"
         },                {
             "fqsen": "\\Session\\session\u003A\u003AtokenCsrf\u0028\u0029",
             "name": "tokenCsrf",
@@ -346,6 +496,26 @@ Search.appendIndex(
             "summary": "Funci\u00F3n\u0020que\u0020valida\u0020las\u0020fechas\u0020de\u0020una\u0020estancia",
             "url": "classes/Tools-tools.html#method_validarEstancia"
         },                {
+            "fqsen": "\\Tools\\tools\u003A\u003AcargoCancelacion\u0028\u0029",
+            "name": "cargoCancelacion",
+            "summary": "Funci\u00F3n\u0020que\u0020calcula\u0020el\u0020cargo\u0020por\u0020cancelar\u0020una\u0020reserva\u0020seg\u00FAn\u0020la\u0020pol\u00EDtica\nde\u0020privacy.php.\u0020Los\u0020plazos\u0020se\u0020cuentan\u0020desde\u0020las\u002015\u003A00\u0020\u0028hora\u0020del\u0020hotel\u0029\ndel\u0020d\u00EDa\u0020de\u0020entrada\u003A\n\u002D\u0020m\u00E1s\u0020de\u002072\u0020horas\u0020antes\u0020\u002814\u0020d\u00EDas\u0020en\u0020grupos\u0020de\u00203\u0020o\u0020m\u00E1s\u0020habitaciones\u0029\u003A\u0020gratis\n\u002D\u0020entre\u0020ese\u0020plazo\u0020y\u002024\u0020horas\u0020antes\u003A\u0020el\u002050\u0025\u0020de\u0020la\u0020primera\u0020noche\n\u002D\u0020menos\u0020de\u002024\u0020horas\u0020antes\u003A\u0020la\u0020primera\u0020noche\u0020completa\nA\u0020partir\u0020de\u0020la\u0020hora\u0020de\u0020entrada\u0020ya\u0020no\u0020se\u0020puede\u0020cancelar",
+            "url": "classes/Tools-tools.html#method_cargoCancelacion"
+        },                {
+            "fqsen": "\\Tools\\tools\u003A\u003AvalidarDatosHabitacion\u0028\u0029",
+            "name": "validarDatosHabitacion",
+            "summary": "Funci\u00F3n\u0020que\u0020valida\u0020los\u0020datos\u0020de\u0020una\u0020habitaci\u00F3n\u0020enviados\u0020desde\u0020el\u0020panel\nde\u0020administraci\u00F3n.\u0020Las\u0020casillas\u0020llegan\u0020como\u0020\u0027true\u0027\u0020o\u0020\u0027false\u0027",
+            "url": "classes/Tools-tools.html#method_validarDatosHabitacion"
+        },                {
+            "fqsen": "\\Tools\\tools\u003A\u003AvalidarDatosServicio\u0028\u0029",
+            "name": "validarDatosServicio",
+            "summary": "Funci\u00F3n\u0020que\u0020valida\u0020los\u0020datos\u0020de\u0020un\u0020servicio\u0020enviados\u0020desde\u0020el\u0020panel\u0020de\nadministraci\u00F3n",
+            "url": "classes/Tools-tools.html#method_validarDatosServicio"
+        },                {
+            "fqsen": "\\Tools\\tools\u003A\u003AvalidarPassword\u0028\u0029",
+            "name": "validarPassword",
+            "summary": "Funci\u00F3n\u0020que\u0020valida\u0020una\u0020contrase\u00F1a\u0020nueva\u003A\u0020entre\u00208\u0020y\u002072\u0020caracteres\u0020\u0028bcrypt\nignora\u0020lo\u0020que\u0020pasa\u0020de\u002072\u0020bytes\u0029",
+            "url": "classes/Tools-tools.html#method_validarPassword"
+        },                {
             "fqsen": "\\Tools\\tools\u003A\u003AvalidarDatosCuenta\u0028\u0029",
             "name": "validarDatosCuenta",
             "summary": "Funci\u00F3n\u0020que\u0020valida\u0020los\u0020datos\u0020personales\u0020de\u0020una\u0020cuenta\u0020seg\u00FAn\u0020los\nl\u00EDmites\u0020de\u0020la\u0020tabla\u0020usuarios",
@@ -360,6 +530,11 @@ Search.appendIndex(
             "name": "MAX_NOCHES",
             "summary": "",
             "url": "classes/Tools-tools.html#constant_MAX_NOCHES"
+        },                {
+            "fqsen": "\\Tools\\tools\u003A\u003AHORA_ENTRADA",
+            "name": "HORA_ENTRADA",
+            "summary": "",
+            "url": "classes/Tools-tools.html#constant_HORA_ENTRADA"
         },                {
             "fqsen": "\\",
             "name": "\\",
@@ -380,6 +555,11 @@ Search.appendIndex(
             "name": "Email",
             "summary": "",
             "url": "namespaces/email.html"
+        },                {
+            "fqsen": "\\Http",
+            "name": "Http",
+            "summary": "",
+            "url": "namespaces/http.html"
         },                {
             "fqsen": "\\Session",
             "name": "Session",

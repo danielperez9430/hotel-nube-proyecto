@@ -1,0 +1,73 @@
+# Despliegue de Hotel Nube con las imágenes publicadas en ghcr.io.
+#
+#   1. En el servidor: clona el repositorio (hacen falta config/ y docker/db/
+#      para crear la base de datos la primera vez) y crea el .env:
+#        cp .env.example .env
+#      Rellena las contraseñas, el SMTP real, SITE_URL y API_URL con las
+#      URLs públicas (https://...) y TRUST_PROXY=true si hay un proxy inverso.
+#   2. Si los paquetes son privados: docker login ghcr.io
+#   3. docker compose -f docker-compose.prod.yml up -d
+#
+# La web y la API solo escuchan en 127.0.0.1: publícalas con un proxy inverso
+# con HTTPS (Nginx, Caddy, Traefik...). Para actualizar:
+#   docker compose -f docker-compose.prod.yml pull && docker compose -f docker-compose.prod.yml up -d
+# (las migraciones pendientes se aplican solas al arrancar la web)
+name: hotel-nube
+
+services:
+  db:
+    image: mariadb:11.4.13
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Define DB_ROOT_PASSWORD en el .env}
+      DB_PASSWORD_ADMIN: ${DB_PASSWORD_ADMIN:?Define DB_PASSWORD_ADMIN en el .env}
+      DB_PASSWORD_CONEXION: ${DB_PASSWORD_CONEXION:?Define DB_PASSWORD_CONEXION en el .env}
+      DB_PASSWORD_ESTANDAR: ${DB_PASSWORD_ESTANDAR:?Define DB_PASSWORD_ESTANDAR en el .env}
+    volumes:
+      - db-datos:/var/lib/mysql
+      # Solo se ejecutan la primera vez, con el volumen vacío
+      - ./config/db_hotel.sql:/docker-entrypoint-initdb.d/01-esquema.sql:ro
+      - ./docker/db/02-usuarios.sh:/docker-entrypoint-initdb.d/02-usuarios.sh:ro
+      - ./config/db_usuarios.sql:/hotel/db_usuarios.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  api:
+    image: ghcr.io/danielperez9430/hotelnube-api:${API_VERSION:-master}
+    restart: unless-stopped
+    environment:
+      SITE_URL: ${SITE_URL:?Define SITE_URL en el .env}
+      ALLOWED_ORIGINS: ${SITE_URL}
+    ports:
+      - "127.0.0.1:8001:8001"
+
+  web:
+    image: ghcr.io/danielperez9430/hotel-nube-web:${WEB_VERSION:-master}
+    restart: unless-stopped
+    env_file: .env
+    # Sustituyen a los valores del .env para usar los otros contenedores
+    environment:
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_NAME: hotel
+      DB_USER_ADMIN: hotel_admin
+      DB_USER_CONEXION: hotel_conexion
+      DB_USER_ESTANDAR: hotel_estandar
+      # Usuario con permisos de esquema, solo para scripts/migrar.php
+      DB_USER_MIGRACIONES: root
+      DB_PASSWORD_MIGRACIONES: ${DB_ROOT_PASSWORD}
+      API_INTERNAL_URL: http://api:8001
+    ports:
+      - "127.0.0.1:8000:80"
+    depends_on:
+      db:
+        condition: service_healthy
+      api:
+        condition: service_started
+
+volumes:
+  db-datos:

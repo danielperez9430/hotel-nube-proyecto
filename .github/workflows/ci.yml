@@ -97,7 +97,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validar docker-compose.yml
+      - name: Validar docker-compose.yml y docker-compose.prod.yml
         run: |
           sed -e 's/^DB_PASSWORD_ADMIN=$/DB_PASSWORD_ADMIN=x/' \
               -e 's/^DB_PASSWORD_CONEXION=$/DB_PASSWORD_CONEXION=x/' \
@@ -105,6 +105,7 @@ jobs:
               -e 's/^DB_ROOT_PASSWORD=$/DB_ROOT_PASSWORD=x/' \
               .env.example > .env
           docker compose config --quiet
+          docker compose -f docker-compose.prod.yml config --quiet
 
       - name: Construir la imagen de la web
         run: docker build -f docker/web/Dockerfile -t hotel-nube-web .

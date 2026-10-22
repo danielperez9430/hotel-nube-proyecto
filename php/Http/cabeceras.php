@@ -30,9 +30,28 @@ class cabeceras {
         header('Cross-Origin-Opener-Policy: same-origin');
 
         // HSTS solo tiene sentido (y solo se respeta) por HTTPS
-        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+        if (self::esHttps()) {
             header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
         }
+    }
+
+    /**
+     * Función que indica si la petición ha llegado por HTTPS. Detrás de un
+     * proxy inverso que termina el TLS (TRUST_PROXY=true en el .env) se fía
+     * de su cabecera X-Forwarded-Proto; sin él, la ignora, porque cualquier
+     * cliente podría enviarla
+     * 
+     * @return boolean devuelve true si la conexión del navegador es HTTPS
+     */
+    static function esHttps() {
+
+        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+            return true;
+        }
+
+        $confiarEnProxy = filter_var(config::get('TRUST_PROXY', 'false'), FILTER_VALIDATE_BOOLEAN);
+
+        return $confiarEnProxy && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https';
     }
 
     /**
