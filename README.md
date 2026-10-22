@@ -52,7 +52,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 ## ✅ Requisitos
 
 - 🐘 **PHP 8** con la extensión `pdo_mysql`
-- 🗄️ **MariaDB** 10.x. El script SQL usa `GRANT … IDENTIFIED BY PASSWORD`, que **MySQL 8 ya no admite**; con MySQL 8 hay que crear los usuarios con `CREATE USER` antes de los `GRANT`.
+- 🗄️ **MariaDB** 10.4+ o **MySQL** 8
 - 🟢 **Node.js 18+** para ejecutar [hotelnube-api](https://github.com/danielperez9430/hotelnube-api)
 - 📦 **Composer** (opcional: `vendor/` ya está en el repositorio)
 
@@ -68,13 +68,15 @@ cd hotel-nube-proyecto
 ### 2️⃣ Crear la base de datos
 
 ```bash
+# Tablas y datos de ejemplo (5 tipos y 30 habitaciones)
 mariadb -u root -p < config/db_hotel.sql
+
+# Usuarios de base de datos: cambia antes las contraseñas CAMBIAR_* del fichero
+mariadb -u root -p < config/db_usuarios.sql
 ```
 
 > [!WARNING]
-> El script empieza con `DROP DATABASE IF EXISTS hotel`: **borra la base de datos `hotel` si ya existe**.
-
-Crea las tablas, los datos de ejemplo (5 tipos y 30 habitaciones) y los usuarios de base de datos `admin`, `conexion` y `estandar`.
+> `db_hotel.sql` empieza con `DROP DATABASE IF EXISTS hotel`: **borra la base de datos `hotel` si ya existe**.
 
 ### 3️⃣ Configurar el `.env`
 
@@ -110,9 +112,9 @@ Toda la configuración está en el fichero `.env` de la raíz, que **no se sube 
 | `DB_HOST` | `localhost` | Servidor de la base de datos |
 | `DB_PORT` | `3306` | Puerto |
 | `DB_NAME` | `hotel` | Nombre de la base de datos |
-| `DB_USER_ADMIN` / `DB_PASSWORD_ADMIN` | — | Usuario con todos los permisos (registro y panel de administración) |
-| `DB_USER_CONEXION` / `DB_PASSWORD_CONEXION` | — | Usuario de solo lectura (login) |
-| `DB_USER_ESTANDAR` / `DB_PASSWORD_ESTANDAR` | — | Usuario de los visitantes |
+| `DB_USER_ADMIN` / `DB_PASSWORD_ADMIN` | — | Usuario de los administradores (`hotel_admin`) |
+| `DB_USER_CONEXION` / `DB_PASSWORD_CONEXION` | — | Usuario del login (`hotel_conexion`) |
+| `DB_USER_ESTANDAR` / `DB_PASSWORD_ESTANDAR` | — | Usuario de visitantes y clientes (`hotel_estandar`) |
 
 ### ✉️ Correo
 
@@ -137,15 +139,15 @@ Toda la configuración está en el fichero `.env` de la raíz, que **no se sube 
 
 ## 👥 Roles y usuarios
 
-Hay dos tipos de roles:
+Cada rol de la aplicación usa su propio usuario de base de datos, con los permisos mínimos y solo sobre la base de datos `hotel`:
 
 | Rol | Usuario de BD | Permisos en BD | Quién lo tiene |
 | --- | ------------- | -------------- | -------------- |
-| 🌐 `estandar` | `estandar` | `SELECT`, `INSERT` | Cualquier visitante sin sesión iniciada |
-| 🔎 `conexion` | `conexion` | `SELECT` | Se usa para el login. Es el rol que reciben los usuarios nuevos al registrarse |
-| 👑 `admin` | `admin` | Todos | Administradores: acceso a `adminPanel.php` |
+| 🌐 `estandar` | `hotel_estandar` | Lee el catálogo, se registra y reserva | Visitantes sin sesión y clientes registrados |
+| 🔎 `conexion` | `hotel_conexion` | Solo lee `usuarios` y `roles` | Proceso de login |
+| 👑 `admin` | `hotel_admin` | `SELECT`, `INSERT`, `UPDATE`, `DELETE` (sin cambiar la estructura) | Administradores: acceso a `adminPanel.php` |
 
-Al iniciar sesión, la sesión adopta el rol del usuario guardado en la tabla `usuarios`.
+Al registrarse, los usuarios reciben el rol `estandar`. Al iniciar sesión, la sesión adopta el rol guardado en la tabla `usuarios`.
 
 **Crear un administrador:** regístrate desde la web y luego cambia su rol en la base de datos.
 
@@ -181,7 +183,8 @@ Las respuestas de login, registro y borrado tienen la forma `{"result": "success
 ```
 hotel-nube-proyecto/
 ├── 📁 config/
-│   └── db_hotel.sql          # Esquema, datos de ejemplo y usuarios de BD
+│   ├── db_hotel.sql          # Esquema y datos de ejemplo
+│   └── db_usuarios.sql       # Usuarios de BD con permisos mínimos
 ├── 📁 docs/                  # Documentación generada con phpDocumentor
 ├── 📁 php/                   # Clases (autocargadas desde autoload.php)
 │   ├── Config/               # Lectura del .env
@@ -211,6 +214,7 @@ La documentación de las clases está generada con [phpDocumentor](https://www.p
 
 - 🔑 Contraseñas cifradas con `password_hash()` y comprobadas con `password_verify()`.
 - 🧷 Consultas con sentencias preparadas de PDO.
+- 🗝️ Usuarios de base de datos con permisos mínimos, limitados a la base de datos `hotel`.
 - 🔄 El id de sesión se regenera al iniciar sesión.
 - 👑 El panel y los endpoints de administración comprueban el rol en el servidor.
 - 🤫 Las credenciales solo están en el `.env`, que no se sube al repositorio.
