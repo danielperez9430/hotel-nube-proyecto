@@ -2,14 +2,6 @@
     background-color: #1f2929 !important;
 }
 
-.navbar {
-    z-index: 30;
-}
-
-.navbar-light .navbar-toggler-icon {
-	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 255,255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-}
-
 .carousel {
     height: calc(100vh - 123px);
 }
@@ -28,20 +20,6 @@
 
 .col {
     text-align: center;
-}
-
-.active {
-   color: gold !important;
-}
-
-a .text-light:hover {
-   color: gold !important;
-}
-.login {
-    position: absolute;
-    right: 0;
-    cursor: pointer;
-    margin-right: 5px;
 }
 
 .modal-content {
@@ -190,76 +168,11 @@ a .text-light:hover {
     margin-top: 20px;
 }
 
-.userButtonDiv {
-    position: absolute;
-    right: 10px;
-}
-
-#userButton {
-    background-color: unset;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    padding: 5px 10px;
-    transition: 0.1s;
-}
-
-#userButton i {
-    margin-right: 10px;
-}
-
-#userButton:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-#userButton:active {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-
-#userLoggedMenu {
-    background-color: white;
-    border-radius: 5px;
-    padding: 20px 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: absolute;
-    top: 70px;
-    z-index: 100;
-    right: 10px;
-    width: 200px;
-    box-shadow: 3px 3px 10px 10px rgba(0, 0, 0, 0.3);
-}
-
-#userLoggedMenu #fullUserName {
-    font-weight: bold;
-}
-
-#userLoggedMenu #userEmail {
-    color: #6c757d;
-    font-size: 14px;
-    margin-bottom: 20px;
-    word-break: break-all;
-    text-align: center;
-}
-
-#userLoggedMenu #adminPanel i,
-#userLoggedMenu #myBookings i,
-#userLoggedMenu #accountSettings i {
-    margin-right: 10px;
-}
-
 /* Capa transparente para cerrar el menú de usuario al pulsar fuera */
 #userLoggedMenuBase {
     position: fixed;
     inset: 0;
     z-index: 90;
-}
-
-#userLoggedMenu #logOut i {
-    margin-right: 10px;
 }
 
 .formDateBaseContainer {
@@ -350,12 +263,6 @@ a .text-light:hover {
     font-weight: bold;
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     color: white;
-}
-
-@media (max-width: 990px) {
-    div.login {
-        position: unset;
-    }
 }
 
 @media (max-width: 670px) {
@@ -502,4 +409,203 @@ body:has(> .page) {
 /* Ajustes de la cuenta */
 .account-phone-code {
     max-width: 90px;
+}
+
+/* ------------------------------------------------------------------
+   Barra de navegación: carbón con filete dorado, estilo art déco.
+   Mantiene 66 px de alto: la portada coloca el buscador según esa altura
+   ------------------------------------------------------------------ */
+.hn-navbar {
+    min-height: 66px;
+    z-index: 30;
+    background: linear-gradient(180deg, #243030 0%, #1f2929 55%, #192222 100%);
+    border-bottom: 1px solid rgba(220, 176, 4, 0.45);
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+}
+
+.hn-navbar .navbar-brand img {
+    transition: opacity 0.2s;
+}
+
+.hn-navbar .navbar-brand:hover img {
+    opacity: 0.85;
+}
+
+.hn-navbar .navbar-nav .nav-link {
+    position: relative;
+    color: rgba(245, 239, 224, 0.82);
+    font-size: 13px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    transition: color 0.2s;
+}
+
+.hn-navbar .navbar-nav .nav-link:hover,
+.hn-navbar .navbar-nav .nav-link:focus {
+    color: #DCB004;
+}
+
+.hn-navbar .navbar-nav .nav-link.active {
+    color: #DCB004;
+}
+
+/* Filete dorado bajo la página actual */
+.hn-navbar .navbar-nav .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 2px;
+    height: 1px;
+    background: #DCB004;
+    transform: scaleX(0);
+    transition: transform 0.25s;
+}
+
+.hn-navbar .navbar-nav .nav-link:hover::after,
+.hn-navbar .navbar-nav .nav-link.active::after {
+    transform: scaleX(1);
+}
+
+/* Botón de acceso / usuario */
+.hn-nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: #DCB004;
+    border: 1px solid rgba(220, 176, 4, 0.7);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.hn-nav-button:hover,
+.hn-nav-button:focus-visible {
+    background-color: #DCB004;
+    color: #1f2929;
+}
+
+.hn-nav-button .hn-caret {
+    font-size: 10px;
+    opacity: 0.8;
+}
+
+.hn-navbar .navbar-toggler {
+    border-color: rgba(220, 176, 4, 0.6);
+}
+
+.hn-navbar .navbar-toggler:focus {
+    box-shadow: 0 0 0 2px rgba(220, 176, 4, 0.35);
+}
+
+.hn-navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23DCB004' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Menú desplegable del usuario */
+#userLoggedMenu {
+    position: absolute;
+    top: 74px;
+    right: 12px;
+    z-index: 100;
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 16px 16px;
+    background-color: #fffdf8;
+    border-top: 3px solid #DCB004;
+    border-radius: 4px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+#userLoggedMenu #fullUserName {
+    font-weight: 600;
+    color: #1f2929;
+    text-align: center;
+}
+
+#userLoggedMenu #userEmail {
+    color: #6c757d;
+    font-size: 13px;
+    text-align: center;
+    word-break: break-all;
+    padding-bottom: 14px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hn-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 9px 12px;
+    color: #1f2929;
+    font-size: 15px;
+    text-align: left;
+    transition: background-color 0.15s;
+}
+
+.hn-menu-item i {
+    width: 18px;
+    text-align: center;
+    color: #b38f00;
+}
+
+.hn-menu-item:hover {
+    background-color: rgba(220, 176, 4, 0.12);
+}
+
+.hn-menu-logout {
+    margin-top: 8px;
+    justify-content: center;
+    background-color: #1f2929;
+    color: #DCB004;
+}
+
+.hn-menu-logout i {
+    color: #DCB004;
+}
+
+.hn-menu-logout:hover {
+    background-color: #2b3838;
+}
+
+/* Capa transparente para cerrar el menú de usuario al pulsar fuera */
+#userLoggedMenuBase {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+}
+
+/* Barra en pantallas pequeñas: menú desplegado alineado a la izquierda */
+@media (max-width: 991.98px) {
+    .hn-navbar .navbar-collapse {
+        padding: 8px 0 14px;
+    }
+
+    .hn-navbar .navbar-nav .nav-link {
+        padding: 12px 4px;
+        border-bottom: 1px solid rgba(245, 239, 224, 0.08);
+    }
+
+    .hn-navbar .navbar-nav .nav-link::after {
+        left: 4px;
+        right: auto;
+        width: 40px;
+    }
+
+    .hn-nav-button {
+        margin-top: 14px;
+        width: 100%;
+        justify-content: center;
+    }
 }

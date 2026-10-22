@@ -6,7 +6,7 @@ $usuario = \Session\session::usuario();
 $paginaActual = basename($_SERVER['SCRIPT_NAME']);
 $enlaceNav = function ($pagina, $texto) use ($paginaActual) {
     $activa = $pagina === $paginaActual;
-    return '<a class="nav-link text-light' . ($activa ? ' active" aria-current="page' : '') . '" href="' . $pagina . '">' . $texto . '</a>';
+    return '<a class="nav-link' . ($activa ? ' active" aria-current="page' : '') . '" href="' . $pagina . '">' . $texto . '</a>';
 };
 ?>
 <!DOCTYPE html>
@@ -54,30 +54,30 @@ $enlaceNav = function ($pagina, $texto) use ($paginaActual) {
     <body>
 
         <!-- Barra de navegación -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark hn-navbar">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.php"><img src="src/logo/hotel_nube.svg" height="40" /></a>
+                <a class="navbar-brand" href="index.php"><img src="src/logo/hotel_nube_sin_fondo.svg" height="40" alt="Hotel Nube" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav align-items-center">
+                    <div class="navbar-nav me-auto">
                         <?= $enlaceNav('index.php', 'Home') ?>
                         <?= $enlaceNav('promotions.php', 'Promotions') ?>
                         <?= $enlaceNav('services.php', 'Services') ?>
                         <?= $enlaceNav('contact.php', 'Contact') ?>
-
-                        <?php if ($usuario === null): ?>
-                            <div class="navbar-nav login">
-                                <a class="nav-link text-light me-auto" data-bs-toggle="modal" data-bs-target="#loginDialog">Login/Register</a>
-                            </div>
-                        <?php else: ?>
-                            <div class="userButtonDiv">
-                                <button id="userButton"><i class="fas fa-user"></i><span id="userName"><?= htmlspecialchars(explode(' ', trim($usuario['nombre']))[0]) ?></span></button>
-                            </div>
-                        <?php endif; ?>
                     </div>
+
+                    <?php if ($usuario === null): ?>
+                        <button type="button" class="hn-nav-button" id="navLogin" data-bs-toggle="modal" data-bs-target="#loginDialog">
+                            <i class="far fa-user"></i>Login / Register
+                        </button>
+                    <?php else: ?>
+                        <button type="button" class="hn-nav-button" id="userButton" aria-haspopup="true">
+                            <i class="fas fa-user"></i><span id="userName"><?= htmlspecialchars(explode(' ', trim($usuario['nombre']))[0]) ?></span><i class="fas fa-chevron-down hn-caret"></i>
+                        </button>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>
@@ -87,12 +87,12 @@ $enlaceNav = function ($pagina, $texto) use ($paginaActual) {
             <div id="userLoggedMenu" style="display: none;">
                 <span id="fullUserName"><?= htmlspecialchars($usuario['nombre']) ?></span>
                 <span id="userEmail"><?= htmlspecialchars($usuario['email']) ?></span>
-                <button id="myBookings" class="btn btn-outline-dark mb-2"><i class="fas fa-suitcase"></i>My bookings</button>
-                <button id="accountSettings" class="btn btn-outline-dark mb-2"><i class="fas fa-user-cog"></i>Account settings</button>
+                <button id="myBookings" class="hn-menu-item"><i class="fas fa-suitcase"></i>My bookings</button>
+                <button id="accountSettings" class="hn-menu-item"><i class="fas fa-user-cog"></i>Account settings</button>
                 <?php if ($usuario['rol'] === 'admin'): ?>
-                    <button id="adminPanel" class="btn btn-outline-dark mb-2"><i class="fas fa-tools"></i>Admin panel</button>
+                    <button id="adminPanel" class="hn-menu-item"><i class="fas fa-tools"></i>Admin panel</button>
                 <?php endif; ?>
-                <button id="logOut" class="btn btn-primary"><i class="fas fa-door-open"></i>Log out</button>
+                <button id="logOut" class="hn-menu-item hn-menu-logout"><i class="fas fa-door-open"></i>Log out</button>
             </div>
 
             <!-- Ajustes de la cuenta -->
