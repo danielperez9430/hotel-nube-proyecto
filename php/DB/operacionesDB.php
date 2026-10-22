@@ -230,7 +230,7 @@ class operacionesDB {
      * @param string $direccion cadena de texto con la dirección
      * @param string $password cadena de texto con la contraseña
      * @param string $rol_usuario nombre del rol del usuario
-     * @return Number devuelve 1 si se registró el usuario
+     * @return Number devuelve el id del nuevo usuario o 0 si no se registró
      */
     function registrarUsuario($nombre, $email, $telf, $pais, $provincia, $ciudad, $direccion, $password, $rol_usuario = 'estandar') {
 
@@ -258,8 +258,8 @@ class operacionesDB {
             // Ejecutamos la consulta
             $stmt->execute();
 
-            // Obtenemos el número de filas modificadas
-            $resultado = $stmt->rowCount();
+            // Obtenemos el id del usuario insertado
+            $resultado = $stmt->rowCount() === 1 ? (int) $db->lastInsertId() : 0;
         } else {
             echo "ERROR: " . print_r($db->errorInfo());
         }
