@@ -49,7 +49,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 
 | Capa | Tecnología |
 | ---- | ---------- |
-| 🐘 Backend | PHP 8 + PDO |
+| 🐘 Backend | PHP 8.5 + PDO |
 | 🗄️ Base de datos | MariaDB / MySQL |
 | 🎨 Frontend | Bootstrap 5.3, jQuery 3.7, Font Awesome 5, Litepicker 2 (copias locales en `public/src/vendor`) |
 | ✉️ Correo | PHPMailer 7 |
@@ -71,7 +71,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 **Con Docker** 🐳: solo Docker con Docker Compose.
 
 **Sin Docker**:
-- 🐘 **PHP 8.3** o superior, con la extensión `pdo_mysql`
+- 🐘 **PHP 8.5.12** o superior, con la extensión `pdo_mysql`
 - 📦 **Composer**
 - 🗄️ **MariaDB** 10.4+ o **MySQL** 8
 - 🟢 **Node.js 18+** para ejecutar [hotelnube-api](https://github.com/danielperez9430/hotelnube-api)
@@ -252,7 +252,7 @@ composer test
 > [!WARNING]
 > Los tests de integración **borran los usuarios y las reservas** de esa base de datos. Usa una base de datos de pruebas.
 
-GitHub Actions ejecuta todo lo anterior en cada push y pull request (PHP 8.3 y 8.4, con MariaDB), y además construye la imagen Docker de la web.
+GitHub Actions ejecuta todo lo anterior en cada push y pull request (PHP 8.5, con MariaDB), y además construye la imagen Docker de la web.
 
 ## 👥 Roles y usuarios
 
