@@ -161,12 +161,15 @@
     transform: scale(1.01);
 }
 
+/* Servicios de la habitación: incluidos o no */
 .available {
-    color: green;
+    color: #1F2929;
+    font-weight: 500;
 }
+
 .notavailable {
-        text-decoration:line-through;
-        color: red;
+    text-decoration: line-through;
+    color: #9a8f8f;
 }
 
 /* Pantallas pequeñas: la imagen pasa encima del contenido */

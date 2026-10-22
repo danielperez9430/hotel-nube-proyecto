@@ -25,6 +25,7 @@ $enlaceNav = function ($pagina, $texto) use ($paginaActual) {
         <!-- Librerías (copias locales en src/vendor) -->
         <!-- Bootstrap 5 -->
         <link href="src/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="src/css/marca.css" rel="stylesheet" />
         <link href="src/css/style.css" rel="stylesheet" />
         <link href="src/css/roomSelection.css" rel="stylesheet" />
         <script src="src/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

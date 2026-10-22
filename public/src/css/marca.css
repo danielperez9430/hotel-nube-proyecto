@@ -1,0 +1,169 @@
+/* ==================================================================
+   Tema de la marca Hotel Nube sobre Bootstrap 5.3
+   Paleta: carbón #1F2929, noche #111717, oro #DCB004, oro suave #C9A44C
+   y marfil #F5EFE0. Se carga justo después de Bootstrap en todas las páginas
+   ================================================================== */
+:root {
+    --hn-carbon: #1F2929;
+    --hn-noche: #111717;
+    --hn-oro: #DCB004;
+    --hn-oro-suave: #C9A44C;
+    --hn-oro-oscuro: #8A6D1D;
+    --hn-marfil: #F5EFE0;
+    --hn-burdeos: #8A2C2C;
+
+    --bs-primary: var(--hn-carbon);
+    --bs-primary-rgb: 31, 41, 41;
+    --bs-link-color: var(--hn-oro-oscuro);
+    --bs-link-color-rgb: 138, 109, 29;
+    --bs-link-hover-color: var(--hn-carbon);
+    --bs-link-hover-color-rgb: 31, 41, 41;
+    --bs-focus-ring-color: rgba(220, 176, 4, 0.35);
+    --bs-danger: var(--hn-burdeos);
+    --bs-danger-rgb: 138, 44, 44;
+}
+
+/* ------------------------------------------------------------------
+   Botones
+   ------------------------------------------------------------------ */
+.btn {
+    --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(220, 176, 4, 0.35);
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    --bs-btn-color: var(--hn-oro);
+    --bs-btn-bg: var(--hn-carbon);
+    --bs-btn-border-color: var(--hn-oro);
+    --bs-btn-hover-color: var(--hn-carbon);
+    --bs-btn-hover-bg: var(--hn-oro);
+    --bs-btn-hover-border-color: var(--hn-oro);
+    --bs-btn-active-color: var(--hn-carbon);
+    --bs-btn-active-bg: #C49D03;
+    --bs-btn-active-border-color: #C49D03;
+    --bs-btn-disabled-color: rgba(220, 176, 4, 0.7);
+    --bs-btn-disabled-bg: var(--hn-carbon);
+    --bs-btn-disabled-border-color: rgba(220, 176, 4, 0.5);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    padding: 0.55rem 1.1rem;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--hn-carbon);
+    --bs-btn-border-color: rgba(31, 41, 41, 0.35);
+    --bs-btn-hover-color: var(--hn-carbon);
+    --bs-btn-hover-bg: var(--hn-marfil);
+    --bs-btn-hover-border-color: var(--hn-oro-suave);
+    --bs-btn-active-color: var(--hn-oro);
+    --bs-btn-active-bg: var(--hn-carbon);
+    --bs-btn-active-border-color: var(--hn-carbon);
+}
+
+.btn-danger {
+    --bs-btn-bg: var(--hn-burdeos);
+    --bs-btn-border-color: var(--hn-burdeos);
+    --bs-btn-hover-bg: #6E2222;
+    --bs-btn-hover-border-color: #6E2222;
+    --bs-btn-active-bg: #5A1C1C;
+    --bs-btn-active-border-color: #5A1C1C;
+}
+
+.btn-outline-danger {
+    --bs-btn-color: var(--hn-burdeos);
+    --bs-btn-border-color: var(--hn-burdeos);
+    --bs-btn-hover-bg: var(--hn-burdeos);
+    --bs-btn-hover-border-color: var(--hn-burdeos);
+    --bs-btn-active-bg: #6E2222;
+    --bs-btn-active-border-color: #6E2222;
+}
+
+/* Botones de filtro (btn-check) marcados */
+.btn-check:checked + .btn-outline-secondary {
+    color: var(--hn-oro);
+    background-color: var(--hn-carbon);
+    border-color: var(--hn-carbon);
+}
+
+/* ------------------------------------------------------------------
+   Formularios
+   ------------------------------------------------------------------ */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--hn-oro-suave);
+    box-shadow: 0 0 0 0.25rem rgba(220, 176, 4, 0.2);
+}
+
+.form-check-input:checked {
+    background-color: var(--hn-carbon);
+    border-color: var(--hn-carbon);
+}
+
+.form-check-input:focus {
+    border-color: var(--hn-oro-suave);
+    box-shadow: 0 0 0 0.25rem rgba(220, 176, 4, 0.25);
+}
+
+.form-switch .form-check-input:focus:not(:checked) {
+    --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23C9A44C'/%3e%3c/svg%3e");
+}
+
+/* ------------------------------------------------------------------
+   Diálogos
+   ------------------------------------------------------------------ */
+.modal-content {
+    border: none;
+    border-top: 3px solid var(--hn-oro);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(180deg, #243030 0%, var(--hn-carbon) 100%);
+    border-bottom: 1px solid rgba(220, 176, 4, 0.45);
+    color: var(--hn-marfil);
+}
+
+.modal-header .modal-title {
+    font-size: 1rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+}
+
+.modal-header .text-muted {
+    color: rgba(245, 239, 224, 0.7) !important;
+}
+
+.modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+    opacity: 0.7;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+.modal-footer {
+    border-top-color: rgba(201, 164, 76, 0.3);
+}
+
+/* ------------------------------------------------------------------
+   Avisos e iconos
+   ------------------------------------------------------------------ */
+.alert-info {
+    --bs-alert-color: var(--hn-carbon);
+    --bs-alert-bg: var(--hn-marfil);
+    --bs-alert-border-color: rgba(201, 164, 76, 0.5);
+}
+
+.alert-warning {
+    --bs-alert-color: #5C4A0E;
+    --bs-alert-bg: #FBF3D5;
+    --bs-alert-border-color: rgba(220, 176, 4, 0.5);
+}
+
+.text-brand {
+    color: var(--hn-oro-suave) !important;
+}
