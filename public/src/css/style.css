@@ -373,3 +373,52 @@ a .text-light:hover {
         width: 100%;
     }
 }
+/* Páginas de contenido (contacto, privacidad): el pie queda abajo */
+body:has(> .page) {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.page {
+    flex: 1;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 16px 64px;
+}
+
+.page-title {
+    font-weight: 600;
+    color: #1f2929;
+}
+
+.page-lead {
+    color: #6c757d;
+    font-size: 18px;
+    margin-bottom: 32px;
+}
+
+.page-card {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: 3px solid #DCB004;
+    border-radius: 5px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.page-card h2 {
+    font-size: 22px;
+    margin-bottom: 16px;
+}
+
+.page-card h2 i {
+    color: #DCB004;
+    margin-right: 10px;
+}
+
+.page-card a {
+    color: #1f2929;
+}

@@ -1,6 +1,13 @@
 <?php
 // Usuario con sesión iniciada (null si es un visitante)
 $usuario = \Session\session::usuario();
+
+// Página actual, para marcar su enlace en la barra de navegación
+$paginaActual = basename($_SERVER['SCRIPT_NAME']);
+$enlaceNav = function ($pagina, $texto) use ($paginaActual) {
+    $activa = $pagina === $paginaActual;
+    return '<a class="nav-link text-light' . ($activa ? ' active" aria-current="page' : '') . '" href="' . $pagina . '">' . $texto . '</a>';
+};
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,17 +55,17 @@ $usuario = \Session\session::usuario();
         <!-- Barra de navegación -->
         <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img src="src/logo/hotel_nube.svg" height="40" /></a>
+                <a class="navbar-brand" href="index.php"><img src="src/logo/hotel_nube.svg" height="40" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav align-items-center">
-                        <a class="nav-link active text-light" aria-current="page" href="#">Home</a>
+                        <?= $enlaceNav('index.php', 'Home') ?>
                         <a class="nav-link text-light" href="#">Promotions</a>
                         <a class="nav-link text-light" href="#">Services</a>
-                        <a class="nav-link text-light" href="#">Contact</a>
+                        <?= $enlaceNav('contact.php', 'Contact') ?>
 
                         <?php if ($usuario === null): ?>
                             <div class="navbar-nav login">
