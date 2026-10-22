@@ -15,6 +15,7 @@ $usuario = \Session\session::usuario();
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link href="src/css/style.css" rel="stylesheet" />
+        <link href="src/css/roomSelection.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
@@ -39,6 +40,7 @@ $usuario = \Session\session::usuario();
         <script src="src/js/csrf.js"></script>
         <script src="src/js/login.js"></script>
         <script src="src/js/logout.js"></script>
+        <script src="src/js/roomSelection.js"></script>
         <script src="src/js/datepickers.js"></script>
     </head>
 
@@ -78,10 +80,24 @@ $usuario = \Session\session::usuario();
             <div id="userLoggedMenu" style="display: none;">
                 <span id="fullUserName"><?= htmlspecialchars($usuario['nombre']) ?></span>
                 <span id="userEmail"><?= htmlspecialchars($usuario['email']) ?></span>
+                <button id="myBookings" class="btn btn-outline-dark mb-2"><i class="fas fa-suitcase"></i>My bookings</button>
                 <?php if ($usuario['rol'] === 'admin'): ?>
                     <button id="adminPanel" class="btn btn-outline-dark mb-2"><i class="fas fa-tools"></i>Admin panel</button>
                 <?php endif; ?>
                 <button id="logOut" class="btn btn-primary"><i class="fas fa-door-open"></i>Log out</button>
+            </div>
+
+            <!-- Reservas del usuario -->
+            <div class="modal fade" id="myBookingsDialog" tabindex="-1" aria-labelledby="myBookingsTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myBookingsTitle">My bookings</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="myBookingsList"></div>
+                    </div>
+                </div>
             </div>
         <?php endif; ?>
 

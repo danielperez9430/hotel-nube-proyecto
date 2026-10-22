@@ -245,7 +245,8 @@ a .text-light:hover {
     text-align: center;
 }
 
-#userLoggedMenu #adminPanel i {
+#userLoggedMenu #adminPanel i,
+#userLoggedMenu #myBookings i {
     margin-right: 10px;
 }
 
