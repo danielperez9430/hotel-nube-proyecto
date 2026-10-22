@@ -60,7 +60,7 @@ require_once(__DIR__ . '/../views/header.php');
             <li><strong>Unforeseen circumstances</strong> (illness, transport strikes, severe weather): we offer a credit for the full amount, valid for 12 months.</li>
         </ul>
 
-        <p class="mb-0">To cancel or modify a booking, contact us through the <a href="contact.php">contact page</a> indicating your booking number, which you will find in your confirmation email and under <strong>My bookings</strong>.</p>
+        <p class="mb-0">You can cancel a booking yourself until check-in time from <strong>My bookings</strong> in the user menu: you will see the exact charge, if any, before confirming. To modify a booking, contact us through the <a href="contact.php">contact page</a> indicating your booking number, which you will find in your confirmation email.</p>
     </section>
 </main>
 

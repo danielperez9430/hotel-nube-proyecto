@@ -36,7 +36,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 - 🌍 **Selección de país, provincia y ciudad** en el registro, con datos de [hotelnube-api](https://github.com/danielperez9430/hotelnube-api).
 - 📅 **Búsqueda de habitaciones libres** entre dos fechas ([Litepicker](https://litepicker.com)), con imágenes, servicios y precio total.
 - 🛎️ **Reservas** con resumen, confirmación por correo y protección frente a reservas simultáneas.
-- 🧳 **Mis reservas**: cada cliente consulta sus estancias desde el menú de usuario.
+- 🧳 **Mis reservas**: cada cliente consulta sus estancias desde el menú de usuario y puede **cancelarlas** hasta la hora de entrada, viendo antes el cargo que marca la política de cancelación.
 - ⚙️ **Ajustes de cuenta**: nombre, teléfono y dirección editables desde el menú de usuario.
 - 🛎️ **Servicios y promociones**: páginas con los servicios del hotel (desde la base de datos) y las ofertas vigentes.
 - 👤 **Menú de usuario** con nombre, email, logout y acceso al panel para administradores.
@@ -259,7 +259,8 @@ Todos están en `public/api/` y responden JSON.
 | `api/getRoomTypes.php` | `GET` | — | Nombres de los tipos de habitación |
 | `api/searchRooms.php` | `GET` | — | Habitaciones libres entre `checkin` y `checkout` (`DD-MM-YYYY` o `YYYY-MM-DD`) |
 | `api/bookRoom.php` | `POST` | 👤 sesión | Reserva una habitación (`roomId`, `checkin`, `checkout`). `409` si ya está ocupada |
-| `api/myBookings.php` | `GET` | 👤 sesión | Reservas del usuario |
+| `api/myBookings.php` | `GET` | 👤 sesión | Reservas del usuario, con su estado y el cargo que tendría cancelarlas ahora |
+| `api/cancelBooking.php` | `POST` | 👤 sesión | Cancela una reserva (`booking`, `charge`: el cargo aceptado). `409` si ya está cancelada, ya no se puede cancelar o el cargo ha cambiado |
 | `api/account.php` | `GET` / `POST` | 👤 sesión | Datos de la cuenta / guardarlos (`nombre`, `telf`, `pais`, `provincia`, `ciudad`, `direccion`) |
 | `api/getAllRooms.php` | `GET` | 👑 admin | Listado de todas las habitaciones |
 | `api/updateRoom.php` | `POST` | 👑 admin | Modifica una habitación (`roomId`, `tipo`, `m2`, `ventana`, `internet`, `limpieza`, `precio`) |
@@ -276,6 +277,7 @@ Las respuestas de login, registro y borrado tienen la forma `{"result": "success
 | `4` | 🛡️ Token CSRF ausente o incorrecto (HTTP 403) |
 | `5` | ⏳ Demasiados intentos de login fallidos (HTTP 429) |
 | `6` | 👤 Hace falta iniciar sesión (HTTP 401) |
+| `7` | 💶 El cargo de cancelación ha cambiado y hay que confirmarlo de nuevo (HTTP 409) |
 
 Las peticiones `POST` deben llevar la cabecera `X-CSRF-Token` con el token de la página (`<meta name="csrf-token">`). `src/js/csrf.js` la añade automáticamente a todas las peticiones de jQuery.
 

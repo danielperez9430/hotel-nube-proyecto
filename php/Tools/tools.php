@@ -72,6 +72,9 @@ class tools {
     // Número máximo de noches de una reserva
     const MAX_NOCHES = 30;
 
+    // Hora de entrada (check-in) del hotel, desde la que se cuentan los plazos de cancelación
+    const HORA_ENTRADA = '15:00';
+
     /**
      * Función que convierte una fecha en formato DD-MM-YYYY (el del selector
      * de fechas) o YYYY-MM-DD en un objeto fecha
@@ -131,6 +134,47 @@ class tools {
             'salida' => $fechaSalida->format('Y-m-d'),
             'noches' => $noches
         ];
+    }
+
+    /**
+     * Función que calcula el cargo por cancelar una reserva según la política
+     * de privacy.php. Los plazos se cuentan desde las 15:00 (hora del hotel)
+     * del día de entrada:
+     * - más de 72 horas antes (14 días en grupos de 3 o más habitaciones): gratis
+     * - entre ese plazo y 24 horas antes: el 50% de la primera noche
+     * - menos de 24 horas antes: la primera noche completa
+     * A partir de la hora de entrada ya no se puede cancelar
+     * 
+     * @param string $fechaEntrada fecha de entrada (Y-m-d)
+     * @param float $primeraNoche precio de la primera noche (todas las habitaciones)
+     * @param int $habitaciones número de habitaciones de la reserva
+     * @param \DateTimeImmutable|null $ahora momento de la cancelación (por defecto, ahora)
+     * @return array|null devuelve ['cargo' => euros, 'gratis_hasta' => fecha ISO 8601]
+     * o null si la reserva ya no se puede cancelar
+     */
+    function cargoCancelacion($fechaEntrada, $primeraNoche, $habitaciones = 1, $ahora = null) {
+
+        $zona = new \DateTimeZone(config::get('TIMEZONE', 'Europe/Madrid'));
+        $entrada = \DateTimeImmutable::createFromFormat('!Y-m-d H:i', $fechaEntrada . ' ' . self::HORA_ENTRADA, $zona);
+        $ahora = $ahora ?? new \DateTimeImmutable('now', $zona);
+
+        if ($entrada === false || $ahora >= $entrada) {
+            return null;
+        }
+
+        $horasGratis = $habitaciones >= 3 ? 14 * 24 : 72;
+        $gratisHasta = $entrada->modify("-$horasGratis hours");
+        $horasRestantes = ($entrada->getTimestamp() - $ahora->getTimestamp()) / 3600;
+
+        if ($ahora < $gratisHasta) {
+            $cargo = 0.0;
+        } elseif ($horasRestantes > 24) {
+            $cargo = round($primeraNoche * 0.5, 2);
+        } else {
+            $cargo = round((float) $primeraNoche, 2);
+        }
+
+        return ['cargo' => $cargo, 'gratis_hasta' => $gratisHasta->format(\DATE_ATOM)];
     }
 
     /**

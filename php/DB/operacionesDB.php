@@ -508,11 +508,12 @@ class operacionesDB {
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    // Subconsulta que indica si la habitación h tiene alguna reserva que se
-    // solapa con la estancia [entrada, salida). Parámetros: salida, entrada
+    // Subconsulta que indica si la habitación h tiene alguna reserva
+    // confirmada que se solapa con la estancia [entrada, salida). Las
+    // canceladas no ocupan la habitación. Parámetros: salida, entrada
     const SQL_OCUPADA = "SELECT 1 FROM habitaciones_reservas hr
                           INNER JOIN reservas r ON r.num_reserva = hr.num_reserva
-                          WHERE hr.id_habitacion = h.id
+                          WHERE hr.id_habitacion = h.id AND r.estado = 'confirmada'
                             AND r.fecha_entrada < ? AND r.fecha_salida > ?";
 
     /**
@@ -590,6 +591,7 @@ class operacionesDB {
     function obtenerReservasUsuario($id_usuario) {
 
         $sql = "SELECT r.num_reserva, r.fecha_reserva, r.fecha_entrada, r.fecha_salida,
+                       r.estado, r.fecha_cancelacion, r.cargo_cancelacion,
                        t.tipo_habitacion, hr.id_habitacion, hr.precio_noche,
                        hr.precio_noche * DATEDIFF(r.fecha_salida, r.fecha_entrada) AS total
                   FROM reservas r
@@ -603,6 +605,49 @@ class operacionesDB {
         $stmt->execute([$id_usuario]);
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Función que obtiene una reserva de un usuario con el precio de la
+     * primera noche (todas sus habitaciones), para calcular la cancelación
+     * 
+     * @param Number $num_reserva número de la reserva
+     * @param Number $id_usuario id del usuario dueño de la reserva
+     * @return array|false devuelve num_reserva, fecha_entrada, fecha_salida,
+     * estado, primera_noche y habitaciones, o false si no existe o es de otro usuario
+     */
+    function obtenerReservaUsuario($num_reserva, $id_usuario) {
+
+        $sql = "SELECT r.num_reserva, r.fecha_entrada, r.fecha_salida, r.estado,
+                       SUM(hr.precio_noche) AS primera_noche, COUNT(hr.id) AS habitaciones
+                  FROM reservas r
+                 INNER JOIN habitaciones_reservas hr ON hr.num_reserva = r.num_reserva
+                 WHERE r.num_reserva = ? AND r.id_usuario = ?
+                 GROUP BY r.num_reserva, r.fecha_entrada, r.fecha_salida, r.estado;";
+
+        $stmt = $this->PDO->prepare($sql);
+        $stmt->execute([$num_reserva, $id_usuario]);
+
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Función que cancela una reserva confirmada de un usuario. La condición
+     * del UPDATE hace que dos cancelaciones simultáneas no se apliquen dos veces
+     * 
+     * @param Number $num_reserva número de la reserva
+     * @param Number $id_usuario id del usuario dueño de la reserva
+     * @param float $cargo cargo de cancelación en euros
+     * @return boolean devuelve true si la reserva se ha cancelado
+     */
+    function cancelarReserva($num_reserva, $id_usuario, $cargo) {
+
+        $stmt = $this->PDO->prepare("UPDATE reservas
+                                        SET estado = 'cancelada', fecha_cancelacion = NOW(), cargo_cancelacion = ?
+                                      WHERE num_reserva = ? AND id_usuario = ? AND estado = 'confirmada';");
+        $stmt->execute([$cargo, $num_reserva, $id_usuario]);
+
+        return $stmt->rowCount() === 1;
     }
 
     /**

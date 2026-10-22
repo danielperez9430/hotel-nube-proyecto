@@ -156,5 +156,25 @@ $enlaceNav = function ($pagina, $texto) use ($paginaActual) {
                     </div>
                 </div>
             </div>
+
+            <!-- Confirmar la cancelación de una reserva -->
+            <div class="modal fade" id="cancelBookingDialog" tabindex="-1" aria-labelledby="cancelBookingTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="cancelBookingTitle">Cancel booking</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="cancelBookingSummary"></div>
+                            <div id="cancelBookingMessage" class="alert mt-3 mb-0" style="display: none;"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="cancelBookingClose">Keep booking</button>
+                            <button type="button" class="btn btn-danger" id="cancelBookingConfirm"><i class="fas fa-times"></i> Cancel booking</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <?php endif; ?>
 

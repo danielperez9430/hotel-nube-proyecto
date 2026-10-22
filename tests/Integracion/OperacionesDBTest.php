@@ -249,4 +249,57 @@ class OperacionesDBTest extends TestCase {
         $this->assertFalse($con->tokenRestablecimientoValido($restablecimiento['token']));
         $this->assertFalse($con->restablecerPassword($restablecimiento['token'], password_hash('nueva', PASSWORD_DEFAULT)));
     }
+
+    public function testCancelarUnaReservaLiberaLaHabitacion(): void {
+        $usuario = $this->registrar();
+        $con = new db('estandar');
+
+        $reserva = $con->crearReserva($usuario, 5, $this->fecha(20), $this->fecha(23));
+        $num = $reserva['num_reserva'];
+        $this->assertFalse($con->crearReserva($usuario, 5, $this->fecha(21), $this->fecha(22)));
+
+        $datos = $con->obtenerReservaUsuario($num, $usuario);
+        $this->assertSame('confirmada', $datos['estado']);
+        $this->assertEquals($reserva['precio_noche'], (float) $datos['primera_noche']);
+        $this->assertSame(1, (int) $datos['habitaciones']);
+
+        $this->assertTrue($con->cancelarReserva($num, $usuario, 12.5));
+        // Una segunda cancelación no hace nada
+        $this->assertFalse($con->cancelarReserva($num, $usuario, 0));
+
+        $listado = $con->obtenerReservasUsuario($usuario)[0];
+        $this->assertSame('cancelada', $listado['estado']);
+        $this->assertEquals(12.5, (float) $listado['cargo_cancelacion']);
+        $this->assertNotNull($listado['fecha_cancelacion']);
+
+        // La habitación vuelve a estar libre
+        $this->assertContains(5, array_column($con->buscarHabitaciones($this->fecha(21), $this->fecha(22)), 'id'));
+        $this->assertIsArray($con->crearReserva($usuario, 5, $this->fecha(21), $this->fecha(22)));
+    }
+
+    public function testNoSePuedenCancelarReservasDeOtroUsuario(): void {
+        $ana = $this->registrar();
+        $luis = $this->registrar('luis@test.com');
+        $con = new db('estandar');
+
+        $num = $con->crearReserva($ana, 5, $this->fecha(20), $this->fecha(23))['num_reserva'];
+
+        $this->assertFalse($con->obtenerReservaUsuario($num, $luis));
+        $this->assertFalse($con->cancelarReserva($num, $luis, 0));
+        $this->assertSame('confirmada', $con->obtenerReservaUsuario($num, $ana)['estado']);
+    }
+
+    public function testElUsuarioEstandarNoPuedeCambiarLasFechasDeUnaReserva(): void {
+        $usuario = $this->registrar();
+        $con = new db('estandar');
+        $num = $con->crearReserva($usuario, 5, $this->fecha(20), $this->fecha(23))['num_reserva'];
+
+        $pdo = new \PDO(
+            'mysql:host=' . getenv('DB_HOST') . ';port=' . (getenv('DB_PORT') ?: '3306') . ';dbname=' . (getenv('DB_NAME') ?: 'hotel'),
+            getenv('DB_USER_ESTANDAR'), getenv('DB_PASSWORD_ESTANDAR'), [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
+
+        $this->expectException(\PDOException::class);
+        $this->expectExceptionMessageMatches('/denied/i');
+        $pdo->exec("UPDATE reservas SET fecha_salida = fecha_salida + INTERVAL 5 DAY WHERE num_reserva = $num");
+    }
 }
