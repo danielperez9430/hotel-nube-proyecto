@@ -2,7 +2,7 @@
 
 > *Where your dreams will be as soft as the clouds* ✨
 
-Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap y jQuery. Permite registrarse, iniciar sesión, consultar los tipos de habitación y gestionar las habitaciones desde un panel de administración.
+Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap y jQuery. Permite buscar habitaciones libres, reservarlas, registrarse y gestionar las habitaciones desde un panel de administración.
 
 ## 📑 Índice
 
@@ -23,8 +23,9 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 
 - 🔐 **Registro e inicio de sesión** con contraseñas cifradas (`password_hash`).
 - 🌍 **Selección de país, provincia y ciudad** en el registro, con datos de [hotelnube-api](https://github.com/danielperez9430/hotelnube-api).
-- 📅 **Selector de fechas** de entrada y salida ([Litepicker](https://litepicker.com)).
-- 🛏️ **Tipos de habitación** con descripción e imágenes.
+- 📅 **Búsqueda de habitaciones libres** entre dos fechas ([Litepicker](https://litepicker.com)), con imágenes, servicios y precio total.
+- 🛎️ **Reservas** con resumen, confirmación por correo y protección frente a reservas simultáneas.
+- 🧳 **Mis reservas**: cada cliente consulta sus estancias desde el menú de usuario.
 - 👤 **Menú de usuario** con nombre, email, logout y acceso al panel para administradores.
 - ✉️ **Correos de bienvenida** por SMTP con [PHPMailer](https://github.com/PHPMailer/PHPMailer).
 - 🛠️ **Panel de administración** para modificar y borrar habitaciones.
@@ -129,6 +130,13 @@ Toda la configuración está en el fichero `.env` de la raíz, que **no se sube 
 | `MAIL_FROM_ADDRESS` | `MAIL_USERNAME` | Dirección del remitente |
 | `MAIL_FROM_NAME` | `Hotel Nube` | Nombre del remitente |
 
+### 🌐 Web
+
+| Variable | Por defecto | Descripción |
+| -------- | ----------- | ----------- |
+| `SITE_URL` | `http://localhost:8000` | URL pública de la web. Se usa para las imágenes de los correos |
+| `TIMEZONE` | `Europe/Madrid` | Zona horaria del hotel, para validar las fechas de las reservas |
+
 ### 🌍 API
 
 | Variable | Por defecto | Descripción |
@@ -167,6 +175,9 @@ Todos están en `public/api/` y responden JSON.
 | `api/register.php` | `POST` | — | Registra un usuario |
 | `api/room_type.php` | `GET` | — | Tipos de habitación con su descripción |
 | `api/getRoomTypes.php` | `GET` | — | Nombres de los tipos de habitación |
+| `api/searchRooms.php` | `GET` | — | Habitaciones libres entre `checkin` y `checkout` (`DD-MM-YYYY` o `YYYY-MM-DD`) |
+| `api/bookRoom.php` | `POST` | 👤 sesión | Reserva una habitación (`roomId`, `checkin`, `checkout`). `409` si ya está ocupada |
+| `api/myBookings.php` | `GET` | 👤 sesión | Reservas del usuario |
 | `api/getAllRooms.php` | `GET` | 👑 admin | Listado de todas las habitaciones |
 | `api/updateRoom.php` | `POST` | 👑 admin | Modifica una habitación (`roomId`, `tipo`, `m2`, `ventana`, `internet`, `limpieza`, `precio`) |
 | `api/removeRoom.php` | `POST` | 👑 admin | Borra una habitación (`roomId`) |
@@ -181,6 +192,7 @@ Las respuestas de login, registro y borrado tienen la forma `{"result": "success
 | `3` | 🚫 Sin permisos (HTTP 403) |
 | `4` | 🛡️ Token CSRF ausente o incorrecto (HTTP 403) |
 | `5` | ⏳ Demasiados intentos de login fallidos (HTTP 429) |
+| `6` | 👤 Hace falta iniciar sesión (HTTP 401) |
 
 Las peticiones `POST` deben llevar la cabecera `X-CSRF-Token` con el token de la página (`<meta name="csrf-token">`). `src/js/csrf.js` la añade automáticamente a todas las peticiones de jQuery.
 
