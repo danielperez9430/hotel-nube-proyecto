@@ -11,27 +11,22 @@ $usuario = \Session\session::usuario();
         <meta name="csrf-token" content="<?= htmlspecialchars(\Session\session::tokenCsrf()) ?>">
         <title>Hotel Nube</title>
         
+        <!-- Librerías (copias locales en src/vendor) -->
         <!-- Bootstrap 5 -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link href="src/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="src/css/style.css" rel="stylesheet" />
         <link href="src/css/roomSelection.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+        <script src="src/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         
         <!-- Fonts Awesome -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="src/vendor/fontawesome/css/all.min.css"/>
         
         <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-                integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+        <script src="src/vendor/jquery/jquery.min.js"></script>
 
         <!-- Litepicker -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker@2.0.12/dist/css/litepicker.css"
-              integrity="sha384-fcpDiVI0TDx8mYG1bVKKGTM+E7cSE50LVyMaaBkegJuyXG1DOhC/DNsShtuPlo1L" crossorigin="anonymous"/>
-        <script src="https://cdn.jsdelivr.net/npm/litepicker@2.0.12/dist/litepicker.js"
-                integrity="sha384-TwHJTusQtbcoEHJcrF5aeo0MHBgj8lt8onFRrG7wKk8Q/LG9EphkEsqNRiVWzIP9" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="src/vendor/litepicker/litepicker.css"/>
+        <script src="src/vendor/litepicker/litepicker.js"></script>
 
         <!-- URL de hotelnube-api, configurada con API_URL en el .env -->
         <script>
