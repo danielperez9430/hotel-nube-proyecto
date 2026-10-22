@@ -422,6 +422,96 @@ class operacionesDB {
                             AND r.fecha_entrada < ? AND r.fecha_salida > ?";
 
     /**
+     * Función que reserva una habitación si sigue libre. Usa un bloqueo con
+     * nombre por habitación para que dos reservas simultáneas de la misma
+     * habitación no puedan solaparse
+     * 
+     * @param Number $id_usuario id del usuario que reserva
+     * @param Number $id_habitacion id de la habitación
+     * @param string $fecha_entrada fecha de entrada (Y-m-d)
+     * @param string $fecha_salida fecha de salida (Y-m-d)
+     * @return array|false devuelve num_reserva, tipo_habitacion, imagen y
+     * precio_noche, o false si la habitación no existe o está ocupada
+     */
+    function crearReserva($id_usuario, $id_habitacion, $fecha_entrada, $fecha_salida) {
+
+        $db = $this->PDO;
+        $bloqueo = 'hotel_reserva_' . (int) $id_habitacion;
+
+        $stmt = $db->prepare("SELECT GET_LOCK(?, 5);");
+        $stmt->execute([$bloqueo]);
+
+        if ((int) $stmt->fetchColumn() !== 1) {
+            return false;
+        }
+
+        try {
+            $stmt = $db->prepare("SELECT h.precio, t.tipo_habitacion,
+                       (SELECT i.imagen_habitacion FROM imagenes_habitaciones i
+                         WHERE i.id_habitacion_tipo = t.id ORDER BY i.id LIMIT 1) AS imagen
+                  FROM habitaciones h
+                 INNER JOIN habitacion_tipo t ON t.id = h.id_tipo
+                 WHERE h.id = ? AND NOT EXISTS (" . self::SQL_OCUPADA . ");");
+            $stmt->execute([$id_habitacion, $fecha_salida, $fecha_entrada]);
+            $habitacion = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            if ($habitacion === false) {
+                return false;
+            }
+
+            $db->beginTransaction();
+
+            $stmt = $db->prepare("INSERT INTO reservas (id_usuario, fecha_entrada, fecha_salida) VALUES (?, ?, ?);");
+            $stmt->execute([$id_usuario, $fecha_entrada, $fecha_salida]);
+            $num_reserva = (int) $db->lastInsertId();
+
+            $stmt = $db->prepare("INSERT INTO habitaciones_reservas (num_reserva, id_habitacion, precio_noche) VALUES (?, ?, ?);");
+            $stmt->execute([$num_reserva, $id_habitacion, $habitacion['precio']]);
+
+            $db->commit();
+
+            return [
+                'num_reserva' => $num_reserva,
+                'tipo_habitacion' => $habitacion['tipo_habitacion'],
+                'imagen' => $habitacion['imagen'],
+                'precio_noche' => (float) $habitacion['precio']
+            ];
+        } catch (\PDOException $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $e;
+        } finally {
+            $db->prepare("SELECT RELEASE_LOCK(?);")->execute([$bloqueo]);
+        }
+    }
+
+    /**
+     * Función que obtiene las reservas de un usuario, de la más reciente a
+     * la más antigua
+     * 
+     * @param Number $id_usuario id del usuario
+     * @return array devuelve un array con los datos de cada reserva
+     */
+    function obtenerReservasUsuario($id_usuario) {
+
+        $sql = "SELECT r.num_reserva, r.fecha_reserva, r.fecha_entrada, r.fecha_salida,
+                       t.tipo_habitacion, hr.id_habitacion, hr.precio_noche,
+                       hr.precio_noche * DATEDIFF(r.fecha_salida, r.fecha_entrada) AS total
+                  FROM reservas r
+                 INNER JOIN habitaciones_reservas hr ON hr.num_reserva = r.num_reserva
+                 INNER JOIN habitaciones h ON h.id = hr.id_habitacion
+                 INNER JOIN habitacion_tipo t ON t.id = h.id_tipo
+                 WHERE r.id_usuario = ?
+                 ORDER BY r.fecha_entrada DESC, r.num_reserva DESC;";
+
+        $stmt = $this->PDO->prepare($sql);
+        $stmt->execute([$id_usuario]);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Función que obtiene todas las imagenes de una habitación en concreto
      * 
      * @param Number $id_habitacion_tipo número (id) del tipo de habitación
