@@ -2,24 +2,33 @@
 
 namespace DB;
 
+use \Config\config as config;
+
 class operacionesDB {
 
-    private $nombreBBDD = 'hotel';
+    // Roles de base de datos con credenciales propias en el .env
+    const ROLES = ['admin', 'conexion', 'estandar'];
+
+    private $nombreBBDD;
     private $usuario;
     private $pwd;
-    private $servidor = "localhost";
+    private $servidor;
+    private $puerto;
     private $PDO;
-    // Ficheros de configuración
-    private $xml_file = __DIR__ . '/../../config/configuracion.xml';
-    private $xsd = __DIR__ . '/../../config/configuracion.xsd';
 
     /**
      * Constructor
+     * 
+     * @param string $rol cadena de texto con el rol de la conexión
      */
     function __construct($rol) {
-        $datos = $this->leer_configuracion($this->xml_file, $this->xsd, $rol);
+        $datos = $this->leer_configuracion($rol);
         $this->usuario = $datos[0];
         $this->pwd = $datos[1];
+
+        $this->servidor = config::get('DB_HOST', 'localhost');
+        $this->puerto = config::get('DB_PORT', '3306');
+        $this->nombreBBDD = config::get('DB_NAME', 'hotel');
 
         $this->PDO = $this->conexion();
     }
@@ -38,7 +47,7 @@ class operacionesDB {
      */
     protected function conexion() {
         try {
-            return new \PDO("mysql:host={$this->servidor};dbname={$this->nombreBBDD};charset=utf8mb4", $this->usuario, $this->pwd, [
+            return new \PDO("mysql:host={$this->servidor};port={$this->puerto};dbname={$this->nombreBBDD};charset=utf8mb4", $this->usuario, $this->pwd, [
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
             ]);
         } catch (\PDOException $e) {
@@ -49,34 +58,25 @@ class operacionesDB {
     }
 
     /**
-     * Método que lee el fichero de configuración y obtiene los datos de conexión
-     * de la base de datos 
+     * Método que obtiene del .env el usuario y la contraseña de la base de
+     * datos para un rol (DB_USER_<ROL> y DB_PASSWORD_<ROL>)
      * 
-     * @param string $xml_file cadana de texto con la ruta del xml
-     * @param string $xsd  cadana de texto con la ruta del xsd
      * @param string $rol cadena de texto con el rol cuya conexión buscamos
      * @return array devuelve un array con el usuario y la contraseña
      * @throws PDOException
      */
-    function leer_configuracion($xml_file, $xsd, $rol) {
+    function leer_configuracion($rol) {
 
-        //Devuelve un array de 2 strings: nombre y password
-        $conf = new \DOMDocument();
-        $conf->load($xml_file);
-
-        if (!$conf->schemaValidate($xsd)) {
-            throw new \PDOException("Ficheiro de usuarios no valido");
+        if (!in_array($rol, self::ROLES, true)) {
+            throw new \PDOException("No existe configuración para el rol: " . $rol);
         }
 
-        // Recorremos los usuarios en lugar de construir una consulta XPath
-        // con el rol, así evitamos inyecciones en la expresión
-        foreach (simplexml_load_file($xml_file)->usuario as $usuario) {
-            if ((string) $usuario->rol === $rol) {
-                return [(string) $usuario->nombre, (string) $usuario->password];
-            }
-        }
+        $sufijo = strtoupper($rol);
 
-        throw new \PDOException("No existe configuración para el rol: " . $rol);
+        return [
+            config::requerida('DB_USER_' . $sufijo),
+            config::get('DB_PASSWORD_' . $sufijo, '')
+        ];
     }
 
     /**
