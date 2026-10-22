@@ -24,4 +24,16 @@ class EmailTest extends TestCase {
 
         $this->assertTrue(email::estaConfigurado());
     }
+
+    public function testLaPlantillaDeRestablecimientoMuestraElNombreYElEnlaceEscapados(): void {
+        putenv('SITE_URL=https://hotel.example');
+
+        $html = email::plantilla('restablecer', ['nombre' => 'Ana <b>', 'enlace' => 'https://hotel.example/reset-password.php?token=abc&x=1']);
+
+        putenv('SITE_URL');
+
+        $this->assertStringContainsString('Hi Ana &lt;b&gt;,', $html);
+        $this->assertStringContainsString('href="https://hotel.example/reset-password.php?token=abc&amp;x=1"', $html);
+        $this->assertStringContainsString('src="https://hotel.example/src/logo/hotel_nube.png"', $html);
+    }
 }

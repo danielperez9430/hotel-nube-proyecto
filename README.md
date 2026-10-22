@@ -32,6 +32,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 ## ✨ Funcionalidades
 
 - 🔐 **Registro e inicio de sesión** con contraseñas cifradas (`password_hash`).
+- 🔁 **Recuperación de contraseña** con un enlace por correo de un solo uso y válido una hora.
 - 🌍 **Selección de país, provincia y ciudad** en el registro, con datos de [hotelnube-api](https://github.com/danielperez9430/hotelnube-api).
 - 📅 **Búsqueda de habitaciones libres** entre dos fechas ([Litepicker](https://litepicker.com)), con imágenes, servicios y precio total.
 - 🛎️ **Reservas** con resumen, confirmación por correo y protección frente a reservas simultáneas.
@@ -252,7 +253,9 @@ Todos están en `public/api/` y responden JSON.
 | ---- | ------ | -------- | ----------- |
 | `api/login.php` | `POST` | — | Inicia sesión (`email`, `password`) |
 | `api/logout.php` | `POST` | — | Cierra la sesión |
-| `api/register.php` | `POST` | — | Registra un usuario |
+| `api/register.php` | `POST` | — | Registra un usuario (contraseña de 8 a 72 caracteres) |
+| `api/forgotPassword.php` | `POST` | — | Envía el enlace para restablecer la contraseña (`email`). Responde lo mismo exista o no la cuenta |
+| `api/resetPassword.php` | `POST` | — | Cambia la contraseña con el token del enlace (`token`, `password`). `400` si el token no es válido |
 | `api/getRoomTypes.php` | `GET` | — | Nombres de los tipos de habitación |
 | `api/searchRooms.php` | `GET` | — | Habitaciones libres entre `checkin` y `checkout` (`DD-MM-YYYY` o `YYYY-MM-DD`) |
 | `api/bookRoom.php` | `POST` | 👤 sesión | Reserva una habitación (`roomId`, `checkin`, `checkout`). `409` si ya está ocupada |
@@ -336,6 +339,8 @@ El script sustituye las fuentes y los scripts que la plantilla carga de CDNs por
 - 🔄 El id de sesión se regenera al iniciar sesión, y la cookie es `HttpOnly` y `SameSite=Lax` (y `Secure` con HTTPS).
 - 🛡️ Protección CSRF en todas las peticiones `POST`.
 - ⏳ Límite de intentos de login: 5 fallos por email o 20 por IP en 15 minutos. Además, el tiempo de respuesta es el mismo exista o no el usuario.
+- 🔁 Recuperación de contraseña: el token es aleatorio (256 bits) y en la base de datos solo se guarda su hash SHA-256; caduca en una hora, sirve una sola vez, pedir uno nuevo invalida los anteriores y hay un máximo de 3 por hora y cuenta. La respuesta no revela si el email está registrado.
+- 🧱 Cabeceras de seguridad en todas las páginas y endpoints (`Http\cabeceras`): una CSP estricta sin scripts en línea (`script-src 'self'`), `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy` y HSTS cuando se sirve por HTTPS.
 - 👑 El panel y los endpoints de administración comprueban el rol en el servidor.
 - 🤫 Las credenciales solo están en el `.env`, que no se sube al repositorio.
 - 🏠 Sin recursos de terceros: librerías, fuentes e iconos se sirven desde `public/src/vendor`, así que ninguna visita llega a un CDN.

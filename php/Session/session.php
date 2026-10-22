@@ -9,6 +9,10 @@ class session {
      */
     static function comprobar_sesion() {
 
+        // Todas las páginas y endpoints pasan por aquí: enviamos las
+        // cabeceras de seguridad antes que cualquier contenido
+        \Http\cabeceras::enviar();
+
         if (session_status() == PHP_SESSION_NONE) {  // Comprobamos si NO tiene una sesión activa
             // Cookie de sesión inaccesible desde JavaScript, no enviada desde
             // otras webs y solo por HTTPS cuando la web usa HTTPS

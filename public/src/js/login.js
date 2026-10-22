@@ -38,18 +38,63 @@ $(document).ready(function () {
     $('#goRegister').click(function (e) { 
         e.preventDefault();
         
-        $('#logRegTitle').html('Register');
-        $('#loginContent').css('display', 'none');
-        $('#registerContent').css('display', 'flex');
+        mostrarSeccion('registerContent', 'Register');
     });
 
-    $('#goLogin').click(function (e) { 
+    // Muestra una de las secciones del diálogo (login, registro o recuperación)
+    function mostrarSeccion(id, titulo) {
+        $('#logRegTitle').text(titulo);
+        $('#loginContent, #registerContent, #forgotContent').css('display', 'none');
+        $('#' + id).css('display', 'flex');
+    }
+
+    $('.goLoginLink').click(function (e) {
         e.preventDefault();
-        
-        $('#logRegTitle').html('Login');
-        $('#registerContent').css('display', 'none');
-        $('#loginContent').css('display', 'flex');
+        mostrarSeccion('loginContent', 'Login');
     });
+
+    $('#goForgot').click(function (e) {
+        e.preventDefault();
+        $('#forgotEmail').val($('#loginEmail').val()).trigger('input');
+        $('#forgotMessage').hide();
+        mostrarSeccion('forgotContent', 'Forgot your password');
+    });
+
+    $('#forgotEmail').on('input', function () {
+        document.getElementById('forgotBtn').disabled = !this.value || !this.checkValidity();
+    });
+
+    $('#forgotBtn').click(function (e) {
+        e.preventDefault();
+
+        const boton = this;
+        boton.disabled = true;
+
+        $.ajax({
+            type: 'POST',
+            url: 'api/forgotPassword.php',
+            data: { email: document.getElementById('forgotEmail').value },
+            dataType: 'JSON',
+            success: function (response) {
+                $('#forgotMessage').attr('class', 'alert alert-success mb-0').text(response.message).show();
+            },
+            error: function (xhr) {
+                const mensaje = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'The link could not be sent. Try again.';
+                $('#forgotMessage').attr('class', 'alert alert-danger mb-0').text(mensaje).show();
+                boton.disabled = false;
+            }
+        });
+    });
+
+    // index.php?login=1 abre el login e index.php?forgot=1 la recuperación
+    const parametros = new URLSearchParams(window.location.search);
+
+    if (parametros.has('login') || parametros.has('forgot')) {
+        if (parametros.has('forgot')) {
+            mostrarSeccion('forgotContent', 'Forgot your password');
+        }
+        bootstrap.Modal.getOrCreateInstance(loginDialog).show();
+    }
 
     $('#loginEmail, #loginPassword').on('input', function () {
         const email = document.getElementById('loginEmail').value;
@@ -187,8 +232,11 @@ $(document).ready(function () {
             return regexCode.test(phoneCode) && regexPhone.test(phoneNumber);
         };
 
-        if (valEmail() && password && name && valPhone() && address && city) {
+        const valPassword = () => password.length >= 8;
+
+        if (valEmail() && valPassword() && name && valPhone() && address && city) {
             $('#registerEmail').removeAttr('style');
+            $('#registerPassword').removeAttr('style');
             $('#registerPhoneCode').removeAttr('style');
             $('#registerPhoneNumber').removeAttr('style');
 
@@ -229,6 +277,13 @@ $(document).ready(function () {
             }
             else {
                 $('#registerEmail').removeAttr('style');
+            }
+
+            if (!valPassword()) {
+                $('#registerPassword').css('border-color', 'red');
+            }
+            else {
+                $('#registerPassword').removeAttr('style');
             }
 
             if (!valPhone()) {
