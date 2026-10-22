@@ -80,7 +80,8 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.result == 'success' && response.code == 0) {
                     mostrarResultado('#loginSuccessful');
-                    // login
+                    // Recargamos para mostrar la cabecera con la sesión iniciada
+                    setTimeout(() => window.location.reload(), 800);
                 }
                 else {
                     mostrarResultado('#loginFail');
@@ -201,7 +202,8 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.result == 'success' && response.code == 0) {
                         mostrarResultado('#loginSuccessful');
-                        // login
+                        // El registro inicia la sesión: recargamos para mostrarla
+                        setTimeout(() => window.location.reload(), 800);
                     }
                     else {
                         mostrarResultado('#loginFail');
@@ -229,20 +231,5 @@ $(document).ready(function () {
                 $('#registerPhoneNumber').removeAttr('style');
             }
         }
-    });
-
-    $('#logOut').click(function (e) { 
-        e.preventDefault();
-
-        $.ajax({
-            type: "POST",
-            url: "api/logout.php",
-            dataType: "JSON",
-            success: function (response) {
-                if (response.result == true) {
-                    window.location.reload();
-                }
-            }
-        });
     });
 });

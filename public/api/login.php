@@ -54,10 +54,7 @@ if (isset($_POST['email'], $_POST['password'])) {
     if ($loginCorrect) {
         $con->borrarIntentosLogin($email);
 
-        // Regeneramos el id de sesión para evitar ataques de fijación de sesión
-        session_regenerate_id(true);
-        s::cambiarRol($datos_user[1]);
-        $_SESSION['email'] = $email;
+        s::iniciarSesionUsuario($datos_user[2], $datos_user[3], $email, $datos_user[1]);
 
         echo json_encode([
             'result' => 'success',

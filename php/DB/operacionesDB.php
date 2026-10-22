@@ -84,14 +84,14 @@ class operacionesDB {
      * su hash y rol en caso de existir
      * 
      * @param string $email cadena de texto el correo del usuario
-     * @return mixed devuelve un array con el hash y el rol del usuario o un 
-     * false en caso de que el usuario no exista
+     * @return mixed devuelve un array con el hash, el rol, el id y el nombre
+     * del usuario o false en caso de que el usuario no exista
      */
     function buscarUsuario($email) {
         $stmt = "";
         $resultado = false;
 
-        $sql = "SELECT password, nombre_rol FROM usuarios
+        $sql = "SELECT password, nombre_rol, usuarios.id, nombre FROM usuarios
                  inner join roles
                   on usuarios.rol_usuario = roles.id
                    where email = ?;";
@@ -104,7 +104,7 @@ class operacionesDB {
             $stmt->execute(); // Ejecutamos la setencia preparada
 
             while ($row = $stmt->fetch(\PDO::FETCH_BOTH)) {
-                $resultado = array($row['password'], $row['nombre_rol']);
+                $resultado = array($row['password'], $row['nombre_rol'], (int) $row['id'], $row['nombre']);
             }
         } else {
             echo "ERROR: " . print_r($db->errorInfo());
