@@ -4,6 +4,9 @@ require_once __DIR__ . '/../../autoload.php';
 
 use \DB\operacionesDB as db;
 use \Tools\tools as tools;
+use \Session\session as s;
+
+s::verificarCsrf();
 
 header('content-type: application/json; charset=utf-8');
 
