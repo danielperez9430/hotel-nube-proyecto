@@ -24,6 +24,7 @@ if ($tool->comprobarDatosRegistro($campos)) {
     $provincia = $_POST['provincia'];
     $ciudad = $_POST['ciudad'];
     $direccion = $_POST['direccion'];
+    $passwordValida = $tool->validarPassword($_POST['password']) === null;
     // Ciframos la contraseña
     $password = $tool->cifrarContraseña($_POST['password']);
 
@@ -32,7 +33,7 @@ if ($tool->comprobarDatosRegistro($campos)) {
     $datosValidos = empty($tool->validarDatosCuenta(['nombre' => $nombre, 'telf' => $telf, 'pais' => $pais,
             'provincia' => $provincia, 'ciudad' => $ciudad, 'direccion' => $direccion]));
 
-    if ($datosValidos && $tool->comprobarEmail($email) && mb_strlen($email) <= 50) {
+    if ($datosValidos && $passwordValida && $tool->comprobarEmail($email) && mb_strlen($email) <= 50) {
         // El usuario estándar solo puede insertar en usuarios, suficiente para registrarse
         $con = new db('estandar');
 

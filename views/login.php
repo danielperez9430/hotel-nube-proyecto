@@ -19,14 +19,26 @@
                         <button id="loginBtn" class="btn btn-primary" disabled>Login</button>
                     </div>
                     <div class="goTo">
+                        <span id="goForgot">Forgot your password?</span>
                         <span id="goRegister">Not registered yet?</span>
+                    </div>
+                </div>
+                <div class="forgotContent" id="forgotContent" style="display: none;">
+                    <p class="mb-0">Enter the email of your account and we will send you a link to choose a new password.</p>
+                    <input type="email" class="form-control" id="forgotEmail" placeholder="Email" autocomplete="email">
+                    <div id="forgotMessage" class="alert mb-0" style="display: none;"></div>
+                    <div class="buttons">
+                        <button id="forgotBtn" class="btn btn-primary" disabled>Send link</button>
+                    </div>
+                    <div class="goTo">
+                        <span class="goLoginLink">Back to login</span>
                     </div>
                 </div>
                 <div class="registerContent" id="registerContent" style="display: none;">
                     <div class="registerInputs">
                         <div class="title"><span>Account data</span></div>
                         <input type="email" class="form-control" id="registerEmail" placeholder="Email" autocomplete="off" required\>
-                        <input type="password" class="form-control" id="registerPassword" placeholder="Password" autocomplete="off" required\>
+                        <input type="password" class="form-control" id="registerPassword" placeholder="Password (min. 8 characters)" autocomplete="new-password" minlength="8" maxlength="72" required\>
                     </div>
                     <div class="registerInputs">
                         <div class="title"><span>Personal data</span></div>
@@ -52,7 +64,7 @@
                         <button id="registerBtn" class="btn btn-primary" disabled>Register</button>
                     </div>
                     <div class="goTo">
-                        <span id="goLogin">Already registered?</span>
+                        <span id="goLogin" class="goLoginLink">Already registered?</span>
                     </div>
                 </div>
             </div>

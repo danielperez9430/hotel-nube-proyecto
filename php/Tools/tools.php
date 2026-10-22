@@ -134,6 +134,26 @@ class tools {
     }
 
     /**
+     * Función que valida una contraseña nueva: entre 8 y 72 caracteres (bcrypt
+     * ignora lo que pasa de 72 bytes)
+     * 
+     * @param mixed $password contraseña recibida (puede no ser texto)
+     * @return string|null devuelve el mensaje de error o null si es válida
+     */
+    function validarPassword($password) {
+
+        if (!is_string($password) || mb_strlen($password) < 8) {
+            return 'The password must be at least 8 characters long';
+        }
+
+        if (strlen($password) > 72) {
+            return 'The password must be at most 72 characters long';
+        }
+
+        return null;
+    }
+
+    /**
      * Función que valida los datos personales de una cuenta según los
      * límites de la tabla usuarios
      * 

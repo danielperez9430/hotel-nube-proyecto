@@ -13,3 +13,7 @@ parameters:
         -
             identifier: whitespace.fileEnd
             path: views/*
+        # Las plantillas de correo reciben sus variables de email::plantilla()
+        -
+            identifier: variable.undefined
+            path: views/correos/*

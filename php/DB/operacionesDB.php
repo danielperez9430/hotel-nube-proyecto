@@ -168,6 +168,107 @@ class operacionesDB {
     }
 
     /**
+     * Función que crea un token para restablecer la contraseña de un usuario.
+     * Invalida los tokens anteriores y limita las solicitudes por hora
+     * 
+     * @param string $email cadena de texto con el email del usuario
+     * @param Number $maxPorHora número máximo de solicitudes por hora
+     * @return array|null devuelve ['token' => token en claro, 'nombre' => nombre]
+     * o null si el usuario no existe o ha superado el límite
+     */
+    function crearRestablecimiento($email, $maxPorHora = 3) {
+
+        $stmt = $this->PDO->prepare("SELECT id, nombre FROM usuarios WHERE email = ?;");
+        $stmt->execute([$email]);
+        $usuario = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if ($usuario === false) {
+            return null;
+        }
+
+        $stmt = $this->PDO->prepare("SELECT COUNT(*) FROM restablecimientos_password
+                                      WHERE id_usuario = ? AND creado > NOW() - INTERVAL 1 HOUR;");
+        $stmt->execute([$usuario['id']]);
+
+        if ((int) $stmt->fetchColumn() >= $maxPorHora) {
+            return null;
+        }
+
+        // Solo vale el último enlace enviado
+        $this->PDO->prepare("UPDATE restablecimientos_password SET usado = TRUE WHERE id_usuario = ? AND usado = FALSE;")
+                ->execute([$usuario['id']]);
+
+        $token = bin2hex(random_bytes(32));
+
+        $this->PDO->prepare("INSERT INTO restablecimientos_password (id_usuario, token_hash, expira)
+                             VALUES (?, ?, NOW() + INTERVAL 1 HOUR);")
+                ->execute([$usuario['id'], hash('sha256', $token)]);
+
+        return ['token' => $token, 'nombre' => $usuario['nombre']];
+    }
+
+    /**
+     * Función que indica si un token de restablecimiento es válido (existe,
+     * no se ha usado y no ha caducado)
+     * 
+     * @param string $token cadena de texto con el token en claro
+     * @return boolean devuelve true si el token es válido
+     */
+    function tokenRestablecimientoValido($token) {
+
+        $stmt = $this->PDO->prepare("SELECT COUNT(*) FROM restablecimientos_password
+                                      WHERE token_hash = ? AND usado = FALSE AND expira > NOW();");
+        $stmt->execute([hash('sha256', (string) $token)]);
+
+        return (int) $stmt->fetchColumn() === 1;
+    }
+
+    /**
+     * Función que cambia la contraseña con un token de restablecimiento
+     * válido. Invalida todos los tokens del usuario y borra sus intentos de
+     * login fallidos
+     * 
+     * @param string $token cadena de texto con el token en claro
+     * @param string $hash hash de la nueva contraseña
+     * @return boolean devuelve true si se cambió la contraseña
+     */
+    function restablecerPassword($token, $hash) {
+
+        $db = $this->PDO;
+        $db->beginTransaction();
+
+        try {
+            // FOR UPDATE: dos peticiones con el mismo token no pueden usarlo a
+            // la vez. Solo se bloquea la fila del token: en MySQL 8 bloquear
+            // usuarios exigiría permiso UPDATE sobre toda la tabla
+            $stmt = $db->prepare("SELECT id_usuario FROM restablecimientos_password
+                                   WHERE token_hash = ? AND usado = FALSE AND expira > NOW()
+                                     FOR UPDATE;");
+            $stmt->execute([hash('sha256', (string) $token)]);
+            $idUsuario = $stmt->fetchColumn();
+
+            if ($idUsuario === false) {
+                $db->rollBack();
+                return false;
+            }
+
+            $stmt = $db->prepare("SELECT id AS id_usuario, email FROM usuarios WHERE id = ?;");
+            $stmt->execute([$idUsuario]);
+            $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            $db->prepare("UPDATE usuarios SET password = ? WHERE id = ?;")->execute([$hash, $fila['id_usuario']]);
+            $db->prepare("UPDATE restablecimientos_password SET usado = TRUE WHERE id_usuario = ?;")->execute([$fila['id_usuario']]);
+            $db->prepare("DELETE FROM intentos_login WHERE email = ?;")->execute([$fila['email']]);
+
+            $db->commit();
+            return true;
+        } catch (\PDOException $e) {
+            $db->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
      * Función que obtiene los datos de la cuenta de un usuario (sin la
      * contraseña)
      * 

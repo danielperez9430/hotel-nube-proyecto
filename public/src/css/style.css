@@ -121,7 +121,22 @@
     float: right;
 }
 
+.forgotContent {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.forgotContent > .buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .goTo {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px 20px;
     margin-top: 20px;
     width: 100%;
     color: #06b6d4;
@@ -630,4 +645,9 @@ body:has(> .page) {
 
 .policy-list li {
     margin-bottom: 6px;
+}
+
+/* Restablecer la contraseña */
+.reset-card {
+    max-width: 480px;
 }

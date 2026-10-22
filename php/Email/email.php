@@ -126,6 +126,44 @@ class email {
     }
 
     /**
+     * Función que envía el enlace para restablecer la contraseña. Los errores
+     * se registran en el log
+     * 
+     * @param string $correo cadena de texto con el email del usuario
+     * @param string $nombre cadena de texto con el nombre del usuario
+     * @param string $enlace URL completa para restablecer la contraseña
+     * @return boolean devuelve true si el correo se envió
+     */
+    static function enviarRestablecimiento($correo, $nombre, $enlace) {
+        return self::enviarSeguro($correo, 'Reset your Hotel Nube password', function () use ($nombre, $enlace) {
+            return self::plantilla('restablecer', ['nombre' => $nombre, 'enlace' => $enlace]);
+        });
+    }
+
+    /**
+     * Función que genera el HTML de una plantilla de correo de views/correos
+     * 
+     * @param string $plantilla nombre de la plantilla (sin .php)
+     * @param array $variables variables que recibe la plantilla
+     * @return string devuelve el HTML del correo
+     */
+    static function plantilla($plantilla, $variables) {
+        $fichero = __DIR__ . '/../../views/correos/' . basename($plantilla) . '.php';
+        $variables['sitio'] = rtrim(config::get('SITE_URL', 'http://localhost:8000'), '/');
+
+        // La plantilla se incluye en una función aparte y EXTR_SKIP impide que
+        // sus variables pisen los parámetros
+        $renderizar = static function ($__fichero, $__variables) {
+            extract($__variables, EXTR_SKIP);
+            ob_start();
+            include $__fichero;
+            return ob_get_clean();
+        };
+
+        return $renderizar($fichero, $variables);
+    }
+
+    /**
      * Función que genera el contenido con $crearCuerpo y envía el correo,
      * registrando en el log cualquier error
      *

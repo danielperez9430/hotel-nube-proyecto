@@ -196,4 +196,57 @@ class OperacionesDBTest extends TestCase {
         $this->expectExceptionMessageMatches('/denied/i');
         (new db('conexion'))->buscarHabitaciones($this->fecha(1), $this->fecha(2));
     }
+
+    public function testRestablecerLaContraseña(): void {
+        $id = $this->registrar();
+        $con = new db('conexion');
+        $con->registrarIntentoFallido('ana@test.com', '127.0.0.1');
+
+        $restablecimiento = $con->crearRestablecimiento('ana@test.com');
+        $this->assertSame('Ana López', $restablecimiento['nombre']);
+        $this->assertMatchesRegularExpression('/^[0-9a-f]{64}$/', $restablecimiento['token']);
+
+        // En la base de datos solo se guarda el hash del token
+        $guardado = self::$admin->query("SELECT token_hash FROM restablecimientos_password WHERE id_usuario = $id")->fetchColumn();
+        $this->assertSame(hash('sha256', $restablecimiento['token']), $guardado);
+
+        $this->assertTrue($con->tokenRestablecimientoValido($restablecimiento['token']));
+        $this->assertTrue($con->restablecerPassword($restablecimiento['token'], password_hash('nueva-clave', PASSWORD_DEFAULT)));
+
+        // La contraseña cambia, se borran los intentos fallidos y el token ya no sirve
+        $this->assertTrue(password_verify('nueva-clave', $con->buscarUsuario('ana@test.com')[0]));
+        $this->assertSame(['email' => 0, 'ip' => 0], array_map('intval', $con->contarIntentosLogin('ana@test.com', '127.0.0.2', 15)));
+        $this->assertFalse($con->tokenRestablecimientoValido($restablecimiento['token']));
+        $this->assertFalse($con->restablecerPassword($restablecimiento['token'], password_hash('otra', PASSWORD_DEFAULT)));
+    }
+
+    public function testRestablecerConUnEmailInexistenteNoHaceNada(): void {
+        $this->assertNull((new db('conexion'))->crearRestablecimiento('nadie@test.com'));
+        $this->assertFalse((new db('conexion'))->restablecerPassword(str_repeat('a', 64), 'hash'));
+    }
+
+    public function testUnTokenNuevoInvalidaElAnteriorYHayLimitePorHora(): void {
+        $this->registrar();
+        $con = new db('conexion');
+
+        $primero = $con->crearRestablecimiento('ana@test.com');
+        $segundo = $con->crearRestablecimiento('ana@test.com');
+
+        $this->assertFalse($con->tokenRestablecimientoValido($primero['token']));
+        $this->assertTrue($con->tokenRestablecimientoValido($segundo['token']));
+
+        $this->assertNotNull($con->crearRestablecimiento('ana@test.com'));
+        $this->assertNull($con->crearRestablecimiento('ana@test.com'), 'Como máximo 3 enlaces por hora');
+    }
+
+    public function testUnTokenCaducadoNoSirve(): void {
+        $id = $this->registrar();
+        $con = new db('conexion');
+
+        $restablecimiento = $con->crearRestablecimiento('ana@test.com');
+        self::$admin->exec("UPDATE restablecimientos_password SET expira = NOW() - INTERVAL 1 MINUTE WHERE id_usuario = $id");
+
+        $this->assertFalse($con->tokenRestablecimientoValido($restablecimiento['token']));
+        $this->assertFalse($con->restablecerPassword($restablecimiento['token'], password_hash('nueva', PASSWORD_DEFAULT)));
+    }
 }

@@ -111,4 +111,15 @@ class ToolsTest extends TestCase {
     public function testEstanciaConFechasInvalidas(): void {
         $this->assertSame(['error' => 'Invalid dates'], $this->tools->validarEstancia('31-02-2030', '05-03-2030'));
     }
+
+    public function testValidarPassword(): void {
+        $tool = $this->tools;
+
+        $this->assertNull($tool->validarPassword('12345678'));
+        $this->assertNotNull($tool->validarPassword('1234567'));
+        $this->assertNotNull($tool->validarPassword(str_repeat('a', 73)));
+        // Se cuentan caracteres para el mínimo y bytes para el máximo de bcrypt
+        $this->assertNull($tool->validarPassword('ññññññññ'));
+        $this->assertNotNull($tool->validarPassword(str_repeat('ñ', 37)));
+    }
 }
