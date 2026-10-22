@@ -86,7 +86,10 @@ $(document).ready(function () {
                     mostrarResultado('#loginFail');
                 }
             },
-            error: function () {
+            error: function (xhr) {
+                if (xhr.status == 429) {
+                    $('#loginFail span').html('Too many failed attempts. Try again in 15 minutes.');
+                }
                 mostrarResultado('#loginFail');
             }
         });
