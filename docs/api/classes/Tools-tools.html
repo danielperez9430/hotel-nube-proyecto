@@ -2,24 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Documentation</title>
+            <title>Hotel Nube</title>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png"/>
     <link rel="icon" href="images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
-            <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+            
+        <link href="recursos/fuentes/fuentes.css" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
-                <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
-        <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/js/all.min.js" integrity="sha256-0vuk8LXoyrmCjp1f0O300qo1M75ZQyhH9X3J6d+scmk=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="recursos/fontawesome/css/all.min.css" />
+        <link rel="stylesheet" href="recursos/prism/themes/prism-okaidia.min.css">
+        <link rel="stylesheet" href="recursos/prism/plugins/line-numbers/prism-line-numbers.min.css">
+        <link rel="stylesheet" href="recursos/prism/plugins/line-highlight/prism-line-highlight.min.css">
+                <script src="recursos/fuse/fuse.js"></script>
+        <script src="recursos/css-vars-ponyfill/css-vars-ponyfill.min.js"></script>
+        <script src="js/template.js"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Hotel Nube</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -47,61 +55,58 @@
 <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
     Menu
 </label>
-<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
-    
-    <section class="phpdocumentor-sidebar__category">
-        <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
-                                <h3 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/default.html"><abbr title="\">Global</abbr></a></h3>
-                                        <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/db.html"><abbr title="\DB">DB</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/email.html"><abbr title="\Email">Email</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/habitacion.html"><abbr title="\Habitacion">Habitacion</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/session.html"><abbr title="\Session">Session</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/tools.html"><abbr title="\Tools">Tools</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/composer.html"><abbr title="\Composer">Composer</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                            <li><a href="namespaces/composer-autoload.html"><abbr title="\Composer\Autoload">Autoload</abbr></a></li>
-                                    </ul>
-                            <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/phpmailer.html"><abbr title="\PHPMailer">PHPMailer</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                            <li><a href="namespaces/phpmailer-phpmailer.html"><abbr title="\PHPMailer\PHPMailer">PHPMailer</abbr></a></li>
-                                    </ul>
-                        </section>
+<aside class="phpdocumentor-column -three phpdocumentor-sidebar">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
+            <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/config.html" class="">Config</a>
+</h4>
 
-        <section class="phpdocumentor-sidebar__category">
-        <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
-                    <h3 class="phpdocumentor-sidebar__root-package"><a href="packages/Default.html"><abbr title="\Default">Default</abbr></a></h3>
-                                <h3 class="phpdocumentor-sidebar__root-package"><a href="packages/PHPMailer.html"><abbr title="\PHPMailer">PHPMailer</abbr></a></h3>
-                                <h3 class="phpdocumentor-sidebar__root-package"><a href="packages/PHPMailerSomeFrenchpunctuationrequiresathinnon.html"><abbr title="\PHPMailerSomeFrenchpunctuationrequiresathinnon">PHPMailerSomeFrenchpunctuationrequiresathinnon</abbr></a></h3>
-                        <ul class="phpdocumentor-list">
-                                    <li><a href="packages/PHPMailerSomeFrenchpunctuationrequiresathinnon-breakingspaceU202Fcharacterbeforeitforexamplebeforeacolonorexclamationmark.html"><abbr title="\PHPMailerSomeFrenchpunctuationrequiresathinnon\breakingspaceU202Fcharacterbeforeitforexamplebeforeacolonorexclamationmark">breakingspaceU202Fcharacterbeforeitforexamplebeforeacolonorexclamationmark</abbr></a></li>
-                            </ul>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/db.html" class="">DB</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/email.html" class="">Email</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/habitacion.html" class="">Habitacion</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/session.html" class="">Session</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/tools.html" class="">Tools</a>
+</h4>
+
                         </section>
-    
-    <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
+            <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
+
+                        </section>
+            
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
 </aside>
 
-            <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <ul class="phpdocumentor-breadcrumbs">
+            <div class="phpdocumentor-column -nine phpdocumentor-content">
+                                <section>
+                                        <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/tools.html">Tools</a></li>
     </ul>
 
@@ -113,83 +118,167 @@
             <div class="phpdocumentor-element__package">
             in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Default.html">Default</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
                             </ul>
         </div>
     
     
     </h2>
 
+<div class="phpdocumentor-label-line">
+
+
+</div>
+
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">7</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">8</span>
+
+    </aside>
 
         
 
 
 
 
-
-
-
-
+    
+    
 <h3 id="toc">
     Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Tools-tools.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+
 </h3>
 
+
+
+
+
+
+
+<h4 id="toc-constants">
+    Constants
+    <a href="classes/Tools-tools.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Tools-tools.html#method_asignarRol">asignarRol()</a>
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Tools-tools.html#constant_MAX_NOCHES">MAX_NOCHES</a>
     <span>
-                        &nbsp;: mixed    </span>
+        &nbsp;: mixed&nbsp;= 30                            </span>
+</dt>
+
+    </dl>
+
+
+
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/Tools-tools.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Tools-tools.html#method_asignarRol">asignarRol()</a>
+    <span>
+                                &nbsp;: mixed    </span>
 </dt>
 <dd>Función que sirve para asignar un rol a la sesión del usuario</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Tools-tools.html#method_cifrarContrase%C3%B1a">cifrarContraseña()</a>
+    <a class="" href="classes/Tools-tools.html#method_cifrarContrase%C3%B1a">cifrarContraseña()</a>
     <span>
-                        &nbsp;: string    </span>
+                                &nbsp;: string    </span>
 </dt>
 <dd>Función que cifra la contraseña</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Tools-tools.html#method_comprobarContrase%C3%B1a">comprobarContraseña()</a>
+    <a class="" href="classes/Tools-tools.html#method_comprobarContrase%C3%B1a">comprobarContraseña()</a>
     <span>
-                        &nbsp;: bool    </span>
+                                &nbsp;: bool    </span>
 </dt>
 <dd>Función que comprueba si contraseña es correcta</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Tools-tools.html#method_comprobarDatosRegistro">comprobarDatosRegistro()</a>
+    <a class="" href="classes/Tools-tools.html#method_comprobarDatosRegistro">comprobarDatosRegistro()</a>
     <span>
-                        &nbsp;: bool    </span>
+                                &nbsp;: bool    </span>
 </dt>
 <dd>Función que comprueba si los campos enviados por POST no están vacios
 y existen</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Tools-tools.html#method_comprobarEmail">comprobarEmail()</a>
+    <a class="" href="classes/Tools-tools.html#method_comprobarEmail">comprobarEmail()</a>
     <span>
-                        &nbsp;: mixed    </span>
+                                &nbsp;: mixed    </span>
 </dt>
 <dd>Función que comprueba si el correo introducido por un usuario es
 correcto</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Tools-tools.html#method_validarUsuario">validarUsuario()</a>
+    <a class="" href="classes/Tools-tools.html#method_parsearFecha">parsearFecha()</a>
     <span>
-                        &nbsp;: bool    </span>
+                                &nbsp;: <abbr title="\DateTimeImmutable">DateTimeImmutable</abbr>|null    </span>
+</dt>
+<dd>Función que convierte una fecha en formato DD-MM-YYYY (el del selector
+de fechas) o YYYY-MM-DD en un objeto fecha</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Tools-tools.html#method_validarEstancia">validarEstancia()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Función que valida las fechas de una estancia</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Tools-tools.html#method_validarUsuario">validarUsuario()</a>
+    <span>
+                                &nbsp;: bool    </span>
 </dt>
 <dd>Función para validar los datos de login de un usuario</dd>
 
-        </dl>
+    </dl>
 
 
 
         
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="classes/Tools-tools.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_MAX_NOCHES">
+        MAX_NOCHES
+        <a href="classes/Tools-tools.html#constant_MAX_NOCHES" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">73</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">MAX_NOCHES</span>
+    = <span class="phpdocumentor-signature__default-value">30</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+            </section>
 
         
 
@@ -197,6 +286,7 @@ correcto</dd>
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
             <a href="classes/Tools-tools.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="phpdocumentor-element
@@ -207,26 +297,30 @@ correcto</dd>
     <h4 class="phpdocumentor-element__name" id="method_asignarRol">
         asignarRol()
         <a href="classes/Tools-tools.html#method_asignarRol" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">55</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Función que sirve para asignar un rol a la sesión del usuario</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">asignarRol</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rol</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">asignarRol</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rol</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$rol</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-argument-list__argument__name">$rol</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>cadena de texto con el rol actual</p>
@@ -237,11 +331,8 @@ correcto</dd>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
+    
     
 </article>
                     <article
@@ -253,26 +344,30 @@ correcto</dd>
     <h4 class="phpdocumentor-element__name" id="method_cifrarContraseña">
         cifrarContraseña()
         <a href="classes/Tools-tools.html#method_cifrarContrase%C3%B1a" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">28</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Función que cifra la contraseña</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">cifrarContraseña</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$password</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">cifrarContraseña</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$password</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$password</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-argument-list__argument__name">$password</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>cadena de texto con la contraseña</p>
@@ -283,13 +378,17 @@ correcto</dd>
 
     
 
+        
+    
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>cadena de texto con la contraseña cifrada</p>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>cadena de texto con la contraseña cifrada</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -300,26 +399,30 @@ correcto</dd>
     <h4 class="phpdocumentor-element__name" id="method_comprobarContraseña">
         comprobarContraseña()
         <a href="classes/Tools-tools.html#method_comprobarContrase%C3%B1a" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">17</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Función que comprueba si contraseña es correcta</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">comprobarContraseña</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$password</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hash</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">comprobarContraseña</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$password</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hash</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$password</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-argument-list__argument__name">$password</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>cadena de texto con la clave introducida por el usuario</p>
@@ -327,8 +430,8 @@ correcto</dd>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$hash</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-argument-list__argument__name">$hash</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>cadena de texto con el hash de la clave</p>
@@ -339,13 +442,17 @@ correcto</dd>
 
     
 
+        
+    
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>devuelve true si es correcta y false en caso contrario</p>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve true si es correcta y false en caso contrario</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -356,27 +463,31 @@ correcto</dd>
     <h4 class="phpdocumentor-element__name" id="method_comprobarDatosRegistro">
         comprobarDatosRegistro()
         <a href="classes/Tools-tools.html#method_comprobarDatosRegistro" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">144</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Función que comprueba si los campos enviados por POST no están vacios
 y existen</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">comprobarDatosRegistro</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$array</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">comprobarDatosRegistro</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$array</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$array</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                <span class="phpdocumentor-argument-list__argument__name">$array</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Array con los nombre de las variables $_POST a buscar</p>
@@ -387,14 +498,18 @@ y existen</p>
 
     
 
+        
+    
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>devuelve true si los datos son correctos y
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve true si los datos son correctos y
 false en caso contrario</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -405,27 +520,31 @@ false en caso contrario</p>
     <h4 class="phpdocumentor-element__name" id="method_comprobarEmail">
         comprobarEmail()
         <a href="classes/Tools-tools.html#method_comprobarEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">68</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Función que comprueba si el correo introducido por un usuario es
 correcto</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">comprobarEmail</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$email</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">comprobarEmail</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$email</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$email</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-argument-list__argument__name">$email</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>cadena de texto con el correo introducido por el usuario</p>
@@ -436,14 +555,139 @@ correcto</p>
 
     
 
+        
+    
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>devuelve una string con el email o false en caso de no ser
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve una string con el email o false en caso de no ser
 correcto</p>
 </section>
 
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_parsearFecha">
+        parsearFecha()
+        <a href="classes/Tools-tools.html#method_parsearFecha" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">82</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que convierte una fecha en formato DD-MM-YYYY (el del selector
+de fechas) o YYYY-MM-DD en un objeto fecha</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">parsearFecha</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$texto</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
     
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$texto</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>cadena de texto con la fecha</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr>|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve la fecha o null si no es válida</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_validarEstancia">
+        validarEstancia()
+        <a href="classes/Tools-tools.html#method_validarEstancia" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">104</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que valida las fechas de una estancia</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">validarEstancia</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$entrada</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$salida</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$entrada</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>cadena de texto con la fecha de entrada</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$salida</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>cadena de texto con la fecha de salida</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve ['entrada' =&gt; 'Y-m-d', 'salida' =&gt; 'Y-m-d',
+'noches' =&gt; n] o ['error' =&gt; mensaje] si no son válidas</p>
+</section>
+
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -454,26 +698,30 @@ correcto</p>
     <h4 class="phpdocumentor-element__name" id="method_validarUsuario">
         validarUsuario()
         <a href="classes/Tools-tools.html#method_validarUsuario" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">41</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Función para validar los datos de login de un usuario</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">validarUsuario</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$email</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$password</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">validarUsuario</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$email</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$password</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$email</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-argument-list__argument__name">$email</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>cadena de texto con el correo del usuario</p>
@@ -481,8 +729,8 @@ correcto</p>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$password</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-argument-list__argument__name">$password</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>cadena de texto con la clave del usuario</p>
@@ -493,19 +741,64 @@ correcto</p>
 
     
 
+        
+    
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>devuelve true si los datos del usuario son correctos y
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve true si los datos del usuario son correctos y
 en caso contrario devuelve false</p>
 </section>
 
-    
+            </section>
+
 </article>
             </section>
 
+        
     </article>
-                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+                                </section>
+                <section class="phpdocumentor-on-this-page__sidebar">
+                                
+    <section class="phpdocumentor-on-this-page__content">
+        <strong class="phpdocumentor-on-this-page__title">On this page</strong>
+
+        <ul class="phpdocumentor-list -clean">
+            <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                        <li><a href="classes/Tools-tools.html#toc-constants">Constants</a></li>
+                                                                                <li><a href="classes/Tools-tools.html#toc-methods">Methods</a></li>
+                                    </ul>
+            </li>
+                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Tools-tools.html#constant_MAX_NOCHES">MAX_NOCHES</a></li>
+                                            </ul>
+                </li>
+            
+            
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li class=""><a href="classes/Tools-tools.html#method_asignarRol">asignarRol()</a></li>
+                                            <li class=""><a href="classes/Tools-tools.html#method_cifrarContrase%C3%B1a">cifrarContraseña()</a></li>
+                                            <li class=""><a href="classes/Tools-tools.html#method_comprobarContrase%C3%B1a">comprobarContraseña()</a></li>
+                                            <li class=""><a href="classes/Tools-tools.html#method_comprobarDatosRegistro">comprobarDatosRegistro()</a></li>
+                                            <li class=""><a href="classes/Tools-tools.html#method_comprobarEmail">comprobarEmail()</a></li>
+                                            <li class=""><a href="classes/Tools-tools.html#method_parsearFecha">parsearFecha()</a></li>
+                                            <li class=""><a href="classes/Tools-tools.html#method_validarEstancia">validarEstancia()</a></li>
+                                            <li class=""><a href="classes/Tools-tools.html#method_validarUsuario">validarUsuario()</a></li>
+                                    </ul>
+            </li>
+                    </ul>
+    </section>
+
+                </section>
+                            </div>
+            <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
             <h2 class="phpdocumentor-search-results__title">Search results</h2>
@@ -516,7 +809,6 @@ en caso contrario devuelve false</p>
         </section>
     </section>
 </section>
-            </div>
         </div>
         <a href="classes/Tools-tools.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
@@ -525,5 +817,9 @@ en caso contrario devuelve false</p>
     <script>
         cssVars({});
     </script>
+    <script src="recursos/prism/prism.js"></script>
+    <script src="recursos/prism/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="recursos/prism/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="recursos/prism/plugins/line-highlight/prism-line-highlight.min.js"></script>
 </body>
 </html>

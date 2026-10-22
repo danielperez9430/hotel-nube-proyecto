@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Documentación de las clases de php/ con phpDocumentor 3:
+     php phpDocumentor.phar   (genera docs/api) -->
+<phpdocumentor
+        configVersion="3"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://www.phpdoc.org"
+        xsi:noNamespaceSchemaLocation="https://docs.phpdoc.org/latest/phpdoc.xsd">
+    <title>Hotel Nube</title>
+    <paths>
+        <output>docs/api</output>
+        <cache>.phpdoc/cache</cache>
+    </paths>
+    <version number="latest">
+        <api>
+            <source dsn=".">
+                <path>php</path>
+            </source>
+        </api>
+    </version>
+</phpdocumentor>
