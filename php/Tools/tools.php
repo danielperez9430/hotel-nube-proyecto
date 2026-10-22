@@ -178,6 +178,58 @@ class tools {
     }
 
     /**
+     * Función que valida los datos de una habitación enviados desde el panel
+     * de administración. Las casillas llegan como 'true' o 'false'
+     * 
+     * @param array $datos array con tipo, m2, precio, ventana, internet y limpieza
+     * @return array|null devuelve los datos validados (m2 y precio como float,
+     * casillas como boolean) o null si alguno no es válido
+     */
+    function validarDatosHabitacion($datos) {
+
+        $tipo = trim((string) ($datos['tipo'] ?? ''));
+        $m2 = filter_var($datos['m2'] ?? null, FILTER_VALIDATE_FLOAT, ['options' => ['min_range' => 1, 'max_range' => 9999]]);
+        $precio = filter_var($datos['precio'] ?? null, FILTER_VALIDATE_FLOAT, ['options' => ['min_range' => 0, 'max_range' => 9999]]);
+        $casillas = [];
+
+        foreach (['ventana', 'internet', 'limpieza'] as $casilla) {
+            $casillas[$casilla] = filter_var($datos[$casilla] ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        }
+
+        if ($tipo === '' || $m2 === false || $precio === false || in_array(null, $casillas, true)) {
+            return null;
+        }
+
+        return ['tipo' => $tipo, 'm2' => $m2, 'precio' => $precio] + $casillas;
+    }
+
+    /**
+     * Función que valida los datos de un servicio enviados desde el panel de
+     * administración
+     * 
+     * @param array $datos array con nombre, precio, descripcion, disponible e icono
+     * @return array|null devuelve los datos validados o null si alguno no es válido
+     */
+    function validarDatosServicio($datos) {
+
+        $nombre = trim((string) ($datos['nombre'] ?? ''));
+        $descripcion = trim((string) ($datos['descripcion'] ?? ''));
+        $icono = trim((string) ($datos['icono'] ?? '')) ?: 'fas fa-concierge-bell';
+        $precio = filter_var($datos['precio'] ?? null, FILTER_VALIDATE_FLOAT, ['options' => ['min_range' => 0, 'max_range' => 9999]]);
+        $disponible = filter_var($datos['disponible'] ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+
+        // El icono es una clase de Font Awesome: solo letras, números, guiones y espacios
+        $iconoValido = mb_strlen($icono) <= 50 && preg_match('/^fa[a-z]? fa-[a-z0-9-]+$/', $icono);
+
+        if ($nombre === '' || mb_strlen($nombre) > 255 || $descripcion === '' || mb_strlen($descripcion) > 255
+                || $precio === false || $disponible === null || !$iconoValido) {
+            return null;
+        }
+
+        return ['nombre' => $nombre, 'precio' => $precio, 'descripcion' => $descripcion, 'disponible' => $disponible, 'icono' => $icono];
+    }
+
+    /**
      * Función que valida una contraseña nueva: entre 8 y 72 caracteres (bcrypt
      * ignora lo que pasa de 72 bytes)
      * 

@@ -459,6 +459,34 @@ class operacionesDB {
     }
 
     /**
+     * Función que crea una habitación nueva
+     * 
+     * @param string $tipo nombre del tipo de habitación
+     * @param float $m2 superficie en metros cuadrados
+     * @param boolean $ventana si tiene ventana
+     * @param boolean $internet si tiene internet
+     * @param boolean $limpieza si tiene servicio de limpieza
+     * @param float $precio precio por noche
+     * @return int devuelve el número (id) de la habitación nueva, o 0 si el tipo no existe
+     */
+    function crearHabitacion($tipo, $m2, $ventana, $internet, $limpieza, $precio) {
+
+        $sql = "INSERT INTO habitaciones (id_tipo, m2, ventana, internet, servicio_limpieza, precio)
+                SELECT t.id, ?, ?, ?, ?, ? FROM habitacion_tipo t WHERE t.tipo_habitacion = ?;";
+
+        $stmt = $this->PDO->prepare($sql);
+        $stmt->bindValue(1, $m2);
+        $stmt->bindValue(2, $ventana, \PDO::PARAM_BOOL);
+        $stmt->bindValue(3, $internet, \PDO::PARAM_BOOL);
+        $stmt->bindValue(4, $limpieza, \PDO::PARAM_BOOL);
+        $stmt->bindValue(5, $precio);
+        $stmt->bindValue(6, $tipo, \PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->rowCount() === 1 ? (int) $this->PDO->lastInsertId() : 0;
+    }
+
+    /**
      * Función que borra una habitación
      * 
      * @param Number $id_habitacion número (id) de la habitación
@@ -648,6 +676,152 @@ class operacionesDB {
         $stmt->execute([$cargo, $num_reserva, $id_usuario]);
 
         return $stmt->rowCount() === 1;
+    }
+
+    /**
+     * Función que obtiene todas las reservas del hotel para el panel de
+     * administración, de la entrada más próxima a la más lejana
+     * 
+     * @param string $filtro 'proximas' (confirmadas que aún no han terminado),
+     * 'canceladas' o 'todas'
+     * @param string $hoy fecha de hoy en el hotel (Y-m-d)
+     * @return array devuelve un array con los datos de cada reserva, su cliente y su habitación
+     */
+    function obtenerReservasAdmin($filtro, $hoy) {
+
+        $condiciones = [
+            'proximas' => ["r.estado = 'confirmada' AND r.fecha_salida >= ?", [$hoy]],
+            'canceladas' => ["r.estado = 'cancelada'", []],
+            'todas' => ["TRUE", []]
+        ];
+        [$condicion, $parametros] = $condiciones[$filtro] ?? $condiciones['proximas'];
+
+        $sql = "SELECT r.num_reserva, r.fecha_reserva, r.fecha_entrada, r.fecha_salida,
+                       r.estado, r.fecha_cancelacion, r.cargo_cancelacion,
+                       u.nombre, u.email, u.telf,
+                       t.tipo_habitacion, hr.id_habitacion, hr.precio_noche,
+                       hr.precio_noche * DATEDIFF(r.fecha_salida, r.fecha_entrada) AS total
+                  FROM reservas r
+                 INNER JOIN usuarios u ON u.id = r.id_usuario
+                 INNER JOIN habitaciones_reservas hr ON hr.num_reserva = r.num_reserva
+                 INNER JOIN habitaciones h ON h.id = hr.id_habitacion
+                 INNER JOIN habitacion_tipo t ON t.id = h.id_tipo
+                 WHERE $condicion
+                 ORDER BY r.fecha_entrada, r.num_reserva;";
+
+        $stmt = $this->PDO->prepare($sql);
+        $stmt->execute($parametros);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Función que calcula la ocupación del hotel: habitaciones ocupadas esta
+     * noche, entradas y salidas de hoy, porcentaje de ocupación de los
+     * próximos días e ingresos de las reservas futuras
+     * 
+     * @param string $hoy fecha de hoy en el hotel (Y-m-d)
+     * @param int $dias número de días de la previsión de ocupación
+     * @return array devuelve habitaciones, ocupadas_hoy, entradas_hoy,
+     * salidas_hoy, noches_reservadas, ocupacion (porcentaje) e ingresos_futuros
+     */
+    function obtenerResumenOcupacion($hoy, $dias = 30) {
+
+        $habitaciones = (int) $this->PDO->query("SELECT COUNT(*) FROM habitaciones;")->fetchColumn();
+
+        // Noches de cada habitación reservada dentro de [hoy, fin). Las fechas
+        // llegan una sola vez en la tabla derivada p
+        $sql = "SELECT
+                    COALESCE(SUM(r.fecha_entrada <= p.hoy AND r.fecha_salida > p.hoy), 0) AS ocupadas_hoy,
+                    COALESCE(SUM(r.fecha_entrada = p.hoy), 0) AS entradas_hoy,
+                    COALESCE(SUM(r.fecha_salida = p.hoy), 0) AS salidas_hoy,
+                    COALESCE(SUM(GREATEST(0, DATEDIFF(LEAST(r.fecha_salida, p.fin), GREATEST(r.fecha_entrada, p.hoy)))), 0) AS noches_reservadas,
+                    COALESCE(SUM(CASE WHEN r.fecha_entrada >= p.hoy
+                                      THEN hr.precio_noche * DATEDIFF(r.fecha_salida, r.fecha_entrada) END), 0) AS ingresos_futuros
+                  FROM reservas r
+                 INNER JOIN habitaciones_reservas hr ON hr.num_reserva = r.num_reserva
+                 CROSS JOIN (SELECT CAST(? AS DATE) AS hoy, CAST(? AS DATE) AS fin) p
+                 WHERE r.estado = 'confirmada';";
+
+        $fin = (new \DateTimeImmutable($hoy))->modify('+' . (int) $dias . ' days')->format('Y-m-d');
+
+        $stmt = $this->PDO->prepare($sql);
+        $stmt->execute([$hoy, $fin]);
+        $resumen = array_map('floatval', $stmt->fetch(\PDO::FETCH_ASSOC));
+
+        $capacidad = $habitaciones * $dias;
+
+        return [
+            'habitaciones' => $habitaciones,
+            'ocupadas_hoy' => (int) $resumen['ocupadas_hoy'],
+            'entradas_hoy' => (int) $resumen['entradas_hoy'],
+            'salidas_hoy' => (int) $resumen['salidas_hoy'],
+            'noches_reservadas' => (int) $resumen['noches_reservadas'],
+            'ocupacion' => $capacidad > 0 ? round($resumen['noches_reservadas'] * 100 / $capacidad, 1) : 0.0,
+            'ingresos_futuros' => round($resumen['ingresos_futuros'], 2)
+        ];
+    }
+
+    /**
+     * Función que obtiene todos los servicios del hotel, también los no
+     * disponibles, para el panel de administración
+     * 
+     * @return array devuelve un array con los datos de cada servicio
+     */
+    function obtenerTodosServicios() {
+        return $this->PDO->query("SELECT id, nombre_servicio, precio_servicio, descripcion, disponibilidad, icono
+                                    FROM servicios ORDER BY nombre_servicio;")->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Función que crea un servicio o, si recibe un id, lo actualiza
+     * 
+     * @param Number|null $id id del servicio a actualizar, o null para crearlo
+     * @param array $datos array con nombre, precio, descripcion, disponible e icono
+     * @return int devuelve el id del servicio, o 0 si el servicio a actualizar no existe
+     */
+    function guardarServicio($id, $datos) {
+
+        $valores = [$datos['nombre'], $datos['precio'], $datos['descripcion'], $datos['disponible'] ? 1 : 0, $datos['icono']];
+
+        if ($id === null) {
+            $stmt = $this->PDO->prepare("INSERT INTO servicios (nombre_servicio, precio_servicio, descripcion, disponibilidad, icono)
+                                          VALUES (?, ?, ?, ?, ?);");
+            $stmt->execute($valores);
+
+            return (int) $this->PDO->lastInsertId();
+        }
+
+        $stmt = $this->PDO->prepare("UPDATE servicios
+                                        SET nombre_servicio = ?, precio_servicio = ?, descripcion = ?, disponibilidad = ?, icono = ?
+                                      WHERE id = ?;");
+        $stmt->execute(array_merge($valores, [$id]));
+
+        // rowCount es 0 si los datos no cambian, así que comprobamos que exista
+        $comprobacion = $this->PDO->prepare("SELECT COUNT(*) FROM servicios WHERE id = ?;");
+        $comprobacion->execute([$id]);
+
+        return (int) $comprobacion->fetchColumn() === 1 ? (int) $id : 0;
+    }
+
+    /**
+     * Función que borra un servicio
+     * 
+     * @param Number $id id del servicio
+     * @return boolean devuelve true si se ha borrado
+     */
+    function borrarServicio($id) {
+
+        try {
+            $stmt = $this->PDO->prepare("DELETE FROM servicios WHERE id = ?;");
+            $stmt->execute([$id]);
+
+            return $stmt->rowCount() === 1;
+        } catch (\PDOException $e) {
+            // Por ejemplo, si el servicio está contratado en alguna reserva
+            error_log('Error al borrar el servicio: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /**

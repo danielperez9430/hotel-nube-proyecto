@@ -41,7 +41,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 - 🛎️ **Servicios y promociones**: páginas con los servicios del hotel (desde la base de datos) y las ofertas vigentes.
 - 👤 **Menú de usuario** con nombre, email, logout y acceso al panel para administradores.
 - ✉️ **Correos de bienvenida** por SMTP con [PHPMailer](https://github.com/PHPMailer/PHPMailer).
-- 🛠️ **Panel de administración** para modificar y borrar habitaciones.
+- 🛠️ **Panel de administración** con tres pestañas: **habitaciones** (crear, modificar y borrar), **reservas** (listado con los datos del cliente, filtros y resumen de ocupación: habitaciones ocupadas esta noche, entradas y salidas de hoy, ocupación de los próximos 30 días e ingresos previstos) y **servicios** (crear, modificar, ocultar y borrar).
 
 ## 🧰 Tecnologías
 
@@ -263,8 +263,13 @@ Todos están en `public/api/` y responden JSON.
 | `api/cancelBooking.php` | `POST` | 👤 sesión | Cancela una reserva (`booking`, `charge`: el cargo aceptado). `409` si ya está cancelada, ya no se puede cancelar o el cargo ha cambiado |
 | `api/account.php` | `GET` / `POST` | 👤 sesión | Datos de la cuenta / guardarlos (`nombre`, `telf`, `pais`, `provincia`, `ciudad`, `direccion`) |
 | `api/getAllRooms.php` | `GET` | 👑 admin | Listado de todas las habitaciones |
+| `api/createRoom.php` | `POST` | 👑 admin | Crea una habitación (`tipo`, `m2`, `ventana`, `internet`, `limpieza`, `precio`) y devuelve su número |
 | `api/updateRoom.php` | `POST` | 👑 admin | Modifica una habitación (`roomId`, `tipo`, `m2`, `ventana`, `internet`, `limpieza`, `precio`) |
 | `api/removeRoom.php` | `POST` | 👑 admin | Borra una habitación (`roomId`) |
+| `api/getBookings.php` | `GET` | 👑 admin | Reservas de todos los clientes (`filter`: `proximas`, `canceladas` o `todas`) y resumen de ocupación |
+| `api/getAllServices.php` | `GET` | 👑 admin | Todos los servicios, también los no disponibles |
+| `api/saveService.php` | `POST` | 👑 admin | Crea un servicio o, con `id`, lo modifica (`nombre`, `descripcion`, `precio`, `icono`, `disponible`) |
+| `api/removeService.php` | `POST` | 👑 admin | Borra un servicio (`id`) |
 
 Las respuestas de login, registro y borrado tienen la forma `{"result": "success" | "fail", "code": n}`:
 

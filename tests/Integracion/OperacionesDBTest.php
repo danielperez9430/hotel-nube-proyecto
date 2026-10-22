@@ -44,7 +44,7 @@ class OperacionesDBTest extends TestCase {
     }
 
     private function fecha(int $dias): string {
-        return (new \DateTimeImmutable('today'))->modify("+$dias days")->format('Y-m-d');
+        return (new \DateTimeImmutable('today'))->modify(sprintf("%+d days", $dias))->format('Y-m-d');
     }
 
     public function testRegistroAsignaElRolEstandar(): void {
@@ -301,5 +301,75 @@ class OperacionesDBTest extends TestCase {
         $this->expectException(\PDOException::class);
         $this->expectExceptionMessageMatches('/denied/i');
         $pdo->exec("UPDATE reservas SET fecha_salida = fecha_salida + INTERVAL 5 DAY WHERE num_reserva = $num");
+    }
+
+    public function testCrearHabitacion(): void {
+        $admin = new db('admin');
+
+        $id = $admin->crearHabitacion('Single Room', 18.5, true, false, true, 75);
+        $this->assertGreaterThan(0, $id);
+
+        $habitacion = array_values(array_filter($admin->obtenerListaHabitaciones(), fn($h) => (int) $h['id'] === $id))[0];
+        $this->assertSame('Single Room', $habitacion['tipo_habitacion']);
+        $this->assertEquals(18.5, (float) $habitacion['m2']);
+        $this->assertSame([1, 0, 1], [(int) $habitacion['ventana'], (int) $habitacion['internet'], (int) $habitacion['servicio_limpieza']]);
+
+        // Con un tipo inexistente no se crea nada
+        $this->assertSame(0, $admin->crearHabitacion('Suite Imaginaria', 20, true, true, true, 100));
+
+        self::$admin->exec("DELETE FROM habitaciones WHERE id = $id");
+    }
+
+    public function testReservasYOcupacionParaElAdministrador(): void {
+        $ana = $this->registrar();
+        $con = new db('estandar');
+        $admin = new db('admin');
+        $hoy = $this->fecha(0);
+
+        $estancia = $con->crearReserva($ana, 5, $this->fecha(-1), $this->fecha(2));
+        $entra = $con->crearReserva($ana, 4, $this->fecha(0), $this->fecha(3));
+        $futura = $con->crearReserva($ana, 3, $this->fecha(40), $this->fecha(42));
+        $cancelada = $con->crearReserva($ana, 2, $this->fecha(5), $this->fecha(6));
+        $con->cancelarReserva($cancelada['num_reserva'], $ana, 0);
+
+        $proximas = $admin->obtenerReservasAdmin('proximas', $hoy);
+        $this->assertSame([$estancia['num_reserva'], $entra['num_reserva'], $futura['num_reserva']], array_column($proximas, 'num_reserva'));
+        $this->assertSame('Ana López', $proximas[0]['nombre']);
+        $this->assertSame('ana@test.com', $proximas[0]['email']);
+
+        $this->assertSame([$cancelada['num_reserva']], array_column($admin->obtenerReservasAdmin('canceladas', $hoy), 'num_reserva'));
+        $this->assertCount(4, $admin->obtenerReservasAdmin('todas', $hoy));
+
+        $ocupacion = $admin->obtenerResumenOcupacion($hoy, 30);
+        $total = (int) self::$admin->query('SELECT COUNT(*) FROM habitaciones')->fetchColumn();
+
+        $this->assertSame($total, $ocupacion['habitaciones']);
+        $this->assertSame(2, $ocupacion['ocupadas_hoy']);
+        $this->assertSame(1, $ocupacion['entradas_hoy']);
+        $this->assertSame(0, $ocupacion['salidas_hoy']);
+        // 2 noches de la estancia en curso + 3 de la que entra hoy (la futura queda fuera de los 30 días)
+        $this->assertSame(5, $ocupacion['noches_reservadas']);
+        $this->assertSame(round(5 * 100 / ($total * 30), 1), $ocupacion['ocupacion']);
+        // Ingresos de las que entran hoy o después (no la cancelada)
+        $this->assertEquals(round($entra['precio_noche'] * 3 + $futura['precio_noche'] * 2, 2), $ocupacion['ingresos_futuros']);
+    }
+
+    public function testGestionarServicios(): void {
+        $admin = new db('admin');
+        $datos = ['nombre' => 'Yoga al amanecer', 'precio' => 18.0, 'descripcion' => 'Clase en la terraza.', 'disponible' => false, 'icono' => 'fas fa-sun'];
+
+        $id = $admin->guardarServicio(null, $datos);
+        $this->assertGreaterThan(0, $id);
+
+        // Los no disponibles solo los ve el administrador
+        $this->assertContains($id, array_map('intval', array_column($admin->obtenerTodosServicios(), 'id')));
+        $this->assertNotContains($id, array_map('intval', array_column((new db('estandar'))->obtenerServicios(), 'id')));
+
+        $this->assertSame($id, $admin->guardarServicio($id, ['disponible' => true] + $datos));
+        $this->assertContains($id, array_map('intval', array_column((new db('estandar'))->obtenerServicios(), 'id')));
+
+        $this->assertSame(0, $admin->guardarServicio(999999, $datos));
+        $this->assertTrue($admin->borrarServicio($id));
+        $this->assertFalse($admin->borrarServicio($id));
     }
 }

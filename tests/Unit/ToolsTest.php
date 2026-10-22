@@ -158,4 +158,29 @@ class ToolsTest extends TestCase {
         $this->assertNull($this->tools->cargoCancelacion('2030-06-20', 120.0, 1, new \DateTimeImmutable('2030-06-25')));
         $this->assertNull($this->tools->cargoCancelacion('no-es-fecha', 120.0));
     }
+
+    public function testValidarDatosHabitacion(): void {
+        $datos = ['tipo' => ' Single Room ', 'm2' => '18.5', 'precio' => '75', 'ventana' => 'true', 'internet' => 'false', 'limpieza' => 'true'];
+
+        $this->assertSame(['tipo' => 'Single Room', 'm2' => 18.5, 'precio' => 75.0, 'ventana' => true, 'internet' => false, 'limpieza' => true],
+            $this->tools->validarDatosHabitacion($datos));
+
+        $this->assertNull($this->tools->validarDatosHabitacion(['m2' => '0'] + $datos));
+        $this->assertNull($this->tools->validarDatosHabitacion(['precio' => '-1'] + $datos));
+        $this->assertNull($this->tools->validarDatosHabitacion(['ventana' => 'quizá'] + $datos));
+        $this->assertNull($this->tools->validarDatosHabitacion(['tipo' => ''] + $datos));
+    }
+
+    public function testValidarDatosServicio(): void {
+        $datos = ['nombre' => 'Spa', 'precio' => '45', 'descripcion' => 'Circuito', 'disponible' => 'true', 'icono' => 'fas fa-spa'];
+
+        $this->assertSame(['nombre' => 'Spa', 'precio' => 45.0, 'descripcion' => 'Circuito', 'disponible' => true, 'icono' => 'fas fa-spa'],
+            $this->tools->validarDatosServicio($datos));
+        // Sin icono se usa el de recepción
+        $this->assertSame('fas fa-concierge-bell', $this->tools->validarDatosServicio(['icono' => ''] + $datos)['icono']);
+
+        $this->assertNull($this->tools->validarDatosServicio(['icono' => 'fas fa-spa" onclick="x'] + $datos));
+        $this->assertNull($this->tools->validarDatosServicio(['nombre' => ' '] + $datos));
+        $this->assertNull($this->tools->validarDatosServicio(['precio' => 'gratis'] + $datos));
+    }
 }
