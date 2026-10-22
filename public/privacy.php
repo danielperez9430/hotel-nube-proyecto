@@ -28,8 +28,39 @@ require_once(__DIR__ . '/../views/header.php');
 
     <section class="page-card" id="cancellation">
         <h2><i class="fas fa-calendar-times"></i> Cancellation policy</h2>
-        <p>Bookings can be cancelled free of charge up to 48 hours before the check-in date. To cancel or modify a booking, contact us indicating your booking number.</p>
-        <p class="mb-0">Cancellations made less than 48 hours before check-in, or no-shows, may be charged the first night of the stay.</p>
+        <p>Plans change, and we understand. Check-in is from 3 pm and check-out until 12 noon (hotel local time); the deadlines below are counted from 3 pm on the check-in date.</p>
+
+        <table class="table policy-table">
+            <thead>
+                <tr>
+                    <th scope="col">When you cancel</th>
+                    <th scope="col">What we charge</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>More than 72 hours before check-in</td>
+                    <td><strong>Nothing</strong>: free cancellation</td>
+                </tr>
+                <tr>
+                    <td>Between 72 and 24 hours before check-in</td>
+                    <td>50% of the first night</td>
+                </tr>
+                <tr>
+                    <td>Less than 24 hours before check-in, or no-show</td>
+                    <td>The first night in full</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul class="policy-list">
+            <li><strong>Changes of date</strong> are free up to 72 hours before check-in, subject to availability.</li>
+            <li><strong>Early departures</strong>: we refund the unused nights, except the night following your departure.</li>
+            <li><strong>Group bookings</strong> of three or more rooms can be cancelled free of charge up to 14 days before check-in.</li>
+            <li><strong>Unforeseen circumstances</strong> (illness, transport strikes, severe weather): we offer a credit for the full amount, valid for 12 months.</li>
+        </ul>
+
+        <p class="mb-0">To cancel or modify a booking, contact us through the <a href="contact.php">contact page</a> indicating your booking number, which you will find in your confirmation email and under <strong>My bookings</strong>.</p>
     </section>
 </main>
 

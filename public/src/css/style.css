@@ -609,3 +609,25 @@ body:has(> .page) {
         justify-content: center;
     }
 }
+
+/* Política de cancelación */
+.policy-table {
+    margin: 16px 0 20px;
+}
+
+.policy-table thead th {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8a6d00;
+    border-bottom: 1px solid #DCB004;
+}
+
+.policy-list {
+    padding-left: 20px;
+    margin-bottom: 16px;
+}
+
+.policy-list li {
+    margin-bottom: 6px;
+}
