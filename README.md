@@ -388,7 +388,7 @@ El script sustituye las fuentes y los scripts que la plantilla carga de CDNs por
 
 ## 🤖 Dependencias
 
-[Dependabot](.github/dependabot.yml) revisa cada lunes Composer, ESLint (npm), las acciones de GitHub, las imágenes del `Dockerfile` (PHP y Composer) y las de los `docker-compose*.yml`. Las versiones menores y los parches llegan agrupados en un solo PR por ecosistema; las mayores, uno a uno. Las actualizaciones de versión de MariaDB que no son parches se hacen a mano, porque pueden exigir migrar los datos.
+[Dependabot](.github/dependabot.yml) revisa cada lunes Composer, ESLint (npm), las acciones de GitHub, las imágenes del `Dockerfile` (PHP y Composer) y las de los `docker-compose*.yml`. Solo propone versiones **menores y parches**, agrupadas en un solo PR por ecosistema. Las versiones mayores pueden romper la compatibilidad, así que se actualizan a mano (como la subida a PHP 8.5). MariaDB solo recibe parches, porque incluso una versión menor puede exigir migrar los datos.
 
 ## 🎨 Identidad visual
 
