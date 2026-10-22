@@ -39,10 +39,9 @@ $enlaceNav = function ($pagina, $texto) use ($paginaActual) {
         <link rel="stylesheet" href="src/vendor/litepicker/litepicker.css"/>
         <script src="src/vendor/litepicker/litepicker.js"></script>
 
-        <!-- URL de hotelnube-api, configurada con API_URL en el .env -->
-        <script>
-            window.API_URL = <?= json_encode(rtrim(\Config\config::get('API_URL', 'http://localhost:8001'), '/'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES) ?>;
-        </script>
+        <!-- URL de hotelnube-api (API_URL en el .env); la lee src/js/config.js -->
+        <meta name="api-url" content="<?= htmlspecialchars(rtrim(\Config\config::get('API_URL', 'http://localhost:8001'), '/')) ?>">
+        <script src="src/js/config.js"></script>
         <script src="src/js/csrf.js"></script>
         <script src="src/js/login.js"></script>
         <script src="src/js/logout.js"></script>
