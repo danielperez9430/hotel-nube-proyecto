@@ -2,6 +2,10 @@
   <img src=".github/banner.png" alt="Hotel Nube — Where your dreams will be as soft as the clouds" width="100%">
 </p>
 
+<p align="center">
+  <a href="https://github.com/danielperez9430/hotel-nube-proyecto/actions/workflows/ci.yml"><img src="https://github.com/danielperez9430/hotel-nube-proyecto/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+</p>
+
 # ☁️ Hotel Nube
 
 > *Where your dreams will be as soft as the clouds* ✨
@@ -16,6 +20,7 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 - [✅ Requisitos](#-requisitos)
 - [🚀 Puesta en marcha](#-puesta-en-marcha)
 - [⚙️ Configuración (.env)](#️-configuración-env)
+- [🧪 Tests y calidad](#-tests-y-calidad)
 - [👥 Roles y usuarios](#-roles-y-usuarios)
 - [📡 Endpoints internos](#-endpoints-internos)
 - [🗂️ Estructura del proyecto](#️-estructura-del-proyecto)
@@ -58,21 +63,44 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 
 ## ✅ Requisitos
 
-- 🐘 **PHP 8** con la extensión `pdo_mysql`
+**Con Docker** 🐳: solo Docker con Docker Compose.
+
+**Sin Docker**:
+- 🐘 **PHP 8.3** o superior, con la extensión `pdo_mysql`
+- 📦 **Composer**
 - 🗄️ **MariaDB** 10.4+ o **MySQL** 8
 - 🟢 **Node.js 18+** para ejecutar [hotelnube-api](https://github.com/danielperez9430/hotelnube-api)
-- 📦 **Composer** (opcional: `vendor/` ya está en el repositorio)
 
 ## 🚀 Puesta en marcha
 
-### 1️⃣ Clonar el proyecto
+### 🐳 Opción rápida: Docker Compose
 
 ```bash
 git clone https://github.com/danielperez9430/hotel-nube-proyecto.git
 cd hotel-nube-proyecto
+cp .env.example .env    # rellena DB_ROOT_PASSWORD y las DB_PASSWORD_*
+docker compose up --build
 ```
 
-### 2️⃣ Crear la base de datos
+| Servicio | URL |
+| -------- | --- |
+| 🏨 Web | <http://localhost:8000> |
+| 🌍 hotelnube-api | <http://localhost:8001> |
+| 📬 Mailpit (correos enviados) | <http://localhost:8025> |
+
+La primera vez se crea la base de datos con los datos de ejemplo y los usuarios con las contraseñas del `.env`. Todos los correos se quedan en Mailpit, nunca salen a Internet. Para empezar de cero: `docker compose down -v`.
+
+### 🛠️ Instalación manual
+
+#### 1️⃣ Clonar el proyecto e instalar las dependencias
+
+```bash
+git clone https://github.com/danielperez9430/hotel-nube-proyecto.git
+cd hotel-nube-proyecto
+composer install          # en producción: composer install --no-dev
+```
+
+#### 2️⃣ Crear la base de datos
 
 ```bash
 # Tablas y datos de ejemplo (5 tipos y 30 habitaciones)
@@ -85,7 +113,7 @@ mariadb -u root -p < config/db_usuarios.sql
 > [!WARNING]
 > `db_hotel.sql` empieza con `DROP DATABASE IF EXISTS hotel`: **borra la base de datos `hotel` si ya existe**.
 
-### 3️⃣ Configurar el `.env`
+#### 3️⃣ Configurar el `.env`
 
 ```bash
 cp .env.example .env
@@ -93,14 +121,14 @@ cp .env.example .env
 
 Rellena las contraseñas y el resto de valores. Están todos explicados en [⚙️ Configuración](#️-configuración-env).
 
-### 4️⃣ Arrancar hotelnube-api
+#### 4️⃣ Arrancar hotelnube-api
 
 ```bash
 git clone https://github.com/danielperez9430/hotelnube-api.git
 cd hotelnube-api && npm ci && npm start
 ```
 
-### 5️⃣ Arrancar la web
+#### 5️⃣ Arrancar la web
 
 ```bash
 php -S localhost:8000 -t public
@@ -146,10 +174,43 @@ Toda la configuración está en el fichero `.env` de la raíz, que **no se sube 
 
 | Variable | Por defecto | Descripción |
 | -------- | ----------- | ----------- |
-| `API_URL` | `http://localhost:8001` | URL base de hotelnube-api. La usan PHP y el JavaScript (a través de `window.API_URL`) |
+| `API_URL` | `http://localhost:8001` | URL base de hotelnube-api tal como la ve el navegador (`window.API_URL`) |
+| `API_INTERNAL_URL` | `API_URL` | URL de la API desde el servidor PHP, si es distinta (en Docker, `http://api:8001`) |
+
+### 🐳 Docker Compose
+
+| Variable | Descripción |
+| -------- | ----------- |
+| `DB_ROOT_PASSWORD` | Contraseña de root del contenedor de MariaDB |
+
+Docker Compose fija el resto de valores de conexión (`DB_HOST`, `MAIL_HOST`, URLs…) para que los contenedores se encuentren entre sí.
 
 > [!TIP]
 > Si falta una variable obligatoria, el log de PHP lo indica con un mensaje del tipo `Falta la variable de configuración DB_USER_ADMIN (revisa el fichero .env)`.
+
+## 🧪 Tests y calidad
+
+```bash
+composer lint       # sintaxis de todos los .php
+composer analyse    # análisis estático con PHPStan (nivel 5)
+composer test       # tests con PHPUnit
+npm ci && npm run lint   # ESLint para el JavaScript de public/src/js
+```
+
+Los **tests de integración** se ejecutan contra una base de datos real creada con `db_hotel.sql` y `db_usuarios.sql`:
+
+```bash
+DB_TESTS=1 DB_HOST=127.0.0.1 \
+DB_USER_ADMIN=hotel_admin DB_PASSWORD_ADMIN=... \
+DB_USER_CONEXION=hotel_conexion DB_PASSWORD_CONEXION=... \
+DB_USER_ESTANDAR=hotel_estandar DB_PASSWORD_ESTANDAR=... \
+composer test
+```
+
+> [!WARNING]
+> Los tests de integración **borran los usuarios y las reservas** de esa base de datos. Usa una base de datos de pruebas.
+
+GitHub Actions ejecuta todo lo anterior en cada push y pull request (PHP 8.3 y 8.4, con MariaDB), y además construye la imagen Docker de la web.
 
 ## 👥 Roles y usuarios
 
@@ -205,10 +266,14 @@ Las peticiones `POST` deben llevar la cabecera `X-CSRF-Token` con el token de la
 
 ```
 hotel-nube-proyecto/
+├── 📁 .github/               # CI (workflows) y banner del README
 ├── 📁 config/
 │   ├── db_hotel.sql          # Esquema y datos de ejemplo
 │   └── db_usuarios.sql       # Usuarios de BD con permisos mínimos
-├── 📁 docs/                  # Documentación generada con phpDocumentor
+├── 📁 docker/                # Imagen de la web y script de usuarios de MariaDB
+├── 📁 docs/
+│   ├── api/                  # Documentación generada con phpDocumentor
+│   └── recursos/             # Fuentes y scripts de la documentación (sin CDNs)
 ├── 📁 php/                   # Clases (autocargadas desde autoload.php)
 │   ├── Config/               # Lectura del .env
 │   ├── DB/                   # Acceso a la base de datos (PDO)
@@ -225,16 +290,27 @@ hotel-nube-proyecto/
 │   ├── privacy.php           # Privacidad, cookies y cancelación
 │   ├── adminPanel.php        # Panel de administración
 │   └── favicon.svg / .ico
+├── 📁 scripts/               # generar-docs.sh
+├── 📁 tests/                 # Tests unitarios y de integración (PHPUnit)
 ├── 📁 views/                 # Cabecera, pie y diálogo de login comunes
-├── 📁 vendor/                # Dependencias de Composer (PHPMailer)
 ├── 📄 autoload.php           # Autocarga de las clases de php/
-├── 📄 composer.json
+├── 📄 composer.json / .lock  # Dependencias PHP (vendor/ no se versiona)
+├── 📄 docker-compose.yml     # Web + MariaDB + API + Mailpit
 └── 📄 .env.example           # Plantilla de configuración
 ```
 
 ## 📚 Documentación del código
 
 La documentación de las clases está generada con [phpDocumentor](https://www.phpdoc.org) en [`docs/api/`](docs/api/). Abre `docs/api/index.html` en el navegador.
+
+Para regenerarla después de cambiar el código:
+
+```bash
+curl -LO https://phpdoc.org/phpDocumentor.phar
+scripts/generar-docs.sh
+```
+
+El script sustituye las fuentes y los scripts que la plantilla carga de CDNs por las copias de `docs/recursos`.
 
 ## 🔒 Seguridad
 
