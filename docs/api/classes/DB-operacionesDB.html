@@ -71,6 +71,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/http.html" class="">Http</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/session.html" class="">Session</a>
 </h4>
 
@@ -162,6 +166,12 @@
     <a class="" href="classes/DB-operacionesDB.html#constant_ROLES">ROLES</a>
     <span>
         &nbsp;: mixed&nbsp;= [&#039;admin&#039;, &#039;conexion&#039;, &#039;estandar&#039;]                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/DB-operacionesDB.html#constant_SQL_EXTRAS">SQL_EXTRAS</a>
+    <span>
+        &nbsp;: mixed&nbsp;= &quot;(SELECT COALESCE(SUM(rs.precio), 0) FROM reser...                            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
@@ -267,6 +277,13 @@ es el identificador del login</dd>
 <dd>Función que borra los intentos fallidos de un email tras un login correcto</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_borrarServicio">borrarServicio()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Función que borra un servicio</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/DB-operacionesDB.html#method_buscarHabitaciones">buscarHabitaciones()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -289,12 +306,27 @@ es el identificador del login</dd>
 su hash y rol en caso de existir</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_cancelarReserva">cancelarReserva()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Función que cancela una reserva confirmada de un usuario. La condición
+del UPDATE hace que dos cancelaciones simultáneas no se apliquen dos veces</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/DB-operacionesDB.html#method_contarIntentosLogin">contarIntentosLogin()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Función que cuenta los intentos de login fallidos recientes de un
 email y de una IP</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_crearHabitacion">crearHabitacion()</a>
+    <span>
+                                &nbsp;: int    </span>
+</dt>
+<dd>Función que crea una habitación nueva</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/DB-operacionesDB.html#method_crearReserva">crearReserva()</a>
@@ -304,6 +336,20 @@ email y de una IP</dd>
 <dd>Función que reserva una habitación si sigue libre. Usa un bloqueo con
 nombre por habitación para que dos reservas simultáneas de la misma
 habitación no puedan solaparse</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_crearRestablecimiento">crearRestablecimiento()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;|null    </span>
+</dt>
+<dd>Función que crea un token para restablecer la contraseña de un usuario.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_guardarServicio">guardarServicio()</a>
+    <span>
+                                &nbsp;: int    </span>
+</dt>
+<dd>Función que crea un servicio o, si recibe un id, lo actualiza</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/DB-operacionesDB.html#method_leer_configuracion">leer_configuracion()</a>
@@ -328,12 +374,37 @@ datos para un rol (DB_USER_&lt;ROL&gt; y DB_PASSWORD_&lt;ROL&gt;)</dd>
 <dd>Función que obtiene únicamente los nombres de los tipos de habitación</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_obtenerReservasAdmin">obtenerReservasAdmin()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Función que obtiene todas las reservas del hotel para el panel de
+administración, de la entrada más próxima a la más lejana</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/DB-operacionesDB.html#method_obtenerReservasUsuario">obtenerReservasUsuario()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Función que obtiene las reservas de un usuario, de la más reciente a
 la más antigua</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_obtenerReservaUsuario">obtenerReservaUsuario()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;|false    </span>
+</dt>
+<dd>Función que obtiene una reserva de un usuario con el precio de la
+primera noche (todas sus habitaciones), para calcular la cancelación</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_obtenerResumenOcupacion">obtenerResumenOcupacion()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Función que calcula la ocupación del hotel: habitaciones ocupadas esta
+noche, entradas y salidas de hoy, porcentaje de ocupación de los
+próximos días e ingresos de las reservas futuras</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/DB-operacionesDB.html#method_obtenerServicios">obtenerServicios()</a>
@@ -344,11 +415,26 @@ la más antigua</dd>
 baratos a más caros</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_obtenerServiciosDisponibles">obtenerServiciosDisponibles()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Función que obtiene los servicios disponibles con los ids indicados</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/DB-operacionesDB.html#method_obtenerTiposHabitacion">obtenerTiposHabitacion()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Función que obtiene los tipos de habitación</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_obtenerTodosServicios">obtenerTodosServicios()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Función que obtiene todos los servicios del hotel, también los no
+disponibles, para el panel de administración</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/DB-operacionesDB.html#method_obtenerUsuario">obtenerUsuario()</a>
@@ -372,6 +458,23 @@ registros de más de un día</dd>
                                 &nbsp;: <abbr title="\DB\Number">Number</abbr>    </span>
 </dt>
 <dd>Función que registra a un nuevo usuario en la base de datos</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_restablecerPassword">restablecerPassword()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Función que cambia la contraseña con un token de restablecimiento
+válido. Invalida todos los tokens del usuario y borra sus intentos de
+login fallidos</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/DB-operacionesDB.html#method_tokenRestablecimientoValido">tokenRestablecimientoValido()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Función que indica si un token de restablecimiento es válido (existe,
+no se ha usado y no ha caducado)</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/DB-operacionesDB.html#method_conexion">conexion()</a>
@@ -422,6 +525,36 @@ registros de más de un día</dd>
         
     </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_SQL_EXTRAS">
+        SQL_EXTRAS
+        <a href="classes/DB-operacionesDB.html#constant_SQL_EXTRAS" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">548</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">SQL_EXTRAS</span>
+    = <span class="phpdocumentor-signature__default-value">&quot;(SELECT COALESCE(SUM(rs.precio), 0) FROM reservas_servicios rs\n                          WHERE rs.num_reserva = r.num_reserva) AS extras,\n                        (SELECT GROUP_CONCAT(s.nombre_servicio ORDER BY s.nombre_servicio SEPARATOR &#039;, &#039;)\n                           FROM reservas_servicios rs INNER JOIN servicios s ON s.id = rs.id_servicio\n                          WHERE rs.num_reserva = r.num_reserva) AS servicios&quot;</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_SQL_OCUPADA">
         SQL_OCUPADA
         <a href="classes/DB-operacionesDB.html#constant_SQL_OCUPADA" class="headerlink"><i class="fas fa-link"></i></a>
@@ -431,7 +564,7 @@ registros de más de un día</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">412</span>
+    <span class="phpdocumentor-element-found-in__line">542</span>
 
     </aside>
 
@@ -441,7 +574,7 @@ registros de más de un día</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">SQL_OCUPADA</span>
-    = <span class="phpdocumentor-signature__default-value">&quot;SELECT 1 FROM habitaciones_reservas hr\n                          INNER JOIN reservas r ON r.num_reserva = hr.num_reserva\n                          WHERE hr.id_habitacion = h.id\n                            AND r.fecha_entrada &lt; ? AND r.fecha_salida &gt; ?&quot;</span>
+    = <span class="phpdocumentor-signature__default-value">&quot;SELECT 1 FROM habitaciones_reservas hr\n                          INNER JOIN reservas r ON r.num_reserva = hr.num_reserva\n                          WHERE hr.id_habitacion = h.id AND r.estado = &#039;confirmada&#039;\n                            AND r.fecha_entrada &lt; ? AND r.fecha_salida &gt; ?&quot;</span>
 </code>
 
 
@@ -786,7 +919,7 @@ registros de más de un día</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">201</span>
+    <span class="phpdocumentor-element-found-in__line">302</span>
 
     </aside>
 
@@ -897,7 +1030,7 @@ no cambien)</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">331</span>
+    <span class="phpdocumentor-element-found-in__line">432</span>
 
     </aside>
 
@@ -1006,7 +1139,7 @@ no cambien)</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">366</span>
+    <span class="phpdocumentor-element-found-in__line">495</span>
 
     </aside>
 
@@ -1100,6 +1233,61 @@ no cambien)</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_borrarServicio">
+        borrarServicio()
+        <a href="classes/DB-operacionesDB.html#method_borrarServicio" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">852</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que borra un servicio</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">borrarServicio</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\DB\Number">Number</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$id</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\DB\Number">Number</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>id del servicio</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve true si se ha borrado</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_buscarHabitaciones">
         buscarHabitaciones()
         <a href="classes/DB-operacionesDB.html#method_buscarHabitaciones" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1108,7 +1296,7 @@ no cambien)</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">391</span>
+    <span class="phpdocumentor-element-found-in__line">520</span>
 
     </aside>
 
@@ -1173,7 +1361,7 @@ su tipo y la primera imagen del tipo, ordenado por precio</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">530</span>
+    <span class="phpdocumentor-element-found-in__line">889</span>
 
     </aside>
 
@@ -1277,6 +1465,80 @@ del usuario o false en caso de que el usuario no exista</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_cancelarReserva">
+        cancelarReserva()
+        <a href="classes/DB-operacionesDB.html#method_cancelarReserva" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">709</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que cancela una reserva confirmada de un usuario. La condición
+del UPDATE hace que dos cancelaciones simultáneas no se apliquen dos veces</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">cancelarReserva</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\DB\Number">Number</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$num_reserva</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><abbr title="\DB\Number">Number</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id_usuario</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$cargo</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$num_reserva</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\DB\Number">Number</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>número de la reserva</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$id_usuario</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\DB\Number">Number</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>id del usuario dueño de la reserva</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$cargo</span>
+                : <span class="phpdocumentor-argument-list__argument__type">float</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>cargo de cancelación en euros</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve true si la reserva se ha cancelado</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_contarIntentosLogin">
         contarIntentosLogin()
         <a href="classes/DB-operacionesDB.html#method_contarIntentosLogin" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1351,6 +1613,106 @@ email y de una IP</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_crearHabitacion">
+        crearHabitacion()
+        <a href="classes/DB-operacionesDB.html#method_crearHabitacion" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">472</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que crea una habitación nueva</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">crearHabitacion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tipo</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$m2</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ventana</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$internet</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$limpieza</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$precio</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$tipo</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>nombre del tipo de habitación</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$m2</span>
+                : <span class="phpdocumentor-argument-list__argument__type">float</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>superficie en metros cuadrados</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$ventana</span>
+                : <span class="phpdocumentor-argument-list__argument__type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>si tiene ventana</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$internet</span>
+                : <span class="phpdocumentor-argument-list__argument__type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>si tiene internet</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$limpieza</span>
+                : <span class="phpdocumentor-argument-list__argument__type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>si tiene servicio de limpieza</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$precio</span>
+                : <span class="phpdocumentor-argument-list__argument__type">float</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>precio por noche</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">int</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve el número (id) de la habitación nueva, o 0 si el tipo no existe</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_crearReserva">
         crearReserva()
         <a href="classes/DB-operacionesDB.html#method_crearReserva" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1359,7 +1721,7 @@ email y de una IP</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">429</span>
+    <span class="phpdocumentor-element-found-in__line">591</span>
 
     </aside>
 
@@ -1369,7 +1731,7 @@ habitación no puedan solaparse</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">crearReserva</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\DB\Number">Number</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id_usuario</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><abbr title="\DB\Number">Number</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id_habitacion</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fecha_entrada</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fecha_salida</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|false</span></code>
+                    <span class="phpdocumentor-signature__name">crearReserva</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\DB\Number">Number</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id_usuario</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><abbr title="\DB\Number">Number</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id_habitacion</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fecha_entrada</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fecha_salida</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$servicios</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|false</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1413,6 +1775,16 @@ habitación no puedan solaparse</p>
 </section>
 
             </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$servicios</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">[]</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>servicios extra (obtenerServiciosDisponibles):
+se guardan con el precio que tienen en este momento</p>
+</section>
+
+            </dd>
             </dl>
 
     
@@ -1425,6 +1797,137 @@ habitación no puedan solaparse</p>
                     &mdash;
                 <section class="phpdocumentor-description"><p>devuelve num_reserva, tipo_habitacion, imagen y
 precio_noche, o false si la habitación no existe o está ocupada</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_crearRestablecimiento">
+        crearRestablecimiento()
+        <a href="classes/DB-operacionesDB.html#method_crearRestablecimiento" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">179</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que crea un token para restablecer la contraseña de un usuario.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">crearRestablecimiento</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$email</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type"><abbr title="\DB\Number">Number</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$maxPorHora</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">3</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Invalida los tokens anteriores y limita las solicitudes por hora</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$email</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>cadena de texto con el email del usuario</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$maxPorHora</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\DB\Number">Number</abbr></span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">3</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>número máximo de solicitudes por hora</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve ['token' =&gt; token en claro, 'nombre' =&gt; nombre]
+o null si el usuario no existe o ha superado el límite</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_guardarServicio">
+        guardarServicio()
+        <a href="classes/DB-operacionesDB.html#method_guardarServicio" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">822</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que crea un servicio o, si recibe un id, lo actualiza</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">guardarServicio</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\DB\Number">Number</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$datos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$id</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\DB\Number">Number</abbr>|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>id del servicio a actualizar, o null para crearlo</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$datos</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>array con nombre, precio, descripcion, disponible e icono</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">int</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve el id del servicio, o 0 si el servicio a actualizar no existe</p>
 </section>
 
             </section>
@@ -1514,7 +2017,7 @@ datos para un rol (DB_USER_&lt;ROL&gt; y DB_PASSWORD_&lt;ROL&gt;)</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">308</span>
+    <span class="phpdocumentor-element-found-in__line">409</span>
 
     </aside>
 
@@ -1557,7 +2060,7 @@ datos para un rol (DB_USER_&lt;ROL&gt; y DB_PASSWORD_&lt;ROL&gt;)</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">299</span>
+    <span class="phpdocumentor-element-found-in__line">400</span>
 
     </aside>
 
@@ -1592,6 +2095,72 @@ datos para un rol (DB_USER_&lt;ROL&gt; y DB_PASSWORD_&lt;ROL&gt;)</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_obtenerReservasAdmin">
+        obtenerReservasAdmin()
+        <a href="classes/DB-operacionesDB.html#method_obtenerReservasAdmin" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">728</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que obtiene todas las reservas del hotel para el panel de
+administración, de la entrada más próxima a la más lejana</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">obtenerReservasAdmin</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filtro</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hoy</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$filtro</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>'proximas' (confirmadas que aún no han terminado),
+'canceladas' o 'todas'</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$hoy</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>fecha de hoy en el hotel (Y-m-d)</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve un array con los datos de cada reserva, su cliente y su habitación</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_obtenerReservasUsuario">
         obtenerReservasUsuario()
         <a href="classes/DB-operacionesDB.html#method_obtenerReservasUsuario" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1600,7 +2169,7 @@ datos para un rol (DB_USER_&lt;ROL&gt; y DB_PASSWORD_&lt;ROL&gt;)</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">489</span>
+    <span class="phpdocumentor-element-found-in__line">656</span>
 
     </aside>
 
@@ -1648,6 +2217,139 @@ la más antigua</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_obtenerReservaUsuario">
+        obtenerReservaUsuario()
+        <a href="classes/DB-operacionesDB.html#method_obtenerReservaUsuario" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">685</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que obtiene una reserva de un usuario con el precio de la
+primera noche (todas sus habitaciones), para calcular la cancelación</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">obtenerReservaUsuario</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\DB\Number">Number</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$num_reserva</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><abbr title="\DB\Number">Number</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id_usuario</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|false</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$num_reserva</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\DB\Number">Number</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>número de la reserva</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$id_usuario</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\DB\Number">Number</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>id del usuario dueño de la reserva</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|false</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve num_reserva, fecha_entrada, fecha_salida,
+estado, primera_noche y habitaciones, o false si no existe o es de otro usuario</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_obtenerResumenOcupacion">
+        obtenerResumenOcupacion()
+        <a href="classes/DB-operacionesDB.html#method_obtenerResumenOcupacion" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">767</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que calcula la ocupación del hotel: habitaciones ocupadas esta
+noche, entradas y salidas de hoy, porcentaje de ocupación de los
+próximos días e ingresos de las reservas futuras</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">obtenerResumenOcupacion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hoy</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dias</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">30</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$hoy</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>fecha de hoy en el hotel (Y-m-d)</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$dias</span>
+                : <span class="phpdocumentor-argument-list__argument__type">int</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">30</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>número de días de la previsión de ocupación</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve habitaciones, ocupadas_hoy, entradas_hoy,
+salidas_hoy, noches_reservadas, ocupacion (porcentaje) e ingresos_futuros</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_obtenerServicios">
         obtenerServicios()
         <a href="classes/DB-operacionesDB.html#method_obtenerServicios" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1656,7 +2358,7 @@ la más antigua</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">514</span>
+    <span class="phpdocumentor-element-found-in__line">873</span>
 
     </aside>
 
@@ -1693,6 +2395,62 @@ precio_servicio, descripcion e icono de cada servicio</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_obtenerServiciosDisponibles">
+        obtenerServiciosDisponibles()
+        <a href="classes/DB-operacionesDB.html#method_obtenerServiciosDisponibles" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">561</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que obtiene los servicios disponibles con los ids indicados</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">obtenerServiciosDisponibles</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ids</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$ids</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>ids de los servicios</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve id, nombre_servicio y precio_servicio de los que
+existen y están disponibles</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_obtenerTiposHabitacion">
         obtenerTiposHabitacion()
         <a href="classes/DB-operacionesDB.html#method_obtenerTiposHabitacion" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1701,7 +2459,7 @@ precio_servicio, descripcion e icono de cada servicio</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">271</span>
+    <span class="phpdocumentor-element-found-in__line">372</span>
 
     </aside>
 
@@ -1737,6 +2495,50 @@ y descripcion de las mismas</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_obtenerTodosServicios">
+        obtenerTodosServicios()
+        <a href="classes/DB-operacionesDB.html#method_obtenerTodosServicios" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">810</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que obtiene todos los servicios del hotel, también los no
+disponibles, para el panel de administración</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">obtenerTodosServicios</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve un array con los datos de cada servicio</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_obtenerUsuario">
         obtenerUsuario()
         <a href="classes/DB-operacionesDB.html#method_obtenerUsuario" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1745,7 +2547,7 @@ y descripcion de las mismas</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">178</span>
+    <span class="phpdocumentor-element-found-in__line">279</span>
 
     </aside>
 
@@ -1859,7 +2661,7 @@ registros de más de un día</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">228</span>
+    <span class="phpdocumentor-element-found-in__line">329</span>
 
     </aside>
 
@@ -1975,6 +2777,128 @@ registros de más de un día</p>
                     <article
         class="phpdocumentor-element
             -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_restablecerPassword">
+        restablecerPassword()
+        <a href="classes/DB-operacionesDB.html#method_restablecerPassword" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">235</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que cambia la contraseña con un token de restablecimiento
+válido. Invalida todos los tokens del usuario y borra sus intentos de
+login fallidos</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">restablecerPassword</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hash</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$token</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>cadena de texto con el token en claro</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$hash</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>hash de la nueva contraseña</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve true si se cambió la contraseña</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_tokenRestablecimientoValido">
+        tokenRestablecimientoValido()
+        <a href="classes/DB-operacionesDB.html#method_tokenRestablecimientoValido" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/DB/operacionesDB.php"><a href="files/php-db-operacionesdb.html"><abbr title="php/DB/operacionesDB.php">operacionesDB.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">217</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que indica si un token de restablecimiento es válido (existe,
+no se ha usado y no ha caducado)</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">tokenRestablecimientoValido</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$token</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>cadena de texto con el token en claro</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve true si el token es válido</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
             -protected
                                                         "
 >
@@ -2034,6 +2958,7 @@ registros de más de un día</p>
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/DB-operacionesDB.html#constant_ROLES">ROLES</a></li>
+                                                    <li class=""><a href="classes/DB-operacionesDB.html#constant_SQL_EXTRAS">SQL_EXTRAS</a></li>
                                                     <li class=""><a href="classes/DB-operacionesDB.html#constant_SQL_OCUPADA">SQL_OCUPADA</a></li>
                                             </ul>
                 </li>
@@ -2059,20 +2984,32 @@ registros de más de un día</p>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_actualizarHabitacion">actualizarHabitacion()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_borrarHabitacion">borrarHabitacion()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_borrarIntentosLogin">borrarIntentosLogin()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_borrarServicio">borrarServicio()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_buscarHabitaciones">buscarHabitaciones()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_buscarImagenesHabitacion">buscarImagenesHabitacion()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_buscarUsuario">buscarUsuario()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_cancelarReserva">cancelarReserva()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_contarIntentosLogin">contarIntentosLogin()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_crearHabitacion">crearHabitacion()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_crearReserva">crearReserva()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_crearRestablecimiento">crearRestablecimiento()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_guardarServicio">guardarServicio()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_leer_configuracion">leer_configuracion()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_obtenerListaHabitaciones">obtenerListaHabitaciones()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_obtenerNombresTiposHabitacion">obtenerNombresTiposHabitacion()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_obtenerReservasAdmin">obtenerReservasAdmin()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_obtenerReservasUsuario">obtenerReservasUsuario()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_obtenerReservaUsuario">obtenerReservaUsuario()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_obtenerResumenOcupacion">obtenerResumenOcupacion()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_obtenerServicios">obtenerServicios()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_obtenerServiciosDisponibles">obtenerServiciosDisponibles()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_obtenerTiposHabitacion">obtenerTiposHabitacion()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_obtenerTodosServicios">obtenerTodosServicios()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_obtenerUsuario">obtenerUsuario()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_registrarIntentoFallido">registrarIntentoFallido()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_registrarUsuario">registrarUsuario()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_restablecerPassword">restablecerPassword()</a></li>
+                                            <li class=""><a href="classes/DB-operacionesDB.html#method_tokenRestablecimientoValido">tokenRestablecimientoValido()</a></li>
                                             <li class=""><a href="classes/DB-operacionesDB.html#method_conexion">conexion()</a></li>
                                     </ul>
             </li>

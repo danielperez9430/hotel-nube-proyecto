@@ -71,6 +71,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/http.html" class="">Http</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/session.html" class="">Session</a>
 </h4>
 
@@ -159,6 +163,12 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Tools-tools.html#constant_HORA_ENTRADA">HORA_ENTRADA</a>
+    <span>
+        &nbsp;: mixed&nbsp;= &#039;15:00&#039;                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Tools-tools.html#constant_MAX_NOCHES">MAX_NOCHES</a>
     <span>
         &nbsp;: mixed&nbsp;= 30                            </span>
@@ -180,6 +190,19 @@
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Función que sirve para asignar un rol a la sesión del usuario</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Tools-tools.html#method_cargoCancelacion">cargoCancelacion()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;|null    </span>
+</dt>
+<dd>Función que calcula el cargo por cancelar una reserva según la política
+de privacy.php. Los plazos se cuentan desde las 15:00 (hora del hotel)
+del día de entrada:
+- más de 72 horas antes (14 días en grupos de 3 o más habitaciones): gratis
+- entre ese plazo y 24 horas antes: el 50% de la primera noche
+- menos de 24 horas antes: la primera noche completa
+A partir de la hora de entrada ya no se puede cancelar</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Tools-tools.html#method_cifrarContrase%C3%B1a">cifrarContraseña()</a>
@@ -228,11 +251,35 @@ de fechas) o YYYY-MM-DD en un objeto fecha</dd>
 límites de la tabla usuarios</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Tools-tools.html#method_validarDatosHabitacion">validarDatosHabitacion()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;|null    </span>
+</dt>
+<dd>Función que valida los datos de una habitación enviados desde el panel
+de administración. Las casillas llegan como &#039;true&#039; o &#039;false&#039;</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Tools-tools.html#method_validarDatosServicio">validarDatosServicio()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;|null    </span>
+</dt>
+<dd>Función que valida los datos de un servicio enviados desde el panel de
+administración</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Tools-tools.html#method_validarEstancia">validarEstancia()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Función que valida las fechas de una estancia</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Tools-tools.html#method_validarPassword">validarPassword()</a>
+    <span>
+                                &nbsp;: string|null    </span>
+</dt>
+<dd>Función que valida una contraseña nueva: entre 8 y 72 caracteres (bcrypt
+ignora lo que pasa de 72 bytes)</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Tools-tools.html#method_validarUsuario">validarUsuario()</a>
@@ -252,6 +299,36 @@ límites de la tabla usuarios</dd>
             <a href="classes/Tools-tools.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_HORA_ENTRADA">
+        HORA_ENTRADA
+        <a href="classes/Tools-tools.html#constant_HORA_ENTRADA" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">76</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">HORA_ENTRADA</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;15:00&#039;</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
                     <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_MAX_NOCHES">
         MAX_NOCHES
@@ -338,6 +415,95 @@ límites de la tabla usuarios</dd>
         
     
     
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_cargoCancelacion">
+        cargoCancelacion()
+        <a href="classes/Tools-tools.html#method_cargoCancelacion" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">155</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que calcula el cargo por cancelar una reserva según la política
+de privacy.php. Los plazos se cuentan desde las 15:00 (hora del hotel)
+del día de entrada:
+- más de 72 horas antes (14 días en grupos de 3 o más habitaciones): gratis
+- entre ese plazo y 24 horas antes: el 50% de la primera noche
+- menos de 24 horas antes: la primera noche completa
+A partir de la hora de entrada ya no se puede cancelar</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">cargoCancelacion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fechaEntrada</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$primeraNoche</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$habitaciones</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">1</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ahora</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$fechaEntrada</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>fecha de entrada (Y-m-d)</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$primeraNoche</span>
+                : <span class="phpdocumentor-argument-list__argument__type">float</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>precio de la primera noche (todas las habitaciones)</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$habitaciones</span>
+                : <span class="phpdocumentor-argument-list__argument__type">int</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">1</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>número de habitaciones de la reserva</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$ahora</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr>|null</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>momento de la cancelación (por defecto, ahora)</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve ['cargo' =&gt; euros, 'gratis_hasta' =&gt; fecha ISO 8601]
+o null si la reserva ya no se puede cancelar</p>
+</section>
+
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -472,7 +638,7 @@ límites de la tabla usuarios</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">176</span>
+    <span class="phpdocumentor-element-found-in__line">292</span>
 
     </aside>
 
@@ -586,7 +752,7 @@ correcto</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
@@ -642,7 +808,7 @@ de fechas) o YYYY-MM-DD en un objeto fecha</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
@@ -691,6 +857,119 @@ límites de la tabla usuarios</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_validarDatosHabitacion">
+        validarDatosHabitacion()
+        <a href="classes/Tools-tools.html#method_validarDatosHabitacion" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">188</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que valida los datos de una habitación enviados desde el panel
+de administración. Las casillas llegan como &#039;true&#039; o &#039;false&#039;</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">validarDatosHabitacion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$datos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$datos</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>array con tipo, m2, precio, ventana, internet y limpieza</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve los datos validados (m2 y precio como float,
+casillas como boolean) o null si alguno no es válido</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_validarDatosServicio">
+        validarDatosServicio()
+        <a href="classes/Tools-tools.html#method_validarDatosServicio" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">213</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que valida los datos de un servicio enviados desde el panel de
+administración</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">validarDatosServicio</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$datos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$datos</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>array con nombre, precio, descripcion, disponible e icono</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve los datos validados o null si alguno no es válido</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_validarEstancia">
         validarEstancia()
         <a href="classes/Tools-tools.html#method_validarEstancia" class="headerlink"><i class="fas fa-link"></i></a>
@@ -699,7 +978,7 @@ límites de la tabla usuarios</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">104</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
@@ -745,6 +1024,62 @@ límites de la tabla usuarios</p>
                     &mdash;
                 <section class="phpdocumentor-description"><p>devuelve ['entrada' =&gt; 'Y-m-d', 'salida' =&gt; 'Y-m-d',
 'noches' =&gt; n] o ['error' =&gt; mensaje] si no son válidas</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_validarPassword">
+        validarPassword()
+        <a href="classes/Tools-tools.html#method_validarPassword" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="php/Tools/tools.php"><a href="files/php-tools-tools.html"><abbr title="php/Tools/tools.php">tools.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">239</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Función que valida una contraseña nueva: entre 8 y 72 caracteres (bcrypt
+ignora lo que pasa de 72 bytes)</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">validarPassword</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$password</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$password</span>
+                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>contraseña recibida (puede no ser texto)</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>devuelve el mensaje de error o null si es válida</p>
 </section>
 
             </section>
@@ -836,6 +1171,7 @@ en caso contrario devuelve false</p>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Tools-tools.html#constant_HORA_ENTRADA">HORA_ENTRADA</a></li>
                                                     <li class=""><a href="classes/Tools-tools.html#constant_MAX_NOCHES">MAX_NOCHES</a></li>
                                             </ul>
                 </li>
@@ -845,13 +1181,17 @@ en caso contrario devuelve false</p>
             <li>
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Tools-tools.html#method_asignarRol">asignarRol()</a></li>
+                                            <li class=""><a href="classes/Tools-tools.html#method_cargoCancelacion">cargoCancelacion()</a></li>
                                             <li class=""><a href="classes/Tools-tools.html#method_cifrarContrase%C3%B1a">cifrarContraseña()</a></li>
                                             <li class=""><a href="classes/Tools-tools.html#method_comprobarContrase%C3%B1a">comprobarContraseña()</a></li>
                                             <li class=""><a href="classes/Tools-tools.html#method_comprobarDatosRegistro">comprobarDatosRegistro()</a></li>
                                             <li class=""><a href="classes/Tools-tools.html#method_comprobarEmail">comprobarEmail()</a></li>
                                             <li class=""><a href="classes/Tools-tools.html#method_parsearFecha">parsearFecha()</a></li>
                                             <li class=""><a href="classes/Tools-tools.html#method_validarDatosCuenta">validarDatosCuenta()</a></li>
+                                            <li class=""><a href="classes/Tools-tools.html#method_validarDatosHabitacion">validarDatosHabitacion()</a></li>
+                                            <li class=""><a href="classes/Tools-tools.html#method_validarDatosServicio">validarDatosServicio()</a></li>
                                             <li class=""><a href="classes/Tools-tools.html#method_validarEstancia">validarEstancia()</a></li>
+                                            <li class=""><a href="classes/Tools-tools.html#method_validarPassword">validarPassword()</a></li>
                                             <li class=""><a href="classes/Tools-tools.html#method_validarUsuario">validarUsuario()</a></li>
                                     </ul>
             </li>

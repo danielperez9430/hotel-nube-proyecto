@@ -318,7 +318,7 @@ Las peticiones `POST` deben llevar la cabecera `X-CSRF-Token` con el token de la
 
 ```
 hotel-nube-proyecto/
-├── 📁 .github/               # CI (workflows) y banner del README
+├── 📁 .github/               # CI, publicación de la imagen, Dependabot y banner
 ├── 📁 config/
 │   ├── db_hotel.sql          # Esquema base y datos de ejemplo
 │   ├── db_usuarios.sql       # Usuarios de BD con permisos mínimos
@@ -331,25 +331,28 @@ hotel-nube-proyecto/
 │   ├── Config/               # Lectura del .env
 │   ├── DB/                   # Acceso a la base de datos (PDO)
 │   ├── Email/                # Envío de correos (PHPMailer)
+│   ├── Http/                 # Cabeceras de seguridad (CSP, HSTS...)
 │   ├── Session/              # Sesión, roles y CSRF
-│   └── Tools/                # Utilidades (contraseñas, validaciones)
+│   └── Tools/                # Utilidades (contraseñas, validaciones, política de cancelación)
 ├── 📁 public/                # Raíz pública del servidor web
 │   ├── api/                  # Endpoints JSON
-│   ├── src/                  # CSS, JS, imágenes, iconos y logo
+│   ├── src/                  # CSS (marca.css: tema de Bootstrap), JS, imágenes, iconos y logo
 │   │   └── vendor/           # Bootstrap, jQuery, Litepicker y Font Awesome
 │   ├── index.php             # Página principal y búsqueda de habitaciones
 │   ├── promotions.php        # Promociones
 │   ├── services.php          # Servicios del hotel
 │   ├── contact.php           # Contacto
 │   ├── privacy.php           # Privacidad, cookies y cancelación
+│   ├── reset-password.php    # Elegir una contraseña nueva desde el enlace del correo
 │   ├── adminPanel.php        # Panel de administración
 │   └── favicon.svg / .ico
 ├── 📁 scripts/               # migrar.php y generar-docs.sh
 ├── 📁 tests/                 # Tests unitarios y de integración (PHPUnit)
-├── 📁 views/                 # Cabecera, pie y diálogo de login comunes
+├── 📁 views/                 # Cabecera, pie, diálogo de login y plantillas de correo (correos/)
 ├── 📄 autoload.php           # Autocarga de las clases de php/
 ├── 📄 composer.json / .lock  # Dependencias PHP (vendor/ no se versiona)
-├── 📄 docker-compose.yml     # Web + MariaDB + API + Mailpit
+├── 📄 docker-compose.yml     # Desarrollo: web + MariaDB + API + Mailpit
+├── 📄 docker-compose.prod.yml # Producción con las imágenes de ghcr.io
 └── 📄 .env.example           # Plantilla de configuración
 ```
 
