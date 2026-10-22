@@ -1,3 +1,7 @@
+<?php
+// Usuario con sesión iniciada (null si es un visitante)
+$usuario = \Session\session::usuario();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,6 +38,7 @@
         </script>
         <script src="src/js/csrf.js"></script>
         <script src="src/js/login.js"></script>
+        <script src="src/js/logout.js"></script>
         <script src="src/js/datepickers.js"></script>
     </head>
 
@@ -54,19 +59,29 @@
                         <a class="nav-link text-light" href="#">Services</a>
                         <a class="nav-link text-light" href="#">Contact</a>
 
-                        <div class="navbar-nav login">
-                            <a class="nav-link text-light me-auto" data-bs-toggle="modal" data-bs-target="#loginDialog">Login/Register</a>
-                        </div>
-                        <div class="userButtonDiv" style="display: none;">
-                            <button id="userButton"><i class="fas fa-user"></i><span id="userName">Juan</span></button>
-                        </div>
+                        <?php if ($usuario === null): ?>
+                            <div class="navbar-nav login">
+                                <a class="nav-link text-light me-auto" data-bs-toggle="modal" data-bs-target="#loginDialog">Login/Register</a>
+                            </div>
+                        <?php else: ?>
+                            <div class="userButtonDiv">
+                                <button id="userButton"><i class="fas fa-user"></i><span id="userName"><?= htmlspecialchars(explode(' ', trim($usuario['nombre']))[0]) ?></span></button>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </nav>
 
-        <div id="userLoggedMenu" style="display: none;">
-            <span id="fullUserName">Juan Gilsanz Polo</span>
-            <button id="logOut" class="btn btn-primary"><i class="fas fa-door-open"></i>Log out</button>
-        </div>
+        <?php if ($usuario !== null): ?>
+            <div id="userLoggedMenuBase" style="display: none;"></div>
+            <div id="userLoggedMenu" style="display: none;">
+                <span id="fullUserName"><?= htmlspecialchars($usuario['nombre']) ?></span>
+                <span id="userEmail"><?= htmlspecialchars($usuario['email']) ?></span>
+                <?php if ($usuario['rol'] === 'admin'): ?>
+                    <button id="adminPanel" class="btn btn-outline-dark mb-2"><i class="fas fa-tools"></i>Admin panel</button>
+                <?php endif; ?>
+                <button id="logOut" class="btn btn-primary"><i class="fas fa-door-open"></i>Log out</button>
+            </div>
+        <?php endif; ?>
 

@@ -37,6 +37,46 @@ class session {
     }
 
     /**
+     * Función que inicia la sesión de un usuario tras el login o el registro.
+     * Regenera el id de sesión para evitar ataques de fijación de sesión
+     * 
+     * @param Number $id id del usuario
+     * @param string $nombre nombre del usuario
+     * @param string $email email del usuario
+     * @param string $rol nombre del rol del usuario
+     */
+    static function iniciarSesionUsuario($id, $nombre, $email, $rol) {
+        self::comprobar_sesion();
+        session_regenerate_id(true);
+
+        $_SESSION['id_usuario'] = (int) $id;
+        $_SESSION['nombre'] = $nombre;
+        $_SESSION['email'] = $email;
+        self::cambiarRol($rol);
+    }
+
+    /**
+     * Función que devuelve los datos del usuario con sesión iniciada
+     * 
+     * @return array|null devuelve ['id', 'nombre', 'email', 'rol'] o null si
+     * no hay ningún usuario identificado
+     */
+    static function usuario() {
+        self::comprobar_sesion();
+
+        if (empty($_SESSION['id_usuario'])) {
+            return null;
+        }
+
+        return [
+            'id' => $_SESSION['id_usuario'],
+            'nombre' => $_SESSION['nombre'],
+            'email' => $_SESSION['email'],
+            'rol' => $_SESSION['rol']
+        ];
+    }
+
+    /**
      * Función que indica si el usuario actual es administrador
      * 
      * @return boolean devuelve true si el rol de la sesión es admin

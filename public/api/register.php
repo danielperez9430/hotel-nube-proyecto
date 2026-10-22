@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../autoload.php';
 use \DB\operacionesDB as db;
 use \Tools\tools as tools;
 use \Session\session as s;
+use \Email\email as email;
 
 s::verificarCsrf();
 
@@ -26,7 +27,7 @@ if ($tool->comprobarDatosRegistro($campos)) {
     // Ciframos la contraseña
     $password = $tool->cifrarContraseña($_POST['password']);
 
-    $registerCorrect = false;
+    $idUsuario = 0;
 
     if ($tool->comprobarEmail($email)) {
         // El usuario estándar solo puede insertar en usuarios, suficiente para registrarse
@@ -34,15 +35,18 @@ if ($tool->comprobarDatosRegistro($campos)) {
 
         try {
             // Registramos al usario en la base de datos
-            $registerCorrect = $con->registrarUsuario($nombre, $email, $telf, $pais, $provincia, $ciudad, $direccion, $password) === 1;
+            $idUsuario = $con->registrarUsuario($nombre, $email, $telf, $pais, $provincia, $ciudad, $direccion, $password);
         } catch (\PDOException $e) {
             // Por ejemplo, si el correo ya está registrado
             error_log('Error al registrar el usuario: ' . $e->getMessage());
         }
     }
 
-    if ($registerCorrect) {
-        // start session
+    if ($idUsuario > 0) {
+        // Iniciamos la sesión del nuevo usuario y le damos la bienvenida
+        s::iniciarSesionUsuario($idUsuario, $nombre, $email, 'estandar');
+        email::enviarBienvenida($email, $nombre);
+
         echo json_encode([
             'result' => 'success',
             'code' => 0

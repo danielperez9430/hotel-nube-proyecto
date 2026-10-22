@@ -25,8 +25,9 @@ Web de reservas del hotel **Hotel Nube**, hecha en PHP, MySQL/MariaDB, Bootstrap
 - 🌍 **Selección de país, provincia y ciudad** en el registro, con datos de [hotelnube-api](https://github.com/danielperez9430/hotelnube-api).
 - 📅 **Selector de fechas** de entrada y salida ([Litepicker](https://litepicker.com)).
 - 🛏️ **Tipos de habitación** con descripción e imágenes.
-- 🛠️ **Panel de administración** (solo rol `admin`): listado de habitaciones, detalle y borrado.
-- ✉️ **Envío de correos** por SMTP con [PHPMailer](https://github.com/PHPMailer/PHPMailer).
+- 👤 **Menú de usuario** con nombre, email, logout y acceso al panel para administradores.
+- ✉️ **Correos de bienvenida** por SMTP con [PHPMailer](https://github.com/PHPMailer/PHPMailer).
+- 🛠️ **Panel de administración** para modificar y borrar habitaciones.
 
 ## 🧰 Tecnologías
 
@@ -120,10 +121,10 @@ Toda la configuración está en el fichero `.env` de la raíz, que **no se sube 
 
 | Variable | Por defecto | Descripción |
 | -------- | ----------- | ----------- |
-| `MAIL_HOST` | `smtp.gmail.com` | Servidor SMTP |
+| `MAIL_HOST` | — | Servidor SMTP. Si está vacío no se envían correos (se anota en el log) |
 | `MAIL_PORT` | `587` | Puerto SMTP |
-| `MAIL_ENCRYPTION` | `tls` | `tls` (STARTTLS) o `ssl` (SMTPS) |
-| `MAIL_USERNAME` | — | Usuario SMTP |
+| `MAIL_ENCRYPTION` | `tls` | `tls` (STARTTLS), `ssl` (SMTPS) o vacío (sin cifrado, para servidores de pruebas) |
+| `MAIL_USERNAME` | — | Usuario SMTP. Si está vacío no hay autenticación |
 | `MAIL_PASSWORD` | — | Contraseña SMTP. Con Gmail, una [contraseña de aplicación](https://support.google.com/accounts/answer/185833) |
 | `MAIL_FROM_ADDRESS` | `MAIL_USERNAME` | Dirección del remitente |
 | `MAIL_FROM_NAME` | `Hotel Nube` | Nombre del remitente |
@@ -167,6 +168,7 @@ Todos están en `public/api/` y responden JSON.
 | `api/room_type.php` | `GET` | — | Tipos de habitación con su descripción |
 | `api/getRoomTypes.php` | `GET` | — | Nombres de los tipos de habitación |
 | `api/getAllRooms.php` | `GET` | 👑 admin | Listado de todas las habitaciones |
+| `api/updateRoom.php` | `POST` | 👑 admin | Modifica una habitación (`roomId`, `tipo`, `m2`, `ventana`, `internet`, `limpieza`, `precio`) |
 | `api/removeRoom.php` | `POST` | 👑 admin | Borra una habitación (`roomId`) |
 
 Las respuestas de login, registro y borrado tienen la forma `{"result": "success" | "fail", "code": n}`:
