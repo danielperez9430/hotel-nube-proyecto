@@ -1,5 +1,5 @@
 # Imagen de la web de Hotel Nube: PHP 8.5 + Apache sirviendo public/
-FROM composer:2.10.3 AS composer
+FROM composer:2.11.0 AS composer
 
 FROM php:8.6.0RC2-apache
 
